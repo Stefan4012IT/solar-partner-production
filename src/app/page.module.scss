@@ -6,18 +6,36 @@
 }
 
 .header {
-  position: sticky;
-  top: 0;
-  z-index: 20;
+  position: fixed;
+  top: 16px;
+  left: clamp(16px, 4vw, 56px);
+  z-index: 40;
   display: grid;
   grid-template-columns: auto 1fr auto;
   align-items: center;
-  gap: 24px;
-  width: 100%;
-  border-bottom: 1px solid rgba(22, 24, 29, 0.08);
-  background: rgba(247, 245, 239, 0.92);
-  padding: 18px clamp(20px, 5vw, 72px);
-  backdrop-filter: blur(16px);
+  gap: clamp(16px, 3vw, 34px);
+  width: calc(100% - clamp(16px, 4vw, 56px) * 2);
+  border: 1px solid rgba(255, 255, 255, 0.62);
+  border-radius: 20px;
+  background: linear-gradient(rgba(255, 255, 255, 0.78), rgba(247, 245, 239, 0.72));
+  box-shadow: 0 20px 60px rgba(22, 24, 29, 0.14);
+  padding: 10px 12px 10px 16px;
+  backdrop-filter: blur(22px) saturate(118%);
+  transition:
+    transform 240ms ease,
+    opacity 180ms ease,
+    box-shadow 180ms ease;
+}
+
+.headerVisible {
+  transform: translateY(0);
+  opacity: 1;
+}
+
+.headerHidden {
+  transform: translateY(calc(-100% - 24px));
+  opacity: 0;
+  pointer-events: none;
 }
 
 .brand {
@@ -26,19 +44,21 @@
   gap: 10px;
   color: var(--color-dark);
   font-size: 16px;
-  font-weight: 700;
+  font-weight: 800;
 }
 
 .brandMark {
   display: grid;
-  width: 38px;
-  height: 38px;
+  width: 42px;
+  height: 42px;
   place-items: center;
-  border: 1px solid var(--color-border);
-  background: var(--color-dark);
+  border: 1px solid rgba(245, 158, 11, 0.28);
+  border-radius: 14px;
+  background: linear-gradient(#101722eb, #0a0e15eb);
   color: var(--color-primary);
   font-size: 12px;
   font-weight: 800;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.08);
 }
 
 .nav {
@@ -47,11 +67,121 @@
   gap: clamp(16px, 3vw, 32px);
   color: var(--color-muted);
   font-size: 14px;
-  font-weight: 600;
+  font-weight: 750;
+
+  a {
+    border-radius: 999px;
+    padding: 10px 12px;
+    transition:
+      background 160ms ease,
+      color 160ms ease;
+  }
 
   a:hover {
+    background: rgba(22, 24, 29, 0.06);
     color: var(--color-dark);
   }
+}
+
+.menuButton {
+  display: none;
+  width: 42px;
+  height: 42px;
+  place-items: center;
+  border: 1px solid rgba(22, 24, 29, 0.12);
+  border-radius: 14px;
+  background:
+    linear-gradient(rgba(255, 255, 255, 0.76), rgba(247, 245, 239, 0.64)),
+    #ffffff;
+  cursor: pointer;
+  transition:
+    background 180ms ease,
+    border-color 180ms ease,
+    transform 180ms ease;
+
+  span {
+    display: block;
+    width: 18px;
+    height: 2px;
+    border-radius: 999px;
+    background: var(--color-dark);
+    transition:
+      transform 180ms ease,
+      opacity 180ms ease;
+  }
+
+  span + span {
+    margin-top: 4px;
+  }
+}
+
+.menuButtonOpen {
+  border-color: rgba(245, 158, 11, 0.44);
+  background:
+    linear-gradient(rgba(16, 23, 34, 0.92), rgba(10, 14, 21, 0.92)),
+    var(--color-dark);
+
+  span {
+    background: var(--color-primary);
+  }
+
+  span:nth-child(1) {
+    transform: translateY(6px) rotate(45deg);
+  }
+
+  span:nth-child(2) {
+    opacity: 0;
+  }
+
+  span:nth-child(3) {
+    transform: translateY(-6px) rotate(-45deg);
+  }
+}
+
+.mobileNav {
+  position: absolute;
+  top: calc(100% + 10px);
+  left: 0;
+  right: 0;
+  display: none;
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.58);
+  border-radius: 18px;
+  background:
+    linear-gradient(rgba(255, 255, 255, 0.82), rgba(247, 245, 239, 0.76)),
+    #ffffff;
+  box-shadow: 0 24px 70px rgba(22, 24, 29, 0.18);
+  padding: 8px;
+  backdrop-filter: blur(22px) saturate(118%);
+
+  a {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-radius: 13px;
+    color: var(--color-dark);
+    font-size: 14px;
+    font-weight: 800;
+    padding: 14px 14px;
+
+    &::after {
+      width: 7px;
+      height: 7px;
+      border-radius: 999px;
+      background: var(--color-primary);
+      content: "";
+      opacity: 0.85;
+    }
+  }
+
+  a:hover {
+    background: rgba(22, 24, 29, 0.06);
+  }
+}
+
+.mobileNavOpen {
+  display: grid;
+  gap: 3px;
 }
 
 .headerCta,
@@ -78,6 +208,12 @@
   background: var(--color-primary);
   color: var(--color-dark);
   box-shadow: 0 14px 34px rgba(245, 158, 11, 0.18);
+}
+
+.headerCta {
+  min-height: 42px;
+  border-radius: 14px;
+  padding-inline: 16px;
 }
 
 .secondaryButton {
@@ -893,11 +1029,15 @@
 
 @media (max-width: 1050px) {
   .header {
-    grid-template-columns: 1fr auto;
+    grid-template-columns: 1fr auto auto;
   }
 
   .nav {
     display: none;
+  }
+
+  .menuButton {
+    display: grid;
   }
 
   .hero,
@@ -928,7 +1068,11 @@
 
 @media (max-width: 720px) {
   .header {
-    padding: 14px 18px;
+    top: 10px;
+    left: 10px;
+    width: calc(100% - 20px);
+    border-radius: 18px;
+    padding: 9px 10px;
   }
 
   .brand span:last-child {

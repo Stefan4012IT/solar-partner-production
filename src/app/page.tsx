@@ -1,6 +1,6 @@
 import Image from "next/image";
-import Link from "next/link";
 import { Red_Hat_Display } from "next/font/google";
+import { SiteHeader } from "@/components/SiteHeader";
 import styles from "./page.module.scss";
 
 const redHatDisplay = Red_Hat_Display({
@@ -139,22 +139,7 @@ const faqs = [
 export default function Home() {
   return (
     <main className={`${redHatDisplay.className} ${styles.page}`}>
-      <header className={styles.header}>
-        <a className={styles.brand} href="#top" aria-label="Solar Partner početna">
-          <span className={styles.brandMark}>SP</span>
-          <span>Solar Partner</span>
-        </a>
-        <nav className={styles.nav} aria-label="Glavna navigacija">
-          <a href="#resenja">Rešenja</a>
-          <a href="#proces">Proces</a>
-          <a href="#projekti">Projekti</a>
-          <Link href="/profesionalni-dronovi">Dronovi</Link>
-          <a href="#kontakt">Kontakt</a>
-        </nav>
-        <a className={styles.headerCta} href="#kontakt">
-          Zatražite procenu
-        </a>
-      </header>
+      <SiteHeader />
 
       <section id="top" className={styles.hero}>
         <div className={styles.heroText}>
