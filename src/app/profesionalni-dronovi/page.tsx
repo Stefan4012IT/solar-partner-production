@@ -10,6 +10,9 @@ import {
 } from "@/content/drone";
 import styles from "./page.module.scss";
 
+const assetPath = (path: string) =>
+  `${process.env.GITHUB_PAGES === "true" ? "/solar-partner" : ""}${path}`;
+
 export const metadata: Metadata = {
   title: "Profesionalni dronovi za industriju i bezbednost | Autel Robotics Srbija",
   description:
@@ -60,7 +63,7 @@ export default function ProfessionalDronesPage() {
         </div>
         <div className={styles.heroVisual}>
           <Image
-            src="/drone/enterprise-uav-hero.png"
+            src={assetPath("/drone/enterprise-uav-hero.png")}
             alt="Enterprise dron platforma za profesionalne inspekcije i nadzor"
             fill
             priority

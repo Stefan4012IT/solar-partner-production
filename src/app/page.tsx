@@ -8,23 +8,26 @@ const redHatDisplay = Red_Hat_Display({
   weight: ["400", "500", "600", "700", "800", "900"],
 });
 
+const assetPath = (path: string) =>
+  `${process.env.GITHUB_PAGES === "true" ? "/solar-partner" : ""}${path}`;
+
 const clientTypes = [
   {
     title: "Za domaćinstva",
     text: "Solarni sistemi za porodične kuće i stambene objekte, planirani prema realnoj potrošnji i uslovima na krovu.",
-    image: "/solutions/solar_porodicno.png",
+    image: assetPath("/solutions/solar_porodicno.png"),
     alt: "Porodična kuća sa solarnim panelima na krovu",
   },
   {
     title: "Za firme",
     text: "Solarne elektrane za poslovne, proizvodne, komercijalne i skladišne objekte sa izraženom dnevnom potrošnjom.",
-    image: "/solutions/solar_poslovni_prostori.png",
+    image: assetPath("/solutions/solar_poslovni_prostori.png"),
     alt: "Poslovni objekat sa solarnim panelima na krovu",
   },
   {
     title: "Za vikendice, farme i udaljene objekte",
     text: "Off-grid, hibridna i pomoćna solarna rešenja kada je stabilnost napajanja posebno važna.",
-    image: "/solutions/vikendice_farme.png",
+    image: assetPath("/solutions/vikendice_farme.png"),
     alt: "Udaljeni objekat sa solarnim panelima i baterijskim sistemom",
   },
 ];
@@ -40,7 +43,7 @@ const services = [
   "Servis i nadzor",
 ];
 
-const process = [
+const processSteps = [
   {
     title: "Pošaljete osnovne podatke",
     text: "Račun za struju, lokaciju objekta i osnovne informacije o potrošnji.",
@@ -64,21 +67,21 @@ const projects = [
     title: "Solarna elektrana za porodičnu kuću",
     meta: "Domaćinstvo / 6 kW / On-grid",
     text: "Sistem projektovan za smanjenje mesečnih troškova električne energije i veću energetsku nezavisnost domaćinstva.",
-    image: "/projects/porodicna_kuca_01.png",
+    image: assetPath("/projects/porodicna_kuca_01.png"),
     alt: "Solarna elektrana postavljena na porodičnoj kući",
   },
   {
     title: "Solarni sistem za poslovni objekat",
     meta: "Firma / 30 kW / On-grid",
     text: "Rešenje prilagođeno dnevnoj potrošnji poslovnog objekta, sa fokusom na dugoročnu uštedu.",
-    image: "/projects/poslovni_objekti_01.png",
+    image: assetPath("/projects/poslovni_objekti_01.png"),
     alt: "Solarni paneli na krovu poslovnog objekta",
   },
   {
     title: "Hibridno rešenje za udaljeni objekat",
     meta: "Pomoćni objekat / 5 kW / Hibridni sistem",
     text: "Sistem namenjen stabilnijem napajanju objekta i većoj nezavisnosti od mreže.",
-    image: "/projects/hibridno_resenje_01.png",
+    image: assetPath("/projects/hibridno_resenje_01.png"),
     alt: "Hibridni solarni sistem za udaljeni objekat",
   },
 ];
@@ -164,7 +167,7 @@ export default function Home() {
         </div>
         <div className={styles.heroVisual}>
           <Image
-            src="/solar-partne-hero--000.png"
+            src={assetPath("/solar-partne-hero--000.png")}
             alt="Solarni paneli montirani na krovu objekta"
             fill
             priority
@@ -219,7 +222,7 @@ export default function Home() {
             <h2>Kako izgleda put do sopstvene solarne elektrane</h2>
           </div>
           <div className={styles.processGrid}>
-            {process.map((step, index) => (
+            {processSteps.map((step, index) => (
               <article className={styles.processStep} key={step.title}>
                 <span>{String(index + 1).padStart(2, "0")}</span>
                 <h3>{step.title}</h3>
