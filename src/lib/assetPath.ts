@@ -1,3 +1,3 @@
 export function assetPath(path: string) {
-  return `${process.env.GITHUB_PAGES === "true" ? "/solar-partner" : ""}${path}`;
+  return `${process.env.NEXT_PUBLIC_BASE_PATH ?? ""}${path}`;
 }
