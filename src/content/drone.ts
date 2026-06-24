@@ -40,6 +40,8 @@ export const dronePlatforms = [
   {
     id: "evo-max",
     label: "EVO MAX PLATFORM",
+    image: "/drone/platform_001.png" as string | null,
+    imageAlt: "Autel EVO Max enterprise dron",
     title: "Kompaktna enterprise platforma za autonomne misije",
     text: "EVO Max serija donosi naprednu autonomiju, real-time analizu okruženja i sposobnost kreiranja 3D putanja leta. Platforma je namenjena profesionalnim zadacima gde su mobilnost, termalna detekcija i pouzdanost ključni.",
     models: ["EVO Max 4T", "EVO Max 4N"],
@@ -62,6 +64,8 @@ export const dronePlatforms = [
   {
     id: "alpha",
     label: "AUTEL ALPHA",
+    image: "/drone/platform_002.png" as string | null,
+    imageAlt: "Autel Alpha industrijski dron",
     title: "Industrijski dron za najzahtevnije operacije",
     text: "Autel Alpha je inteligentna industrijska platforma za višenamensku upotrebu. Sa autonomnim letom, IP55 zaštitom, otpornošću na smetnje i preciznim RTK sistemom, projektovana je za rad u kompleksnim uslovima.",
     models: ["Autel Alpha"],
@@ -82,6 +86,8 @@ export const dronePlatforms = [
   {
     id: "dragonfish",
     label: "DRAGONFISH VTOL",
+    image: "/drone/platform_003.png" as string | null,
+    imageAlt: "Autel Dragonfish eVTOL dron",
     title: "eVTOL platforma za dugotrajne nadzorne operacije",
     text: "Dragonfish je eVTOL tiltrotor platforma sa vertikalnim poletanjem i sletanjem. Namenjena je operacijama koje zahtevaju veći domet, duže vreme leta i pregled velikih površina bez piste ili dodatne opreme za lansiranje.",
     models: ["Dragonfish Pro"],
@@ -103,6 +109,8 @@ export const dronePlatforms = [
   {
     id: "evo-nest",
     label: "AUTEL EVO NEST",
+    image: "/drone/platform_004.png" as string | null,
+    imageAlt: "Autel EVO Nest bazna stanica",
     title: "Bazna stanica za automatske dron operacije",
     text: "EVO Nest je prenosiva bazna stanica za automatsko poletanje, sletanje, punjenje i planiranje misija za EVO seriju dronova. U kombinaciji sa command system platformom omogućava centralizovano upravljanje i nadzor operacija.",
     models: ["EVO Nest"],

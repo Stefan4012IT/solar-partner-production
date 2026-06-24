@@ -44,15 +44,15 @@ export function SiteHeader() {
 
   return (
     <header className={`${styles.header} ${isVisible ? styles.headerVisible : styles.headerHidden}`}>
-      <a className={styles.brand} href="#top" aria-label="Solar Partner početna">
+      <Link className={styles.brand} href="/" aria-label="Solar Partner početna">
         <span className={styles.brandMark}>SP</span>
         <span>Solar Partner</span>
-      </a>
+      </Link>
       <nav className={styles.nav} aria-label="Glavna navigacija">
         <a href="#resenja">Rešenja</a>
         <a href="#proces">Proces</a>
         <a href="#projekti">Projekti</a>
-        <Link href="/profesionalni-dronovi">Dronovi</Link>
+        <Link href="/dronovi">Dronovi</Link>
         <a href="#kontakt">Kontakt</a>
       </nav>
       <a className={styles.headerCta} href="#kontakt">
@@ -87,7 +87,7 @@ export function SiteHeader() {
         <a href="#projekti" onClick={closeMenu}>
           Projekti
         </a>
-        <Link href="/profesionalni-dronovi" onClick={closeMenu}>
+        <Link href="/dronovi" onClick={closeMenu}>
           Dronovi
         </Link>
         <a href="#kontakt" onClick={closeMenu}>

@@ -20,53 +20,176 @@
 }
 
 .header {
-  position: sticky;
-  top: 0;
-  z-index: 20;
+  position: fixed;
+  top: 12px;
+  right: clamp(12px, 2vw, 32px);
+  left: clamp(12px, 2vw, 32px);
+  z-index: 40;
   display: grid;
   grid-template-columns: auto 1fr auto;
   align-items: center;
-  gap: 24px;
-  border-bottom: 1px solid var(--drone-line);
-  background: rgba(7, 10, 15, 0.88);
-  padding: 18px clamp(20px, 5vw, 72px);
-  backdrop-filter: blur(18px);
+  gap: clamp(20px, 3vw, 44px);
+  border: 1px solid rgba(255, 255, 255, 0.13);
+  background:
+    linear-gradient(90deg, rgba(56, 189, 248, 0.05), transparent 22%),
+    rgba(7, 10, 15, 0.82);
+  box-shadow:
+    0 18px 50px rgba(0, 0, 0, 0.24),
+    inset 0 1px rgba(255, 255, 255, 0.035);
+  padding: 10px 10px 10px 14px;
+  backdrop-filter: blur(22px) saturate(130%);
+  transition:
+    opacity 220ms ease,
+    transform 220ms ease;
+
+  &::before {
+    position: absolute;
+    top: -1px;
+    left: 64px;
+    width: 92px;
+    height: 2px;
+    content: "";
+    background: linear-gradient(90deg, var(--drone-accent-blue), transparent);
+  }
+
+  &::after {
+    position: absolute;
+    right: 0;
+    bottom: -1px;
+    width: 54px;
+    height: 1px;
+    content: "";
+    background: var(--drone-accent);
+  }
+}
+
+.headerVisible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.headerHidden {
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(calc(-100% - 24px));
 }
 
 .brand {
   display: inline-flex;
   align-items: center;
-  gap: 12px;
+  gap: 11px;
   color: var(--drone-text);
   font-weight: 800;
 
-  span {
-    display: grid;
-    width: 38px;
-    height: 38px;
-    place-items: center;
-    border: 1px solid rgba(249, 115, 22, 0.45);
-    background: #16181d;
-    color: #f59e0b;
-    font-size: 12px;
+  &:hover .brandMark {
+    border-color: var(--drone-accent);
+    color: #ffffff;
   }
+}
+
+.brandMark {
+  position: relative;
+  display: grid;
+  width: 42px;
+  height: 42px;
+  place-items: center;
+  border: 1px solid rgba(56, 189, 248, 0.42);
+  background:
+    linear-gradient(135deg, rgba(56, 189, 248, 0.12), transparent 60%),
+    #101722;
+  color: var(--drone-accent);
+  font-family: var(--font-geist-mono), monospace;
+  font-size: 12px;
+  letter-spacing: 0.08em;
+  transition: border-color 160ms ease, color 160ms ease;
+
+  &::after {
+    position: absolute;
+    right: -1px;
+    bottom: -1px;
+    width: 8px;
+    height: 8px;
+    border-right: 2px solid var(--drone-accent);
+    border-bottom: 2px solid var(--drone-accent);
+    content: "";
+  }
+}
+
+.brandCopy {
+  display: grid;
+  gap: 3px;
 
   strong {
-    font-size: 15px;
+    font-size: 14px;
+    letter-spacing: 0.025em;
+  }
+
+  small {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    color: var(--drone-muted);
+    font-family: var(--font-geist-mono), monospace;
+    font-size: 8px;
+    font-weight: 800;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+  }
+
+  i {
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    background: var(--drone-accent-blue);
+    box-shadow: 0 0 8px rgba(56, 189, 248, 0.85);
   }
 }
 
 .nav {
   display: flex;
   justify-content: center;
-  gap: clamp(16px, 3vw, 32px);
+  gap: clamp(8px, 1.5vw, 22px);
   color: var(--drone-muted);
-  font-size: 13px;
+  font-size: 11px;
   font-weight: 800;
+  letter-spacing: 0.06em;
   text-transform: uppercase;
 
-  a:hover {
-    color: var(--drone-text);
+  a {
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    min-height: 42px;
+    padding: 0 8px;
+    transition: color 160ms ease;
+
+    &::after {
+      position: absolute;
+      right: 8px;
+      bottom: 2px;
+      left: 8px;
+      height: 1px;
+      content: "";
+      background: var(--drone-accent-blue);
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform 160ms ease;
+    }
+
+    span {
+      color: rgba(56, 189, 248, 0.56);
+      font-family: var(--font-geist-mono), monospace;
+      font-size: 8px;
+    }
+
+    &:hover {
+      color: var(--drone-text);
+
+      &::after {
+        transform: scaleX(1);
+      }
+    }
   }
 }
 
@@ -95,7 +218,24 @@
 .primaryButton,
 .form button {
   background: var(--drone-accent);
+  color: #ffffff;
+}
+
+.headerCta {
+  gap: 14px;
+  min-height: 48px;
+  padding-inline: 20px 12px;
   color: #101010;
+
+  i {
+    display: grid;
+    width: 28px;
+    height: 28px;
+    place-items: center;
+    border-left: 1px solid rgba(16, 16, 16, 0.24);
+    font-size: 16px;
+    font-style: normal;
+  }
 }
 
 .secondaryButton,
@@ -117,12 +257,41 @@
 }
 
 .hero {
+  position: relative;
+  isolation: isolate;
   display: grid;
   grid-template-columns: minmax(0, 0.86fr) minmax(420px, 1.14fr);
   min-height: calc(100vh - 75px);
+  overflow: hidden;
+
+  &::after {
+    position: absolute;
+    z-index: -1;
+    inset: 0;
+    content: "";
+    background:
+      linear-gradient(
+        90deg,
+        rgba(7, 10, 15, 0.9) 0%,
+        rgba(7, 10, 15, 0.62) 42%,
+        rgba(255, 255, 255, 0.04) 72%,
+        rgba(255, 255, 255, 0.24) 100%
+      ),
+      linear-gradient(180deg, rgba(7, 10, 15, 0.04), rgba(7, 10, 15, 0.16));
+    pointer-events: none;
+  }
+}
+
+.heroBackground {
+  z-index: -2;
+  object-fit: cover;
+  object-position: center;
+  opacity: 0.78;
 }
 
 .heroCopy {
+  position: relative;
+  z-index: 1;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -131,10 +300,14 @@
 
   h1 {
     max-width: 820px;
-    font-size: clamp(44px, 6.4vw, 86px);
+    font-size: clamp(44px, 5.6vw, 76px);
     font-weight: 900;
-    line-height: 0.95;
+    line-height: 1;
     text-transform: uppercase;
+
+    span {
+      color: var(--drone-accent-blue);
+    }
   }
 
   p:not(.kicker) {
@@ -179,23 +352,6 @@
 .heroVisual {
   position: relative;
   min-height: 620px;
-  overflow: hidden;
-  border-left: 1px solid var(--drone-line);
-  background: #05070b;
-
-  img {
-    object-fit: cover;
-  }
-
-  &::after {
-    position: absolute;
-    inset: 0;
-    content: "";
-    background:
-      linear-gradient(90deg, rgba(7, 10, 15, 0.62), transparent 38%),
-      linear-gradient(180deg, transparent, rgba(7, 10, 15, 0.72));
-    pointer-events: none;
-  }
 }
 
 .telemetry {
@@ -206,7 +362,7 @@
   display: grid;
   width: min(360px, calc(100% - 36px));
   border: 1px solid var(--drone-line);
-  background: rgba(7, 10, 15, 0.72);
+  background: rgba(7, 10, 15, 0.48);
   backdrop-filter: blur(12px);
 
   span {
@@ -219,7 +375,7 @@
 
     &:last-child {
       border-bottom: 0;
-      color: var(--drone-warning);
+      color: var(--drone-accent);
     }
   }
 }
@@ -285,11 +441,25 @@
 }
 
 .introSection {
+  position: relative;
+  isolation: isolate;
   display: grid;
   grid-template-columns: minmax(0, 0.8fr) minmax(0, 1fr);
   gap: clamp(36px, 7vw, 96px);
+  overflow: hidden;
   border-block: 1px solid var(--drone-line);
-  background: rgba(255, 255, 255, 0.03);
+  background:
+    linear-gradient(90deg, rgba(7, 10, 15, 0.66), rgba(7, 10, 15, 0.46)),
+    url("/drone/solar-partner-intro-section-002.png") center / cover no-repeat;
+
+  &::after {
+    position: absolute;
+    z-index: -1;
+    inset: 0;
+    content: "";
+    background: linear-gradient(180deg, transparent, rgba(7, 10, 15, 0.18));
+    pointer-events: none;
+  }
 
   h2 {
     margin-top: 14px;
@@ -302,7 +472,7 @@
 .introText {
   display: grid;
   gap: 18px;
-  color: var(--drone-muted);
+  color: #edf2f7;
   font-size: 18px;
   line-height: 1.7;
 
@@ -336,7 +506,7 @@
 
 .platform {
   display: grid;
-  grid-template-columns: minmax(0, 0.95fr) minmax(320px, 0.72fr);
+  grid-template-columns: minmax(360px, 0.95fr) minmax(280px, 0.72fr) minmax(300px, 0.72fr);
 }
 
 .platformMain,
@@ -344,8 +514,162 @@
   padding: clamp(26px, 4vw, 44px);
 }
 
+.platformMedia {
+  position: relative;
+  min-height: 460px;
+  overflow: hidden;
+  border-left: 1px solid var(--drone-line);
+  background:
+    linear-gradient(rgba(56, 189, 248, 0.055) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(56, 189, 248, 0.055) 1px, transparent 1px),
+    #0a1018;
+  background-size: 32px 32px, 32px 32px, auto;
+
+  &::after {
+    position: absolute;
+    z-index: 2;
+    inset: 0;
+    content: "";
+    background: radial-gradient(
+      circle at 50% 45%,
+      rgba(56, 189, 248, 0.24),
+      rgba(56, 189, 248, 0.08) 34%,
+      transparent 62%
+    );
+    pointer-events: none;
+  }
+
+  .platformImage {
+    z-index: 1;
+    object-fit: cover;
+    opacity: 0.72;
+  }
+}
+
+.imagePlaceholder {
+  position: absolute;
+  z-index: 3;
+  inset: 0;
+  display: grid;
+  align-content: space-between;
+  padding: 22px;
+
+  &::before,
+  &::after {
+    position: absolute;
+    width: 34px;
+    height: 34px;
+    content: "";
+    pointer-events: none;
+  }
+
+  &::before {
+    top: 18px;
+    left: 18px;
+    border-top: 1px solid var(--drone-accent-blue);
+    border-left: 1px solid var(--drone-accent-blue);
+  }
+
+  &::after {
+    right: 18px;
+    bottom: 18px;
+    border-right: 1px solid var(--drone-accent);
+    border-bottom: 1px solid var(--drone-accent);
+  }
+}
+
+.placeholderIndex {
+  justify-self: end;
+  color: rgba(255, 255, 255, 0.28);
+  font-family: var(--font-geist-mono), monospace;
+  font-size: 12px;
+  font-weight: 900;
+}
+
+.placeholderTarget {
+  position: absolute;
+  top: 46%;
+  left: 50%;
+  width: min(190px, 58%);
+  aspect-ratio: 1;
+  border: 1px solid rgba(56, 189, 248, 0.24);
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+
+  &::before,
+  &::after,
+  span::before,
+  span::after {
+    position: absolute;
+    content: "";
+    background: rgba(56, 189, 248, 0.26);
+  }
+
+  &::before {
+    top: 50%;
+    left: -18%;
+    width: 136%;
+    height: 1px;
+  }
+
+  &::after {
+    top: -18%;
+    left: 50%;
+    width: 1px;
+    height: 136%;
+  }
+
+  span::before {
+    inset: 20%;
+    border: 1px solid rgba(249, 115, 22, 0.34);
+    border-radius: 50%;
+    background: transparent;
+  }
+
+  span::after {
+    top: 50%;
+    left: 50%;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--drone-accent);
+    transform: translate(-50%, -50%);
+    box-shadow: 0 0 20px rgba(249, 115, 22, 0.7);
+  }
+}
+
+.placeholderCopy {
+  display: grid;
+  align-self: end;
+  gap: 5px;
+  padding: 16px;
+  border-left: 2px solid var(--drone-accent-blue);
+  background: rgba(7, 10, 15, 0.64);
+
+  span,
+  small {
+    color: var(--drone-muted);
+    font-family: var(--font-geist-mono), monospace;
+    font-size: 9px;
+    font-weight: 800;
+    letter-spacing: 0.12em;
+  }
+
+  strong {
+    color: var(--drone-text);
+    font-size: 14px;
+    line-height: 1.25;
+    text-transform: uppercase;
+  }
+
+  small {
+    color: var(--drone-accent);
+  }
+}
+
 .platformMain {
   display: grid;
+  align-content: center;
   gap: 24px;
 
   h3 {
@@ -559,10 +883,16 @@
     grid-template-columns: 1fr;
   }
 
+  .platformMedia {
+    min-height: 380px;
+    border-left: 0;
+    border-top: 1px solid var(--drone-line);
+    border-bottom: 1px solid var(--drone-line);
+  }
+
   .heroVisual {
     min-height: 520px;
     order: -1;
-    border-left: 0;
     border-bottom: 1px solid var(--drone-line);
   }
 
@@ -579,17 +909,26 @@
 
 @media (max-width: 700px) {
   .header {
-    padding: 14px 18px;
+    top: 8px;
+    right: 8px;
+    left: 8px;
+    padding: 8px;
   }
 
-  .brand strong {
+  .brandCopy {
     display: none;
   }
 
   .headerCta {
     min-height: 42px;
-    padding: 0 12px;
+    gap: 8px;
+    padding: 0 8px 0 12px;
     font-size: 11px;
+
+    i {
+      width: 24px;
+      height: 24px;
+    }
   }
 
   .heroCopy {
@@ -602,6 +941,15 @@
 
   .heroVisual {
     min-height: 340px;
+  }
+
+  .platformMedia {
+    min-height: 320px;
+  }
+
+  .heroBackground {
+    object-position: 58% center;
+    opacity: 0.68;
   }
 
   .telemetry {

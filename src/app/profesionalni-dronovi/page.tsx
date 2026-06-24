@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 import Image from "next/image";
-import Link from "next/link";
 import {
   capabilities,
   comparisonRows,
@@ -9,6 +8,7 @@ import {
   missionApplications,
 } from "@/content/drone";
 import { assetPath } from "@/lib/assetPath";
+import { DroneHeader } from "./DroneHeader";
 import styles from "./page.module.scss";
 
 export const metadata: Metadata = {
@@ -20,26 +20,23 @@ export const metadata: Metadata = {
 export default function ProfessionalDronesPage() {
   return (
     <main className={styles.dronePage}>
-      <header className={styles.header}>
-        <Link className={styles.brand} href="/" aria-label="Solar Partner početna">
-          <span>SP</span>
-          <strong>Solar Partner</strong>
-        </Link>
-        <nav className={styles.nav} aria-label="Navigacija stranice profesionalnih dronova">
-          <a href="#primena">Primena</a>
-          <a href="#platforme">Platforme</a>
-          <a href="#poredjenje">Poređenje</a>
-          <a href="#upit">Upit</a>
-        </nav>
-        <a className={styles.headerCta} href="#upit">
-          Zatražite konsultaciju
-        </a>
-      </header>
+      <DroneHeader />
 
       <section className={styles.hero}>
+        <Image
+          className={styles.heroBackground}
+          src={assetPath("/drone/solar-partner-hero-002.png")}
+          alt=""
+          fill
+          priority
+          sizes="100vw"
+          aria-hidden="true"
+        />
         <div className={styles.heroCopy}>
           <p className={styles.kicker}>ENTERPRISE UAV SYSTEMS</p>
-          <h1>Profesionalni dronovi za misije u kojima je pouzdanost presudna</h1>
+          <h1>
+            Pouzdanost. Preciznost. <span>Kontrola.</span>
+          </h1>
           <p>
             Autel Robotics platforme za industrijsku inspekciju, nadzor, termalnu detekciju,
             potragu i spasavanje, dostupne kroz Solar Partner, zvaničnog uvoznika za Srbiju.
@@ -60,13 +57,6 @@ export default function ProfessionalDronesPage() {
           </div>
         </div>
         <div className={styles.heroVisual}>
-          <Image
-            src={assetPath("/drone/enterprise-uav-hero.png")}
-            alt="Enterprise dron platforma za profesionalne inspekcije i nadzor"
-            fill
-            priority
-            sizes="(max-width: 900px) 100vw, 56vw"
-          />
           <div className={styles.telemetry}>
             <span>THERMAL</span>
             <span>AI DETECTION</span>
@@ -156,6 +146,30 @@ export default function ProfessionalDronesPage() {
                       {link.label}
                     </a>
                   ))}
+                </div>
+              </div>
+              <div className={styles.platformMedia}>
+                {platform.image && (
+                  <Image
+                    className={styles.platformImage}
+                    src={assetPath(platform.image)}
+                    alt={platform.imageAlt}
+                    fill
+                    sizes="(max-width: 1060px) 100vw, 32vw"
+                  />
+                )}
+                <div className={styles.imagePlaceholder} aria-label={`Vizuel platforme: ${platform.imageAlt}`}>
+                  <span className={styles.placeholderIndex}>
+                    {String(dronePlatforms.indexOf(platform) + 1).padStart(2, "0")}
+                  </span>
+                  <div className={styles.placeholderTarget} aria-hidden="true">
+                    <span />
+                  </div>
+                  <div className={styles.placeholderCopy}>
+                    <span>PRODUCT VISUAL</span>
+                    <strong>{platform.models.join(" / ")}</strong>
+                    <small>{platform.image ? "MISSION PLATFORM" : "IMAGE PLACEHOLDER"}</small>
+                  </div>
                 </div>
               </div>
             </article>

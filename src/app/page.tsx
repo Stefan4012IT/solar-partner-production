@@ -1,12 +1,12 @@
 import type { Metadata } from "next";
-import { SolarSystemsPage } from "./solarni-sistemi/SolarSystemsPage";
+import { IntroExperience } from "./intro/IntroExperience";
 
 export const metadata: Metadata = {
-  title: "Solarne elektrane za kuće i firme | Solar Partner",
+  title: "Solar Partner | Energetski i enterprise sistemi",
   description:
-    "Projektovanje, oprema, ugradnja i podrška pri priključenju solarnih elektrana za domaćinstva, firme i industrijske objekte.",
+    "Solarni sistemi, profesionalni dronovi i tehnička rešenja za energetiku, infrastrukturu i poslovne korisnike.",
 };
 
 export default function Home() {
-  return <SolarSystemsPage />;
+  return <IntroExperience />;
 }
