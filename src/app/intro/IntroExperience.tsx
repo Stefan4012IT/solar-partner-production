@@ -30,6 +30,7 @@ const scenes = [
     href: "/dronovi",
     cta: "Pogledajte dronove",
     poster: "/drone/enterprise-uav-hero.png",
+    mobilePoster: "/drone/intro_dron_mob_1.1.png",
     tone: "drone",
   },
   {
@@ -39,7 +40,8 @@ const scenes = [
     text: "Sekcija je rezervisana za budući program sigurnosnih sistema, integracija i tehničke zaštite.",
     href: "#",
     cta: "Uskoro",
-    poster: "/projects/poslovni_objekti_01.png",
+    poster: "/security/security_intro.png",
+    mobilePoster: "/security/intro_security_mob_1.1.png",
     tone: "security",
     disabled: true,
   },
@@ -332,7 +334,8 @@ export function IntroExperience() {
                 {
                   "--panel-distance": distance,
                   "--panel-abs-distance": absDistance,
-                  backgroundImage: `url(${assetPath(scene.poster)})`,
+                  "--panel-poster": `url(${assetPath(scene.poster)})`,
+                  "--panel-mobile-poster": `url(${assetPath(scene.mobilePoster ?? scene.poster)})`,
                 } as React.CSSProperties
               }
             >

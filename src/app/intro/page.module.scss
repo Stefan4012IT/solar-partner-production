@@ -267,6 +267,7 @@
   position: absolute;
   inset: calc(var(--panel-abs-distance) * 9vh) calc(var(--panel-abs-distance) * 12vw);
   overflow: hidden;
+  background-image: var(--panel-poster);
   background-position: center;
   background-size: cover;
   transform:
@@ -538,6 +539,20 @@
   .videoSurface video {
     transform: none;
     filter: none;
+  }
+
+  .videoSurface::before {
+    position: absolute;
+    z-index: 1;
+    inset: 0;
+    content: "";
+    background-image: var(--panel-mobile-poster);
+    background-position: center;
+    background-size: cover;
+  }
+
+  .videoSurface video {
+    display: none;
   }
 
   .motionLayer,
