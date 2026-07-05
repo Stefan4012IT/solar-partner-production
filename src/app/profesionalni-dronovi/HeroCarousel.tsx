@@ -7,16 +7,20 @@ import styles from "./page.module.scss";
 
 const heroSlides = [
   {
-    src: "/drone/solar-partner-hero-002.png",
-    alt: "Profesionalni Autel dron u operativnom okruženju",
+    src: "/drone/hero_dronovi/dron_hero_1.png",
+    alt: "Profesionalni dron u tamnom operativnom okruženju",
   },
   {
-    src: "/drone/enterprise-uav-hero.png",
-    alt: "Enterprise UAV platforma za industrijske i bezbednosne misije",
+    src: "/drone/hero_dronovi/dron_hero_2.png",
+    alt: "Enterprise dron platforma za industrijske i bezbednosne misije",
   },
   {
-    src: "/drone/solar-partner-intro-section-002.png",
-    alt: "Dron platforma prikazana kroz tehnički vizuel",
+    src: "/drone/hero_dronovi/dron_hero_3.png",
+    alt: "Profesionalni dron prikazan u tehničkom aerospace stilu",
+  },
+  {
+    src: "/drone/hero_dronovi/dron_hero_5.png",
+    alt: "Profesionalni dron prikazan u noćnom operativnom ambijentu",
   },
 ];
 

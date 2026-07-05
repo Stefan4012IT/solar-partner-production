@@ -19,6 +19,33 @@ const droneDisplay = Red_Hat_Display({
   variable: "--font-drone-display",
 });
 
+const applicationCardImages = [
+  {
+    src: "/drone/applicationCard/appCard_1_1.png",
+    alt: "Profesionalni dron u primeni za industrijsku inspekciju",
+  },
+  {
+    src: "/drone/applicationCard/appCard_2.png",
+    alt: "Profesionalni dron u operativnoj primeni za nadzor i bezbednost",
+  },
+  {
+    src: "/drone/applicationCard/appCard_3.png",
+    alt: "Profesionalni dron u primeni za potragu, spasavanje i termalnu detekciju",
+  },
+  {
+    src: "/drone/applicationCard/appCard_4.png",
+    alt: "Profesionalni dron u primeni za mapiranje i nadzor infrastrukture",
+  },
+  {
+    src: "/drone/applicationCard/appCard_5.png",
+    alt: "Profesionalni dron u primeni za taktički nadzor i operativnu podršku",
+  },
+  {
+    src: "/drone/applicationCard/appCard_6.png",
+    alt: "Profesionalni dron u primeni za hitne intervencije i kontrolu terena",
+  },
+];
+
 export const metadata: Metadata = {
   title: "Profesionalni dronovi za industriju i bezbednost | Autel Robotics Srbija",
   description:
@@ -73,8 +100,18 @@ export default function ProfessionalDronesPage() {
           <h2>Primena u zahtevnim operativnim okruženjima</h2>
         </div>
         <div className={styles.applicationGrid}>
-          {missionApplications.map((item) => (
+          {missionApplications.map((item, index) => (
             <article className={styles.applicationCard} key={item.title}>
+              {applicationCardImages[index] && (
+                <div className={styles.applicationCardMedia}>
+                  <Image
+                    src={assetPath(applicationCardImages[index].src)}
+                    alt={applicationCardImages[index].alt}
+                    fill
+                    sizes="(max-width: 700px) 100vw, 33vw"
+                  />
+                </div>
+              )}
               <span />
               <h3>{item.title}</h3>
               <p>{item.text}</p>

@@ -284,20 +284,7 @@
   overflow: hidden;
 
   &::after {
-    position: absolute;
-    z-index: 1;
-    inset: 0;
-    content: "";
-    background:
-      linear-gradient(
-        90deg,
-        rgba(7, 10, 15, 0.9) 0%,
-        rgba(7, 10, 15, 0.62) 42%,
-        rgba(255, 255, 255, 0.04) 72%,
-        rgba(255, 255, 255, 0.24) 100%
-      ),
-      linear-gradient(180deg, rgba(7, 10, 15, 0.04), rgba(7, 10, 15, 0.16));
-    pointer-events: none;
+    display: none;
   }
 }
 
@@ -376,19 +363,10 @@
 }
 
 .heroCarousel {
-  background:
-    linear-gradient(135deg, rgba(56, 189, 248, 0.16), transparent 38%),
-    rgba(7, 10, 15, 0.68);
+  background: rgba(7, 10, 15, 0.2);
 
   &::before {
-    position: absolute;
-    z-index: 3;
-    inset: 0;
-    content: "";
-    background:
-      linear-gradient(90deg, rgba(7, 10, 15, 0.54), rgba(7, 10, 15, 0.08) 46%, rgba(7, 10, 15, 0.24)),
-      linear-gradient(180deg, rgba(255, 255, 255, 0.08), rgba(7, 10, 15, 0.22));
-    pointer-events: none;
+    display: none;
   }
 }
 
@@ -404,7 +382,7 @@
 }
 
 .heroSlideActive {
-  opacity: 0.88;
+  opacity: 1;
   transform: translateX(0) scale(1);
 }
 
@@ -526,6 +504,20 @@
   }
 }
 
+.applicationCardMedia {
+  position: relative;
+  aspect-ratio: 16 / 9;
+  overflow: hidden;
+  border: 1px solid var(--drone-line);
+  background: rgba(7, 10, 15, 0.46);
+  margin: -8px -8px 0;
+
+  img {
+    object-fit: cover;
+    object-position: center;
+  }
+}
+
 .introSection {
   position: relative;
   isolation: isolate;
@@ -536,7 +528,7 @@
   border-block: 1px solid var(--drone-line);
   background:
     linear-gradient(90deg, rgba(7, 10, 15, 0.66), rgba(7, 10, 15, 0.46)),
-    url("/drone/solar-partner-intro-section-002.png") center / cover no-repeat;
+    url("/drone/dron-banner-1.png") center / cover no-repeat;
 
   &::after {
     position: absolute;
