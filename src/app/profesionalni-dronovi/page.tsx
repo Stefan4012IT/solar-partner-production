@@ -252,8 +252,8 @@ export default function ProfessionalDronesPage() {
           <p className={styles.kicker}>ENTERPRISE INQUIRY</p>
           <h2>Pošaljite upit za profesionalno dron rešenje</h2>
           <p>
-            Opišite operativnu potrebu, tip primene i platformu koja vas zanima. Kontaktiraćemo vas
-            kako bismo predložili odgovarajuće Autel Robotics rešenje.
+            Pošaljite kontakt podatke, tip primene i platformu koja vas zanima. Javićemo se kako
+            bismo razjasnili detalje i predložili odgovarajuće Autel Robotics rešenje.
           </p>
         </div>
         <form className={styles.form}>
