@@ -59,7 +59,7 @@ export function FloatingContact() {
   const [isOpen, setIsOpen] = useState(false);
   const normalizedPathname = pathname.replace(/\/$/, "");
 
-  if (normalizedPathname === "/intro" || normalizedPathname.endsWith("/intro")) {
+  if (!normalizedPathname || normalizedPathname === "/intro" || normalizedPathname.endsWith("/intro")) {
     return null;
   }
 

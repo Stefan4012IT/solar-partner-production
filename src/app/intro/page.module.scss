@@ -178,7 +178,7 @@
   right: 32px;
   bottom: 32px;
   display: grid;
-  width: min(360px, calc(100vw - 64px));
+  width: min(580px, calc(100vw - 64px));
   grid-template-columns: repeat(4, 1fr);
   gap: 8px;
 }
@@ -186,16 +186,16 @@
 .quickNav a {
   display: grid;
   grid-template-columns: auto 1fr;
-  min-height: 76px;
+  min-height: 54px;
   align-items: center;
   align-content: center;
-  gap: 9px;
+  gap: 7px;
   border: 1px solid rgba(255, 255, 255, 0.14);
   border-radius: 18px;
   background: rgba(7, 11, 17, 0.58);
   color: rgba(255, 255, 255, 0.74);
   backdrop-filter: blur(18px);
-  padding: 10px;
+  padding: 8px 10px;
   transition:
     transform 180ms ease,
     border-color 180ms ease,
@@ -213,8 +213,8 @@
 
 .quickNav span {
   display: block;
-  width: 8px;
-  height: 8px;
+  width: 6px;
+  height: 6px;
   border-radius: 999px;
   background: rgba(255, 255, 255, 0.36);
   box-shadow: 0 0 0 0 rgba(245, 158, 11, 0);
@@ -225,13 +225,14 @@
 
 .quickNav .activeQuickNavItem span {
   background: #f59e0b;
-  box-shadow: 0 0 0 6px rgba(245, 158, 11, 0.14);
+  box-shadow: 0 0 0 5px rgba(245, 158, 11, 0.14);
 }
 
 .quickNav strong {
-  font-size: 0.76rem;
+  font-size: 0.68rem;
   font-weight: 800;
   line-height: 1.1;
+  white-space: nowrap;
 }
 
 .stage {
