@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Image from "next/image";
+import { Red_Hat_Display } from "next/font/google";
 import {
   capabilities,
   comparisonRows,
@@ -9,7 +10,14 @@ import {
 } from "@/content/drone";
 import { assetPath } from "@/lib/assetPath";
 import { DroneHeader } from "./DroneHeader";
+import { HeroCarousel } from "./HeroCarousel";
 import styles from "./page.module.scss";
+
+const droneDisplay = Red_Hat_Display({
+  subsets: ["latin", "latin-ext"],
+  weight: ["500", "600", "700", "800", "900"],
+  variable: "--font-drone-display",
+});
 
 export const metadata: Metadata = {
   title: "Profesionalni dronovi za industriju i bezbednost | Autel Robotics Srbija",
@@ -19,19 +27,10 @@ export const metadata: Metadata = {
 
 export default function ProfessionalDronesPage() {
   return (
-    <main className={styles.dronePage}>
+    <main className={`${styles.dronePage} ${droneDisplay.variable}`}>
       <DroneHeader />
 
       <section className={styles.hero}>
-        <Image
-          className={styles.heroBackground}
-          src={assetPath("/drone/solar-partner-hero-002.png")}
-          alt=""
-          fill
-          priority
-          sizes="100vw"
-          aria-hidden="true"
-        />
         <div className={styles.heroCopy}>
           <p className={styles.kicker}>ENTERPRISE UAV SYSTEMS</p>
           <h1>
@@ -57,6 +56,7 @@ export default function ProfessionalDronesPage() {
           </div>
         </div>
         <div className={styles.heroVisual}>
+          <HeroCarousel />
           <div className={styles.telemetry}>
             <span>THERMAL</span>
             <span>AI DETECTION</span>

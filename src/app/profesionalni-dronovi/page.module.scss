@@ -19,6 +19,25 @@
   color: var(--drone-text);
 }
 
+.brandCopy strong,
+.nav a,
+.headerCta,
+.primaryButton,
+.secondaryButton,
+.platformCta,
+.form button,
+.heroCopy h1,
+.kicker,
+.sectionHeader h2,
+.applicationCard h3,
+.introSection h2,
+.platformMain h3,
+.faqItem h3,
+.inquiryCopy h2 {
+  font-family: var(--font-drone-display), var(--font-geist-sans), Arial, sans-serif;
+  letter-spacing: 0.035em;
+}
+
 .header {
   position: fixed;
   top: 12px;
@@ -260,13 +279,13 @@
   position: relative;
   isolation: isolate;
   display: grid;
-  grid-template-columns: minmax(0, 0.86fr) minmax(420px, 1.14fr);
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
   min-height: calc(100vh - 75px);
   overflow: hidden;
 
   &::after {
     position: absolute;
-    z-index: -1;
+    z-index: 1;
     inset: 0;
     content: "";
     background:
@@ -282,16 +301,9 @@
   }
 }
 
-.heroBackground {
-  z-index: -2;
-  object-fit: cover;
-  object-position: center;
-  opacity: 0.78;
-}
-
 .heroCopy {
   position: relative;
-  z-index: 1;
+  z-index: 2;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -320,10 +332,10 @@
 
 .kicker {
   color: var(--drone-accent-blue);
-  font-family: var(--font-geist-mono), monospace;
+  font-family: var(--font-drone-display), var(--font-geist-sans), Arial, sans-serif;
   font-size: 12px;
   font-weight: 900;
-  letter-spacing: 0.1em;
+  letter-spacing: 0.14em;
   text-transform: uppercase;
 }
 
@@ -351,7 +363,81 @@
 
 .heroVisual {
   position: relative;
+  z-index: 2;
   min-height: 620px;
+  overflow: hidden;
+  border-left: 1px solid var(--drone-line);
+}
+
+.heroCarousel,
+.heroSlides {
+  position: absolute;
+  inset: 0;
+}
+
+.heroCarousel {
+  background:
+    linear-gradient(135deg, rgba(56, 189, 248, 0.16), transparent 38%),
+    rgba(7, 10, 15, 0.68);
+
+  &::before {
+    position: absolute;
+    z-index: 3;
+    inset: 0;
+    content: "";
+    background:
+      linear-gradient(90deg, rgba(7, 10, 15, 0.54), rgba(7, 10, 15, 0.08) 46%, rgba(7, 10, 15, 0.24)),
+      linear-gradient(180deg, rgba(255, 255, 255, 0.08), rgba(7, 10, 15, 0.22));
+    pointer-events: none;
+  }
+}
+
+.heroSlide,
+.heroSlideActive {
+  object-fit: cover;
+  object-position: center;
+  opacity: 0;
+  transform: translateX(-5%) scale(1.03);
+  transition:
+    opacity 720ms ease,
+    transform 920ms ease;
+}
+
+.heroSlideActive {
+  opacity: 0.88;
+  transform: translateX(0) scale(1);
+}
+
+.heroDots {
+  position: absolute;
+  top: 50%;
+  right: clamp(14px, 2.2vw, 28px);
+  z-index: 4;
+  display: grid;
+  gap: 12px;
+  transform: translateY(-50%);
+}
+
+.heroDot,
+.heroDotActive {
+  width: 10px;
+  height: 34px;
+  cursor: pointer;
+  border: 1px solid rgba(244, 247, 251, 0.42);
+  background: rgba(7, 10, 15, 0.46);
+  padding: 0;
+  transition:
+    border-color 160ms ease,
+    background 160ms ease,
+    box-shadow 160ms ease,
+    transform 160ms ease;
+}
+
+.heroDotActive {
+  border-color: var(--drone-accent-blue);
+  background: var(--drone-accent-blue);
+  box-shadow: 0 0 22px rgba(56, 189, 248, 0.42);
+  transform: scaleY(1.16);
 }
 
 .telemetry {
@@ -891,9 +977,29 @@
   }
 
   .heroVisual {
+    display: contents;
+  }
+
+  .heroCarousel {
+    position: relative;
+    order: -3;
     min-height: 520px;
-    order: -1;
     border-bottom: 1px solid var(--drone-line);
+    border-left: 0;
+  }
+
+  .heroCopy {
+    order: -2;
+  }
+
+  .telemetry {
+    order: -1;
+    position: relative;
+    right: auto;
+    bottom: auto;
+    z-index: 3;
+    width: 100%;
+    border-inline: 0;
   }
 
   .specPanel {
@@ -940,25 +1046,19 @@
   }
 
   .heroVisual {
-    min-height: 340px;
+    min-height: 0;
   }
 
   .platformMedia {
     min-height: 320px;
   }
 
-  .heroBackground {
-    object-position: 58% center;
-    opacity: 0.68;
+  .heroCarousel {
+    min-height: 340px;
   }
 
   .telemetry {
-    position: relative;
-    right: auto;
-    bottom: auto;
-    z-index: 3;
-    width: 100%;
-    border-inline: 0;
+    border-top: 1px solid var(--drone-line);
   }
 
   .trustGrid,
