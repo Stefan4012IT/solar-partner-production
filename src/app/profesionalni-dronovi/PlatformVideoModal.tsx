@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useMemo, useState } from "react";
+import { createPortal } from "react-dom";
 import styles from "./page.module.scss";
 
 type PlatformVideo = {
@@ -54,7 +55,8 @@ export function PlatformVideoModal({ platformTitle, videos }: PlatformVideoModal
         Pogledaj video
       </button>
 
-      {isOpen && (
+      {isOpen &&
+        createPortal(
         <div className={styles.videoModal} role="dialog" aria-modal="true" aria-label={`Video: ${platformTitle}`}>
           <button className={styles.videoBackdrop} type="button" aria-label="Zatvori video" onClick={() => setIsOpen(false)} />
           <div className={styles.videoDialog}>
@@ -93,8 +95,9 @@ export function PlatformVideoModal({ platformTitle, videos }: PlatformVideoModal
               </div>
             )}
           </div>
-        </div>
-      )}
+        </div>,
+          document.body,
+        )}
     </>
   );
 }

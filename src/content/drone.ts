@@ -91,6 +91,12 @@ export const dronePlatforms = [
       "IP55 zaštita",
     ],
     cta: "Saznajte više o Alpha platformi",
+    videos: [
+      {
+        title: "Autel Alpha platform overview",
+        url: "https://www.youtube.com/watch?v=N8ZFlswBuNk",
+      },
+    ],
     links: [{ label: "Autel Alpha", url: "https://www.autelrobotics.com/productdetail/autel-alpha/" }],
   },
   {

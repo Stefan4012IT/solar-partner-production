@@ -57,8 +57,9 @@ function ContactIcon({ name }: { name: string }) {
 export function FloatingContact() {
   const pathname = usePathname();
   const [isOpen, setIsOpen] = useState(false);
+  const normalizedPathname = pathname.replace(/\/$/, "");
 
-  if (pathname === "/intro") {
+  if (normalizedPathname === "/intro" || normalizedPathname.endsWith("/intro")) {
     return null;
   }
 

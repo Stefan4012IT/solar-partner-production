@@ -9,8 +9,10 @@ import {
   missionApplications,
 } from "@/content/drone";
 import { assetPath } from "@/lib/assetPath";
+import { DroneInquiryForm } from "./DroneInquiryForm";
 import { DroneHeader } from "./DroneHeader";
 import { HeroCarousel } from "./HeroCarousel";
+import { PlatformInquiryLink } from "./PlatformInquiryLink";
 import { PlatformSpecPanel } from "./PlatformSpecPanel";
 import { PlatformVideoModal } from "./PlatformVideoModal";
 import styles from "./page.module.scss";
@@ -47,6 +49,13 @@ const applicationCardImages = [
     alt: "Profesionalni dron u primeni za hitne intervencije i kontrolu terena",
   },
 ];
+
+const platformInquiryLabels: Record<string, string> = {
+  "evo-max": "EVO Max",
+  alpha: "Alpha",
+  dragonfish: "Dragonfish",
+  "evo-nest": "EVO Nest",
+};
 
 export const metadata: Metadata = {
   title: "Profesionalni dronovi za industriju i bezbednost | Autel Robotics Srbija",
@@ -165,9 +174,9 @@ export default function ProfessionalDronesPage() {
                     <span key={model}>{model}</span>
                   ))}
                 </div>
-                <a className={styles.platformCta} href="#upit">
+                <PlatformInquiryLink platform={platformInquiryLabels[platform.id] ?? platform.models[0]}>
                   {platform.cta}
-                </a>
+                </PlatformInquiryLink>
               </div>
               <PlatformSpecPanel useCases={platform.useCases} specs={platform.specs} links={platform.links} />
               <div className={`${styles.platformMedia} ${styles[`platformMedia${dronePlatforms.indexOf(platform) + 1}`]}`}>
@@ -256,54 +265,7 @@ export default function ProfessionalDronesPage() {
             bismo razjasnili detalje i predložili odgovarajuće Autel Robotics rešenje.
           </p>
         </div>
-        <form className={styles.form}>
-          <div className={styles.field}>
-            <label htmlFor="drone-name">Ime i prezime</label>
-            <input id="drone-name" name="name" type="text" />
-          </div>
-          <div className={styles.field}>
-            <label htmlFor="drone-company">Kompanija / institucija</label>
-            <input id="drone-company" name="company" type="text" />
-          </div>
-          <div className={styles.field}>
-            <label htmlFor="drone-phone">Telefon</label>
-            <input id="drone-phone" name="phone" type="tel" />
-          </div>
-          <div className={styles.field}>
-            <label htmlFor="drone-email">Email</label>
-            <input id="drone-email" name="email" type="email" />
-          </div>
-          <div className={styles.field}>
-            <label htmlFor="drone-application">Tip primene</label>
-            <select id="drone-application" name="application" defaultValue="">
-              <option value="" disabled>
-                Izaberite
-              </option>
-              <option>Industrijska inspekcija</option>
-              <option>Solarne elektrane</option>
-              <option>Elektro mreža</option>
-              <option>Javna bezbednost</option>
-              <option>Potraga i spasavanje</option>
-              <option>Vanredne situacije</option>
-              <option>Distribucija / partnerstvo</option>
-              <option>Drugo</option>
-            </select>
-          </div>
-          <div className={styles.field}>
-            <label htmlFor="drone-platform">Interesuje me</label>
-            <select id="drone-platform" name="platform" defaultValue="">
-              <option value="" disabled>
-                Izaberite
-              </option>
-              <option>EVO Max</option>
-              <option>Alpha</option>
-              <option>Dragonfish</option>
-              <option>EVO Nest</option>
-              <option>Nisam siguran, potrebna mi je konsultacija</option>
-            </select>
-          </div>
-          <button type="button">Pošaljite enterprise upit</button>
-        </form>
+        <DroneInquiryForm />
       </section>
 
       <footer className={styles.footer}>
