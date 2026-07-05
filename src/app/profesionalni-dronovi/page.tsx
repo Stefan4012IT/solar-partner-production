@@ -11,6 +11,7 @@ import {
 import { assetPath } from "@/lib/assetPath";
 import { DroneHeader } from "./DroneHeader";
 import { HeroCarousel } from "./HeroCarousel";
+import { PlatformVideoModal } from "./PlatformVideoModal";
 import styles from "./page.module.scss";
 
 const droneDisplay = Red_Hat_Display({
@@ -207,6 +208,9 @@ export default function ProfessionalDronesPage() {
                     <strong>{platform.models.join(" / ")}</strong>
                     <small>{platform.image ? "MISSION PLATFORM" : "IMAGE PLACEHOLDER"}</small>
                   </div>
+                  {platform.videos && (
+                    <PlatformVideoModal platformTitle={platform.label} videos={platform.videos} />
+                  )}
                 </div>
               </div>
             </article>
@@ -269,25 +273,25 @@ export default function ProfessionalDronesPage() {
           </p>
         </div>
         <form className={styles.form}>
-          <label>
-            Ime i prezime
-            <input name="name" type="text" />
-          </label>
-          <label>
-            Kompanija / institucija
-            <input name="company" type="text" />
-          </label>
-          <label>
-            Telefon
-            <input name="phone" type="tel" />
-          </label>
-          <label>
-            Email
-            <input name="email" type="email" />
-          </label>
-          <label>
-            Tip primene
-            <select name="application" defaultValue="">
+          <div className={styles.field}>
+            <label htmlFor="drone-name">Ime i prezime</label>
+            <input id="drone-name" name="name" type="text" />
+          </div>
+          <div className={styles.field}>
+            <label htmlFor="drone-company">Kompanija / institucija</label>
+            <input id="drone-company" name="company" type="text" />
+          </div>
+          <div className={styles.field}>
+            <label htmlFor="drone-phone">Telefon</label>
+            <input id="drone-phone" name="phone" type="tel" />
+          </div>
+          <div className={styles.field}>
+            <label htmlFor="drone-email">Email</label>
+            <input id="drone-email" name="email" type="email" />
+          </div>
+          <div className={styles.field}>
+            <label htmlFor="drone-application">Tip primene</label>
+            <select id="drone-application" name="application" defaultValue="">
               <option value="" disabled>
                 Izaberite
               </option>
@@ -298,11 +302,12 @@ export default function ProfessionalDronesPage() {
               <option>Potraga i spasavanje</option>
               <option>Vanredne situacije</option>
               <option>Distribucija / partnerstvo</option>
+              <option>Drugo</option>
             </select>
-          </label>
-          <label>
-            Interesuje me
-            <select name="platform" defaultValue="">
+          </div>
+          <div className={styles.field}>
+            <label htmlFor="drone-platform">Interesuje me</label>
+            <select id="drone-platform" name="platform" defaultValue="">
               <option value="" disabled>
                 Izaberite
               </option>
@@ -312,14 +317,26 @@ export default function ProfessionalDronesPage() {
               <option>EVO Nest</option>
               <option>Nisam siguran, potrebna mi je konsultacija</option>
             </select>
-          </label>
-          <label className={styles.fullField}>
-            Kratak opis potrebe
-            <textarea name="message" rows={5} />
-          </label>
+          </div>
           <button type="button">Pošaljite enterprise upit</button>
         </form>
       </section>
+
+      <footer className={styles.footer}>
+        <div>
+          <strong>Solar Partner</strong>
+          <p>Enterprise dron rešenja za industriju, energetiku, bezbednost i vanredne situacije.</p>
+        </div>
+        <nav aria-label="Footer navigacija">
+          <a href="#primena">Primena</a>
+          <a href="#platforme">Platforme</a>
+          <a href="#poredjenje">Poređenje</a>
+          <a href="#upit">Upit</a>
+        </nav>
+        <a className={styles.footerCta} href="#upit">
+          Zatražite konsultaciju
+        </a>
+      </footer>
     </main>
   );
 }

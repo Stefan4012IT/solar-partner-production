@@ -40,7 +40,7 @@ export const dronePlatforms = [
   {
     id: "evo-max",
     label: "EVO MAX PLATFORM",
-    image: "/drone/platform_001.png" as string | null,
+    image: "/drone/platformStack/platformStack_1.png" as string | null,
     imageAlt: "Autel EVO Max enterprise dron",
     title: "Kompaktna enterprise platforma za autonomne misije",
     text: "EVO Max serija donosi naprednu autonomiju, real-time analizu okruženja i sposobnost kreiranja 3D putanja leta. Platforma je namenjena profesionalnim zadacima gde su mobilnost, termalna detekcija i pouzdanost ključni.",
@@ -56,6 +56,16 @@ export const dronePlatforms = [
       "Termalna kamera 640 x 512",
     ],
     cta: "Zatražite specifikacije EVO Max platforme",
+    videos: [
+      {
+        title: "EVO Max 4T platform overview",
+        url: "https://www.youtube.com/watch?v=1NeXMNkMGxc",
+      },
+      {
+        title: "EVO Max mission capabilities",
+        url: "https://www.youtube.com/watch?v=Cv5q5dgtz0U",
+      },
+    ],
     links: [
       { label: "EVO Max 4T", url: "https://www.autelrobotics.com/productdetail/evo-max-4t/" },
       { label: "EVO Max 4N", url: "https://www.autelrobotics.com/productdetail/evo-max-4n/" },
@@ -64,7 +74,7 @@ export const dronePlatforms = [
   {
     id: "alpha",
     label: "AUTEL ALPHA",
-    image: "/drone/platform_002.png" as string | null,
+    image: "/drone/platformStack/platformStack_2.png" as string | null,
     imageAlt: "Autel Alpha industrijski dron",
     title: "Industrijski dron za najzahtevnije operacije",
     text: "Autel Alpha je inteligentna industrijska platforma za višenamensku upotrebu. Sa autonomnim letom, IP55 zaštitom, otpornošću na smetnje i preciznim RTK sistemom, projektovana je za rad u kompleksnim uslovima.",
@@ -86,7 +96,7 @@ export const dronePlatforms = [
   {
     id: "dragonfish",
     label: "DRAGONFISH VTOL",
-    image: "/drone/platform_003.png" as string | null,
+    image: "/drone/platformStack/platformStack_3.png" as string | null,
     imageAlt: "Autel Dragonfish eVTOL dron",
     title: "eVTOL platforma za dugotrajne nadzorne operacije",
     text: "Dragonfish je eVTOL tiltrotor platforma sa vertikalnim poletanjem i sletanjem. Namenjena je operacijama koje zahtevaju veći domet, duže vreme leta i pregled velikih površina bez piste ili dodatne opreme za lansiranje.",
@@ -102,6 +112,12 @@ export const dronePlatforms = [
       "Brza zamena korisnog tereta",
     ],
     cta: "Zatražite konsultaciju za Dragonfish",
+    videos: [
+      {
+        title: "Dragonfish VTOL platform overview",
+        url: "https://www.youtube.com/watch?v=hjA3YRrzRtA",
+      },
+    ],
     links: [
       { label: "Dragonfish Pro", url: "https://www.autelrobotics.com/productdetail/dragonfish-pro/" },
     ],
@@ -109,7 +125,7 @@ export const dronePlatforms = [
   {
     id: "evo-nest",
     label: "AUTEL EVO NEST",
-    image: "/drone/platform_004.png" as string | null,
+    image: "/drone/platformStack/platformStack_4.png" as string | null,
     imageAlt: "Autel EVO Nest bazna stanica",
     title: "Bazna stanica za automatske dron operacije",
     text: "EVO Nest je prenosiva bazna stanica za automatsko poletanje, sletanje, punjenje i planiranje misija za EVO seriju dronova. U kombinaciji sa command system platformom omogućava centralizovano upravljanje i nadzor operacija.",
@@ -125,6 +141,12 @@ export const dronePlatforms = [
       "Integracija sa command system platformom",
     ],
     cta: "Pogledajte mogućnosti EVO Nest sistema",
+    videos: [
+      {
+        title: "Autel EVO Nest platform overview",
+        url: "https://www.youtube.com/watch?v=Qyedf26UWPE",
+      },
+    ],
     links: [{ label: "EVO Nest", url: "https://www.autelrobotics.com/productdetail/evo-nest/" }],
   },
 ];
