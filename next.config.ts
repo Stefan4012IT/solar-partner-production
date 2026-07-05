@@ -1,7 +1,7 @@
 import type { NextConfig } from "next";
 
 const isGithubPages = process.env.GITHUB_PAGES === "true";
-const basePath = isGithubPages ? "/solar-partner" : "";
+const basePath = isGithubPages ? "/solar-partner-production" : "";
 
 const nextConfig: NextConfig = {
   output: "export",
