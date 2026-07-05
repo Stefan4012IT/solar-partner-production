@@ -11,6 +11,7 @@ import {
 import { assetPath } from "@/lib/assetPath";
 import { DroneHeader } from "./DroneHeader";
 import { HeroCarousel } from "./HeroCarousel";
+import { PlatformSpecPanel } from "./PlatformSpecPanel";
 import { PlatformVideoModal } from "./PlatformVideoModal";
 import styles from "./page.module.scss";
 
@@ -168,25 +169,8 @@ export default function ProfessionalDronesPage() {
                   {platform.cta}
                 </a>
               </div>
-              <div className={styles.specPanel}>
-                <div>
-                  <span>USE CASES</span>
-                  <p>{platform.useCases.join(" / ")}</p>
-                </div>
-                <ul>
-                  {platform.specs.map((spec) => (
-                    <li key={spec}>{spec}</li>
-                  ))}
-                </ul>
-                <div className={styles.externalLinks}>
-                  {platform.links.map((link) => (
-                    <a href={link.url} key={link.url} target="_blank" rel="noreferrer">
-                      {link.label}
-                    </a>
-                  ))}
-                </div>
-              </div>
-              <div className={styles.platformMedia}>
+              <PlatformSpecPanel useCases={platform.useCases} specs={platform.specs} links={platform.links} />
+              <div className={`${styles.platformMedia} ${styles[`platformMedia${dronePlatforms.indexOf(platform) + 1}`]}`}>
                 {platform.image && (
                   <Image
                     className={styles.platformImage}

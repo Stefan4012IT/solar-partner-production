@@ -624,6 +624,12 @@
   }
 }
 
+.platformMedia2 {
+  .platformImage {
+    object-position: 50% center;
+  }
+}
+
 .imagePlaceholder {
   position: absolute;
   z-index: 3;
@@ -965,19 +971,75 @@
   gap: 22px;
   border-left: 1px solid var(--drone-line);
   background: rgba(24, 34, 49, 0.55);
+}
 
-  div:first-child span {
+.specSummary {
+  display: flex;
+  width: 100%;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 18px;
+  border: 0;
+  background: transparent;
+  color: inherit;
+  cursor: pointer;
+  padding: 0;
+  text-align: left;
+
+  span {
+    display: grid;
+    gap: 8px;
+  }
+
+  small {
     color: var(--drone-accent);
     font-family: var(--font-geist-mono), monospace;
     font-size: 11px;
     font-weight: 900;
+    letter-spacing: 0.08em;
   }
 
-  div:first-child p {
-    margin-top: 8px;
+  strong {
     color: var(--drone-muted);
+    font-size: 16px;
+    font-weight: 500;
     line-height: 1.5;
   }
+
+  i {
+    position: relative;
+    display: none;
+    width: 34px;
+    height: 34px;
+    flex: 0 0 auto;
+    border: 1px solid var(--drone-line);
+
+    &::before,
+    &::after {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 12px;
+      height: 2px;
+      content: "";
+      background: var(--drone-accent-blue);
+      transform: translate(-50%, -50%);
+      transition: transform 160ms ease;
+    }
+
+    &::after {
+      transform: translate(-50%, -50%) rotate(90deg);
+    }
+  }
+}
+
+.specPanel[data-open="true"] .specSummary i::after {
+  transform: translate(-50%, -50%) rotate(0deg);
+}
+
+.specContent {
+  display: grid;
+  gap: 22px;
 
   ul {
     display: grid;
@@ -1273,10 +1335,41 @@
   }
 
   .platformMedia {
+    order: -3;
     min-height: 380px;
     border-left: 0;
     border-top: 1px solid var(--drone-line);
     border-bottom: 1px solid var(--drone-line);
+  }
+
+  .platformMain {
+    order: -2;
+  }
+
+  .specPanel {
+    order: -1;
+    gap: 0;
+    border-left: 0;
+    border-top: 1px solid var(--drone-line);
+    padding: 0;
+  }
+
+  .specSummary {
+    align-items: center;
+    padding: 20px;
+
+    i {
+      display: block;
+    }
+  }
+
+  .specContent {
+    display: none;
+    padding: 0 20px 22px;
+  }
+
+  .specPanel[data-open="true"] .specContent {
+    display: grid;
   }
 
   .heroVisual {
@@ -1354,6 +1447,12 @@
 
   .platformMedia {
     min-height: 320px;
+  }
+
+  .platformMedia2 {
+    .platformImage {
+      object-position: 50% 33%;
+    }
   }
 
   .videoButton {
