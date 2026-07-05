@@ -26,7 +26,7 @@ const scenes = [
     label: "Profesionalni dronovi",
     eyebrow: "02 / UAV",
     title: "Profesionalni dronovi",
-    text: "Enterprise platforme za energetiku, infrastrukturu, bezbednost i sve zadatke gdje je bitna pouzdanost podataka.",
+    text: "Enterprise platforme za energetiku, infrastrukturu, bezbednost i sve zadatke gde je bitna pouzdanost podataka.",
     href: "/dronovi",
     cta: "Pogledajte dronove",
     poster: "/drone/enterprise-uav-hero.png",
