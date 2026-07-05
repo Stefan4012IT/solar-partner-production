@@ -60,6 +60,8 @@ export function IntroExperience() {
   const pageRef = useRef<HTMLElement>(null);
   const snapTimer = useRef<number>(0);
   const touchStartY = useRef(0);
+  const touchDeltaY = useRef(0);
+  const lastLightNavigationTime = useRef(0);
   const [virtualPosition, setVirtualPosition] = useState(0);
   const [activeIndex, setActiveIndex] = useState(0);
   const [transitionProgress, setTransitionProgress] = useState(0);
@@ -87,7 +89,30 @@ export function IntroExperience() {
     [updatePosition],
   );
 
+  const moveToAdjacentScene = useCallback(
+    (direction: number) => {
+      const now = window.performance.now();
+
+      if (now - lastLightNavigationTime.current < 520) {
+        return;
+      }
+
+      lastLightNavigationTime.current = now;
+      setVirtualPosition((current) => {
+        const next = Math.round(current) + direction;
+
+        updatePosition(next);
+
+        return next;
+      });
+    },
+    [updatePosition],
+  );
+
   useEffect(() => {
+    const shouldUseLightNavigation = () =>
+      window.matchMedia("(max-width: 980px), (prefers-reduced-motion: reduce)").matches;
+
     const moveBy = (delta: number) => {
       setVirtualPosition((current) => {
         const next = current + delta;
@@ -104,15 +129,34 @@ export function IntroExperience() {
     };
 
     const onWheel = (event: WheelEvent) => {
+      if (shouldUseLightNavigation()) {
+        if (Math.abs(event.deltaY) > 18) {
+          event.preventDefault();
+          moveToAdjacentScene(event.deltaY > 0 ? 1 : -1);
+        }
+
+        return;
+      }
+
       event.preventDefault();
       moveBy(event.deltaY / 760);
     };
 
     const onTouchStart = (event: TouchEvent) => {
       touchStartY.current = event.touches[0]?.clientY ?? 0;
+      touchDeltaY.current = 0;
     };
 
     const onTouchMove = (event: TouchEvent) => {
+      if (shouldUseLightNavigation()) {
+        const nextY = event.touches[0]?.clientY ?? touchStartY.current;
+
+        touchDeltaY.current = touchStartY.current - nextY;
+        event.preventDefault();
+
+        return;
+      }
+
       const nextY = event.touches[0]?.clientY ?? touchStartY.current;
       const delta = touchStartY.current - nextY;
 
@@ -121,17 +165,31 @@ export function IntroExperience() {
       moveBy(delta / 440);
     };
 
+    const onTouchEnd = () => {
+      if (!shouldUseLightNavigation()) {
+        return;
+      }
+
+      if (Math.abs(touchDeltaY.current) > 46) {
+        moveToAdjacentScene(touchDeltaY.current > 0 ? 1 : -1);
+      }
+
+      touchDeltaY.current = 0;
+    };
+
     window.addEventListener("wheel", onWheel, { passive: false });
     window.addEventListener("touchstart", onTouchStart, { passive: true });
     window.addEventListener("touchmove", onTouchMove, { passive: false });
+    window.addEventListener("touchend", onTouchEnd);
 
     return () => {
       window.clearTimeout(snapTimer.current);
       window.removeEventListener("wheel", onWheel);
       window.removeEventListener("touchstart", onTouchStart);
       window.removeEventListener("touchmove", onTouchMove);
+      window.removeEventListener("touchend", onTouchEnd);
     };
-  }, [scheduleSnap]);
+  }, [moveToAdjacentScene, scheduleSnap]);
 
   useEffect(() => {
     if (!isMenuOpen) {
@@ -232,7 +290,7 @@ export function IntroExperience() {
               goToScene(index);
             }}
           >
-            <span>{String(index + 1).padStart(2, "0")}</span>
+            <span aria-hidden="true" />
             <strong>{scene.label}</strong>
           </a>
         ))}
@@ -246,12 +304,12 @@ export function IntroExperience() {
         {scenes.map((scene, index) =>
           scene.disabled ? (
             <a key={scene.label} href={scene.href} onClick={(event) => event.preventDefault()}>
-              <span>{String(index + 1).padStart(2, "0")}</span>
+              <span aria-hidden="true" />
               {scene.label}
             </a>
           ) : (
             <Link key={scene.label} href={scene.href} onClick={closeMenu}>
-              <span>{String(index + 1).padStart(2, "0")}</span>
+              <span aria-hidden="true" />
               {scene.label}
             </Link>
           ),

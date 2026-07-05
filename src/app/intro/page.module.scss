@@ -164,8 +164,12 @@
 }
 
 .mobileMenu span {
+  display: block;
+  width: 8px;
+  height: 8px;
+  border-radius: 999px;
+  background: #f59e0b;
   color: #f59e0b;
-  font-size: 0.72rem;
 }
 
 .quickNav {
@@ -181,8 +185,11 @@
 
 .quickNav a {
   display: grid;
+  grid-template-columns: auto 1fr;
   min-height: 76px;
-  align-content: space-between;
+  align-items: center;
+  align-content: center;
+  gap: 9px;
   border: 1px solid rgba(255, 255, 255, 0.14);
   border-radius: 18px;
   background: rgba(7, 11, 17, 0.58);
@@ -205,9 +212,20 @@
 }
 
 .quickNav span {
-  color: #f59e0b;
-  font-size: 0.72rem;
-  font-weight: 900;
+  display: block;
+  width: 8px;
+  height: 8px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.36);
+  box-shadow: 0 0 0 0 rgba(245, 158, 11, 0);
+  transition:
+    background 180ms ease,
+    box-shadow 180ms ease;
+}
+
+.quickNav .activeQuickNavItem span {
+  background: #f59e0b;
+  box-shadow: 0 0 0 6px rgba(245, 158, 11, 0.14);
 }
 
 .quickNav strong {
@@ -479,6 +497,7 @@
     width: calc(100% - 28px);
     grid-template-columns: 1fr auto;
     border-radius: 28px;
+    backdrop-filter: none;
   }
 
   .headerNav {
@@ -488,6 +507,7 @@
   .stage {
     align-items: center;
     padding: 0;
+    perspective: none;
   }
 
   .stage::before {
@@ -499,14 +519,31 @@
   .reel {
     width: 100vw;
     height: 100vh;
+    transform-style: flat;
   }
 
   .mediaPanel {
-    inset: calc(var(--panel-abs-distance) * 9vh) calc(var(--panel-abs-distance) * 7vw);
-    transform:
-      translate3d(0, calc(var(--panel-distance) * 72vh), calc(var(--panel-abs-distance) * -390px))
-      rotateX(calc(var(--panel-distance) * -16deg))
-      scale(calc(1 - (var(--panel-abs-distance) * 0.24)));
+    inset: 0;
+    border: 0;
+    box-shadow: none;
+    opacity: 0;
+    transform: none;
+    transition: opacity 220ms ease;
+  }
+
+  .mediaPanel.activePanel {
+    opacity: 1;
+  }
+
+  .videoSurface video {
+    transform: none;
+    filter: none;
+  }
+
+  .motionLayer,
+  .scanline {
+    display: none;
+    animation: none;
   }
 
   .panelCopy {
@@ -531,16 +568,28 @@
     bottom: 14px;
     left: 14px;
     width: auto;
-    gap: 6px;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 7px;
   }
 
   .quickNav a {
-    min-height: 58px;
-    border-radius: 14px;
-    padding: 8px;
+    min-height: 46px;
+    border-radius: 16px;
+    background: rgba(7, 11, 17, 0.82);
+    backdrop-filter: none;
+    padding: 8px 10px;
   }
 
   .quickNav strong {
+    display: block;
+    overflow: hidden;
+    font-size: 0.72rem;
+    line-height: 1.1;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .panelMeta {
     display: none;
   }
 }

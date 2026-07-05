@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
+import { FloatingContact } from "@/components/FloatingContact";
 import "./globals.scss";
 
 const geistSans = Geist({
@@ -25,7 +26,10 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="sr-Latn" className={`${geistSans.variable} ${geistMono.variable}`}>
-      <body>{children}</body>
+      <body>
+        {children}
+        <FloatingContact />
+      </body>
     </html>
   );
 }

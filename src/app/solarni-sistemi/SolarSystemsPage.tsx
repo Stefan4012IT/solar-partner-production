@@ -217,16 +217,55 @@ export function SolarSystemsPage() {
       <section id="kontakt" className={styles.ctaSection}>
         <div>
           <p className={styles.eyebrow}>Prva procena</p>
-          <h2>Pošaljite podatke i saznajte kakvo solarno rešenje ima smisla za vaš objekat</h2>
+          <h2>Ostavite kontakt, a zatim zajedno prolazimo kroz najbolje opcije za vaš objekat</h2>
           <p>
-            Na osnovu potrošnje, lokacije i tipa objekta pripremamo okvirnu procenu sistema i
-            predlog sledećih koraka.
+            U prvom razgovoru prolazimo kroz vašu trenutnu potrošnju, račune za struju, tip
+            objekta i uslove na lokaciji. Na osnovu toga možemo realno proceniti da li solarni
+            sistem ima smisla, koja snaga bi bila odgovarajuća i koji su sledeći koraci.
           </p>
         </div>
-        <a className={styles.primaryButton} href="mailto:kontakt@solarpartner.rs">
-          Pošaljite zahtev
-        </a>
+        <form className={styles.contactForm}>
+          <div className={styles.formField}>
+            <label htmlFor="solar-name">Ime i prezime</label>
+            <input id="solar-name" name="name" type="text" autoComplete="name" />
+          </div>
+          <div className={styles.formField}>
+            <label htmlFor="solar-email">Email</label>
+            <input id="solar-email" name="email" type="email" autoComplete="email" />
+          </div>
+          <div className={styles.formField}>
+            <label htmlFor="solar-phone">Telefon</label>
+            <input id="solar-phone" name="phone" type="tel" autoComplete="tel" />
+          </div>
+          <div className={styles.honeypot} aria-hidden="true">
+            <label htmlFor="solar-website">Website</label>
+            <input
+              id="solar-website"
+              name="website"
+              type="text"
+              tabIndex={-1}
+              autoComplete="off"
+            />
+          </div>
+          <button className={styles.primaryButton} type="button">
+            Pošaljite zahtev
+          </button>
+        </form>
       </section>
+
+      <footer className={styles.footer}>
+        <div>
+          <strong>Solar Partner</strong>
+          <p>Solarna rešenja za kuće, firme i objekte kojima je potrebna jasna tehnička procena.</p>
+        </div>
+        <nav aria-label="Footer navigacija">
+          <a href="#resenja">Rešenja</a>
+          <a href="#proces">Proces</a>
+          <a href="#projekti">Projekti</a>
+          <a href="#faq">FAQ</a>
+          <a href="#kontakt">Kontakt</a>
+        </nav>
+      </footer>
     </main>
   );
 }
