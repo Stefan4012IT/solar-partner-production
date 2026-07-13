@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Image from "next/image";
 import { Red_Hat_Display } from "next/font/google";
+import type { CSSProperties } from "react";
 import { assetPath } from "@/lib/assetPath";
 import { SecurityHeader } from "./SecurityHeader";
 import styles from "./page.module.scss";
@@ -15,26 +16,38 @@ const protectionSystems = [
   {
     title: "Video nadzor",
     text: "Kamere više nisu samo izvor slike. Savremeni sistemi mogu da rade analitiku događaja, klasifikaciju alarma, zaštitu perimetra, detekciju lica, brojanje ljudi i prepoznavanje situacija koje zahtevaju reakciju.",
+    image: "/security/systemCardMedia/systemCardMedia_001.png",
+    imageAlt: "Sistem video nadzora za tehničku zaštitu objekta",
   },
   {
     title: "Alarmni sistemi",
     text: "Alarm je prva linija odbrane objekta. Pravilno projektovan sistem omogućava brzu dojavu, potvrdu alarma preko video nadzora, scenarije automatizacije i daljinsko upravljanje putem mobilnog telefona.",
+    image: "/security/systemCardMedia/systemCardMedia_002.png",
+    imageAlt: "Alarmni sistem za zaštitu objekta",
   },
   {
     title: "Kontrola pristupa",
     text: "Rešenja za objekte u kojima je potrebno ograničiti i evidentirati kretanje. Sistem beleži ko je otvorio vrata, kada se pristup dogodio i upozorava na nevalidne kartice, pogrešne šifre ili nezatvorena vrata.",
+    image: "/security/systemCardMedia/systemCardMedia_003.png",
+    imageAlt: "Kontrola pristupa i evidencija ulaska u objekat",
   },
   {
     title: "Video interfoni",
     text: "Moderni interfonski sistemi omogućavaju širokougaone kamere, povezivanje sa liftovima, pametnim kućama, kamerama i udaljeno pozivanje kroz mobilnu aplikaciju.",
+    image: "/security/systemCardMedia/systemCardMedia_004.png",
+    imageAlt: "Video interfon za kontrolu ulaza u objekat",
   },
   {
     title: "Protivpožarna zaštita",
     text: "Sistemi namenjeni ranom otkrivanju rizika, pravovremenoj dojavi i integraciji sa ostalim tehničkim sistemima objekta kada je to potrebno.",
+    image: "/security/systemCardMedia/systemCardMedia_005.png",
+    imageAlt: "Protivpožarni sistem i detekcija rizika",
   },
   {
     title: "Rampe, barijere i parking sistemi",
     text: "Kontrola ulaza i izlaza vozila ili pešaka kroz rampe, pešačke barijere, evidenciju prolaza i integraciju sa kontrolom pristupa.",
+    image: "/security/systemCardMedia/systemCardMedia_006.png",
+    imageAlt: "Parking sistem sa rampama i kontrolom prolaza",
   },
 ];
 
@@ -105,7 +118,7 @@ export default function SecuritySystemsPage() {
         </div>
         <div className={styles.heroVisual}>
           <Image
-            src={assetPath("/security/security_intro.png")}
+            src={assetPath("/security/security_hero_001.png")}
             alt="Sigurnosni sistem i tehnička zaštita objekta"
             fill
             priority
@@ -123,6 +136,14 @@ export default function SecuritySystemsPage() {
           {protectionSystems.map((system, index) => (
             <article className={styles.systemCard} key={system.title}>
               <div className={styles.systemCardMedia} aria-hidden="true">
+                {system.image && (
+                  <Image
+                    src={assetPath(system.image)}
+                    alt={system.imageAlt ?? ""}
+                    fill
+                    sizes="(max-width: 700px) 100vw, 33vw"
+                  />
+                )}
                 <span>{String(index + 1).padStart(2, "0")}</span>
               </div>
               <span />
@@ -133,20 +154,28 @@ export default function SecuritySystemsPage() {
         </div>
       </section>
 
-      <section className={styles.analyticsSection}>
+      <section
+        className={styles.analyticsSection}
+        style={
+          {
+            "--analytics-bg": `url(${assetPath("/security/analyticsSection.png")})`,
+          } as CSSProperties
+        }
+      >
         <div>
           <p className={styles.eyebrow}>Video analitika</p>
           <h2>Video nadzor sa korisnom analitikom</h2>
         </div>
         <div className={styles.analyticsText}>
           <p>
-            Napredne kamere mogu da pomognu kod zaštite perimetra, klasifikacije alarma,
-            detekcije ljudi i vozila, prelaska zamišljene linije, ulaska u definisanu zonu,
-            brojanja ljudi, detekcije temperature i drugih scenarija.
+            Analitika ima smisla tek kada je povezana sa načinom rada objekta. Nije svaki pokret
+            alarm, niti svaka kamera treba da prati iste događaje. Zone, pravila i obaveštenja
+            definišu se prema tome šta korisnik zaista mora da zna u trenutku kada se događaj desi.
           </p>
           <p>
-            Cilj je da sistem smanji broj lažnih alarma i da korisniku pruži informaciju koja ima
-            operativnu vrednost. Zato se svaka analitika podešava prema realnim uslovima na terenu.
+            Cilj je da sistem smanji broj lažnih alarma, jasnije razdvoji važne događaje od
+            pozadinske aktivnosti i pruži informaciju koja ima operativnu vrednost. Zato se svaka
+            analitika podešava prema realnim uslovima na terenu.
           </p>
         </div>
       </section>

@@ -359,6 +359,7 @@
 
   img {
     object-fit: cover;
+    object-position: right center;
   }
 
   &::after {
@@ -438,9 +439,15 @@
   background-size: 24px 24px, 24px 24px, auto, auto;
   margin: -8px -8px 0;
 
+  img {
+    object-fit: cover;
+    object-position: center;
+  }
+
   &::before,
   &::after {
     position: absolute;
+    z-index: 2;
     width: 28px;
     height: 28px;
     content: "";
@@ -462,6 +469,7 @@
 
   span {
     position: absolute;
+    z-index: 2;
     right: 16px;
     top: 14px;
     color: rgba(255, 255, 255, 0.74);
@@ -483,7 +491,16 @@
 }
 
 .analyticsSection {
-  background: #101722;
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  background:
+    linear-gradient(90deg, rgba(16, 23, 34, 0.96), rgba(16, 23, 34, 0.82) 50%, rgba(16, 23, 34, 0.9)),
+    linear-gradient(rgba(56, 189, 248, 0.06) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(56, 189, 248, 0.06) 1px, transparent 1px),
+    var(--analytics-bg, none) right center / cover no-repeat,
+    #101722;
+  background-size: auto, 48px 48px, 48px 48px, cover, auto;
   color: #ffffff;
 
   h2 {
