@@ -2,9 +2,26 @@
 
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
+import { getLocalizedPath, type Locale } from "@/lib/i18n";
 import styles from "./page.module.scss";
 
-export function DroneHeader() {
+type DroneHeaderContent = {
+  nav: string[];
+  cta: string;
+};
+
+const defaultContent: DroneHeaderContent = {
+  nav: ["Primena", "Platforme", "Poređenje", "Upit"],
+  cta: "Zatražite konsultaciju",
+};
+
+export function DroneHeader({
+  locale = "sr",
+  content = defaultContent,
+}: {
+  locale?: Locale;
+  content?: DroneHeaderContent;
+}) {
   const [isVisible, setIsVisible] = useState(true);
   const lastScrollY = useRef(0);
 
@@ -29,7 +46,7 @@ export function DroneHeader() {
         isVisible ? styles.headerVisible : styles.headerHidden
       }`}
     >
-      <Link className={styles.brand} href="/" aria-label="Solar Partner početna">
+      <Link className={styles.brand} href={getLocalizedPath("intro", locale)} aria-label="Solar Partner početna">
         <span className={styles.brandMark}>SP</span>
         <span className={styles.brandCopy}>
           <strong>Solar Partner</strong>
@@ -40,20 +57,28 @@ export function DroneHeader() {
       </Link>
       <nav className={styles.nav} aria-label="Navigacija stranice profesionalnih dronova">
         <a href="#primena">
-          <span>01</span> Primena
+          <span>01</span> {content.nav[0]}
         </a>
         <a href="#platforme">
-          <span>02</span> Platforme
+          <span>02</span> {content.nav[1]}
         </a>
         <a href="#poredjenje">
-          <span>03</span> Poređenje
+          <span>03</span> {content.nav[2]}
         </a>
         <a href="#upit">
-          <span>04</span> Upit
+          <span>04</span> {content.nav[3]}
         </a>
       </nav>
+      <div className={styles.languageSwitch} aria-label="Language switcher">
+        <Link className={locale === "sr" ? styles.activeLanguage : ""} href={getLocalizedPath("drones", "sr")}>
+          SR
+        </Link>
+        <Link className={locale === "en" ? styles.activeLanguage : ""} href={getLocalizedPath("drones", "en")}>
+          EN
+        </Link>
+      </div>
       <a className={styles.headerCta} href="#upit">
-        <span>Zatražite konsultaciju</span>
+        <span>{content.cta}</span>
         <i aria-hidden="true">↗</i>
       </a>
     </header>

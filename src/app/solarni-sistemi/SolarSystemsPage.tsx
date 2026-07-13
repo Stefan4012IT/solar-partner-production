@@ -1,8 +1,9 @@
 import Image from "next/image";
 import { Red_Hat_Display } from "next/font/google";
 import { SiteHeader } from "@/components/SiteHeader";
-import { clientTypes, equipment, faqs, processSteps, projects, services } from "@/content/solar";
+import { getSolarContent } from "@/content/solar";
 import { assetPath } from "@/lib/assetPath";
+import type { Locale } from "@/lib/i18n";
 import styles from "./page.module.scss";
 
 const redHatDisplay = Red_Hat_Display({
@@ -10,36 +11,36 @@ const redHatDisplay = Red_Hat_Display({
   weight: ["400", "500", "600", "700", "800", "900"],
 });
 
-export function SolarSystemsPage() {
+export function SolarSystemsPage({ locale = "sr" }: { locale?: Locale } = {}) {
+  const content = getSolarContent(locale);
+
   return (
     <main className={`${redHatDisplay.className} ${styles.page}`}>
-      <SiteHeader />
+      <SiteHeader locale={locale} />
 
       <section id="top" className={styles.hero}>
         <div className={styles.heroText}>
-          <p className={styles.eyebrow}>Solarna energija bez nepoznatih</p>
-          <h1>Solarne elektrane za kuće, firme i industrijske objekte</h1>
-          <p className={styles.lead}>
-            Projektovanje, oprema, ugradnja i podrška pri priključenju, sve na jednom mestu.
-          </p>
+          <p className={styles.eyebrow}>{content.hero.eyebrow}</p>
+          <h1>{content.hero.title}</h1>
+          <p className={styles.lead}>{content.hero.lead}</p>
           <div className={styles.heroActions}>
             <a className={styles.primaryButton} href="#kontakt">
-              Zatražite procenu
+              {content.hero.primaryCta}
             </a>
             <a className={styles.secondaryButton} href="#proces">
-              Pogledajte proces
+              {content.hero.secondaryCta}
             </a>
           </div>
           <div className={styles.trustPoints} aria-label="Ključne prednosti">
-            <span>Procena potrošnje i kapaciteta</span>
-            <span>Oprema proverenih proizvođača</span>
-            <span>Stručna montaža i podrška</span>
+            {content.hero.trustPoints.map((point) => (
+              <span key={point}>{point}</span>
+            ))}
           </div>
         </div>
         <div className={styles.heroVisual}>
           <Image
             src={assetPath("/solar-partne-hero--000.png")}
-            alt="Solarni paneli montirani na krovu objekta"
+            alt={content.hero.imageAlt}
             fill
             priority
             sizes="(max-width: 900px) 100vw, 50vw"
@@ -49,11 +50,11 @@ export function SolarSystemsPage() {
 
       <section id="resenja" className={styles.section}>
         <div className={styles.sectionHeading}>
-          <p className={styles.eyebrow}>Rešenja prema objektu</p>
-          <h2>Kompletna solarna rešenja za različite tipove korisnika</h2>
+          <p className={styles.eyebrow}>{content.sections.clientTypes.eyebrow}</p>
+          <h2>{content.sections.clientTypes.title}</h2>
         </div>
         <div className={styles.cardGrid}>
-          {clientTypes.map((item) => (
+          {content.clientTypes.map((item) => (
             <article className={styles.card} key={item.title}>
               <div className={styles.cardImage}>
                 <Image
@@ -76,16 +77,13 @@ export function SolarSystemsPage() {
       <div className={styles.blueBand}>
         <section id="obim-rada" className={`${styles.section} ${styles.darkSection}`}>
           <div className={styles.split}>
-            <div>
-              <p className={styles.eyebrow}>Obim rada</p>
-              <h2>Od prve procene do puštanja sistema u rad</h2>
-              <p>
-                Svaki sistem planiramo prema potrošnji, objektu i ciljevima korisnika. Cilj nije
-                prodaja gotovog paketa, već rešenje koje ima tehničkog i ekonomskog smisla.
-              </p>
+          <div>
+              <p className={styles.eyebrow}>{content.sections.scope.eyebrow}</p>
+              <h2>{content.sections.scope.title}</h2>
+              <p>{content.sections.scope.text}</p>
             </div>
             <div className={styles.serviceGrid}>
-              {services.map((service) => (
+              {content.services.map((service) => (
                 <span key={service}>{service}</span>
               ))}
             </div>
@@ -94,11 +92,11 @@ export function SolarSystemsPage() {
 
         <section id="proces" className={`${styles.section} ${styles.processSection}`}>
           <div className={styles.sectionHeading}>
-            <p className={styles.eyebrow}>Proces</p>
-            <h2>Kako izgleda put do sopstvene solarne elektrane</h2>
+            <p className={styles.eyebrow}>{content.sections.process.eyebrow}</p>
+            <h2>{content.sections.process.title}</h2>
           </div>
           <div className={styles.processGrid}>
-            {processSteps.map((step, index) => (
+            {content.processSteps.map((step, index) => (
               <article className={styles.processStep} key={step.title}>
                 <span>{String(index + 1).padStart(2, "0")}</span>
                 <h3>{step.title}</h3>
@@ -111,11 +109,11 @@ export function SolarSystemsPage() {
 
       <section id="projekti" className={styles.section}>
         <div className={styles.sectionHeading}>
-          <p className={styles.eyebrow}>Primeri projekata</p>
-          <h2>Kako sistem može da izgleda u praksi</h2>
+          <p className={styles.eyebrow}>{content.sections.projects.eyebrow}</p>
+          <h2>{content.sections.projects.title}</h2>
         </div>
         <div className={styles.projectGrid}>
-          {projects.map((project) => (
+          {content.projects.map((project) => (
             <article className={styles.projectCard} key={project.title}>
               <div className={styles.projectImage}>
                 <Image
@@ -138,15 +136,12 @@ export function SolarSystemsPage() {
       <section id="oprema-distribucija" className={`${styles.section} ${styles.equipmentSection}`}>
         <div className={styles.split}>
           <div>
-            <p className={styles.eyebrow}>Oprema i distribucija</p>
-            <h2>Oprema za kompletna solarna rešenja</h2>
-            <p>
-              Pored ugradnje solarnih elektrana, Solar Partner se bavi prodajom i distribucijom
-              solarne opreme za krajnje korisnike, partnere i instalatere.
-            </p>
+            <p className={styles.eyebrow}>{content.sections.equipment.eyebrow}</p>
+            <h2>{content.sections.equipment.title}</h2>
+            <p>{content.sections.equipment.text}</p>
           </div>
           <div className={styles.equipmentList}>
-            {equipment.map((item) => (
+            {content.equipment.map((item) => (
               <span key={item}>{item}</span>
             ))}
           </div>
@@ -156,22 +151,18 @@ export function SolarSystemsPage() {
       <section id="analiza" className={`${styles.section} ${styles.reasonSection}`}>
         <div className={styles.reasonContent}>
           <div>
-            <p className={styles.eyebrow}>Analiza pre ponude</p>
-            <h2>Prvo proveravamo podatke, pa tek onda predlažemo sistem</h2>
-            <p>
-              Isplativost zavisi od potrošnje, položaja objekta, kvaliteta opreme, načina montaže i
-              pravilnog povezivanja. Zato svaki projekat počinje analizom, a ne prodajom gotovog
-              paketa.
-            </p>
+            <p className={styles.eyebrow}>{content.sections.analysis.eyebrow}</p>
+            <h2>{content.sections.analysis.title}</h2>
+            <p>{content.sections.analysis.text}</p>
             <div className={styles.analysisPoints}>
-              <span>Potrošnja i dnevni profil</span>
-              <span>Krov, orijentacija i zasenčenje</span>
-              <span>Snaga sistema i okvirna proizvodnja</span>
+              {content.sections.analysis.points.map((point) => (
+                <span key={point}>{point}</span>
+              ))}
             </div>
           </div>
-          <div className={styles.analysisPanel} aria-label="Vizuelni prikaz analize sistema">
+          <div className={styles.analysisPanel} aria-label={content.sections.analysis.title}>
             <div className={styles.analysisHeader}>
-              <span>ANALYSIS MODE</span>
+              <span>{content.sections.analysis.panel.label}</span>
               <strong>01</strong>
             </div>
             <div className={styles.analysisGraph}>
@@ -183,16 +174,16 @@ export function SolarSystemsPage() {
             </div>
             <div className={styles.analysisMetrics}>
               <span>
-                Potrošnja
-                <strong>12 meseci</strong>
+                {content.sections.analysis.panel.consumption}
+                <strong>{content.sections.analysis.panel.consumptionValue}</strong>
               </span>
               <span>
-                Krov
-                <strong>azimut / nagib</strong>
+                {content.sections.analysis.panel.roof}
+                <strong>{content.sections.analysis.panel.roofValue}</strong>
               </span>
               <span>
-                Sistem
-                <strong>kW + oprema</strong>
+                {content.sections.analysis.panel.system}
+                <strong>{content.sections.analysis.panel.systemValue}</strong>
               </span>
             </div>
           </div>
@@ -201,11 +192,11 @@ export function SolarSystemsPage() {
 
       <section id="faq" className={`${styles.section} ${styles.faqSection}`}>
         <div className={styles.sectionHeading}>
-          <p className={styles.eyebrow}>Česta pitanja</p>
-          <h2>Pitanja koja treba rešiti pre ugradnje</h2>
+          <p className={styles.eyebrow}>{content.sections.faq.eyebrow}</p>
+          <h2>{content.sections.faq.title}</h2>
         </div>
         <div className={styles.faqGrid}>
-          {faqs.map((item) => (
+          {content.faqs.map((item) => (
             <article className={styles.faqItem} key={item.question}>
               <h3>{item.question}</h3>
               <p>{item.answer}</p>
@@ -216,29 +207,25 @@ export function SolarSystemsPage() {
 
       <section id="kontakt" className={styles.ctaSection}>
         <div>
-          <p className={styles.eyebrow}>Prva procena</p>
-          <h2>Ostavite kontakt, a zatim zajedno prolazimo kroz najbolje opcije za vaš objekat</h2>
-          <p>
-            U prvom razgovoru prolazimo kroz vašu trenutnu potrošnju, račune za struju, tip
-            objekta i uslove na lokaciji. Na osnovu toga možemo realno proceniti da li solarni
-            sistem ima smisla, koja snaga bi bila odgovarajuća i koji su sledeći koraci.
-          </p>
+          <p className={styles.eyebrow}>{content.sections.contact.eyebrow}</p>
+          <h2>{content.sections.contact.title}</h2>
+          <p>{content.sections.contact.text}</p>
         </div>
         <form className={styles.contactForm}>
           <div className={styles.formField}>
-            <label htmlFor="solar-name">Ime i prezime</label>
+            <label htmlFor="solar-name">{content.form.name}</label>
             <input id="solar-name" name="name" type="text" autoComplete="name" />
           </div>
           <div className={styles.formField}>
-            <label htmlFor="solar-email">Email</label>
+            <label htmlFor="solar-email">{content.form.email}</label>
             <input id="solar-email" name="email" type="email" autoComplete="email" />
           </div>
           <div className={styles.formField}>
-            <label htmlFor="solar-phone">Telefon</label>
+            <label htmlFor="solar-phone">{content.form.phone}</label>
             <input id="solar-phone" name="phone" type="tel" autoComplete="tel" />
           </div>
           <div className={styles.honeypot} aria-hidden="true">
-            <label htmlFor="solar-website">Website</label>
+            <label htmlFor="solar-website">{content.form.website}</label>
             <input
               id="solar-website"
               name="website"
@@ -248,7 +235,7 @@ export function SolarSystemsPage() {
             />
           </div>
           <button className={styles.primaryButton} type="button">
-            Pošaljite zahtev
+            {content.sections.contact.submit}
           </button>
         </form>
       </section>
@@ -256,14 +243,14 @@ export function SolarSystemsPage() {
       <footer className={styles.footer}>
         <div>
           <strong>Solar Partner</strong>
-          <p>Solarna rešenja za kuće, firme i objekte kojima je potrebna jasna tehnička procena.</p>
+          <p>{content.footer.text}</p>
         </div>
-        <nav aria-label="Footer navigacija">
-          <a href="#resenja">Rešenja</a>
-          <a href="#proces">Proces</a>
-          <a href="#projekti">Projekti</a>
-          <a href="#faq">FAQ</a>
-          <a href="#kontakt">Kontakt</a>
+        <nav aria-label="Footer navigation">
+          <a href="#resenja">{content.footer.links.solutions}</a>
+          <a href="#proces">{content.footer.links.process}</a>
+          <a href="#projekti">{content.footer.links.projects}</a>
+          <a href="#faq">{content.footer.links.faq}</a>
+          <a href="#kontakt">{content.footer.links.contact}</a>
         </nav>
       </footer>
     </main>

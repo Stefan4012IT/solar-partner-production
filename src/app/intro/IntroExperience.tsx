@@ -3,7 +3,9 @@
 import Link from "next/link";
 import { Red_Hat_Display } from "next/font/google";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { getIntroContent } from "@/content/intro";
 import { assetPath } from "@/lib/assetPath";
+import { getLocalizedPath, type Locale } from "@/lib/i18n";
 import styles from "./page.module.scss";
 
 const redHatDisplay = Red_Hat_Display({
@@ -11,53 +13,8 @@ const redHatDisplay = Red_Hat_Display({
   weight: ["400", "500", "600", "700", "800", "900"],
 });
 
-const scenes = [
-  {
-    label: "Solarni sistemi",
-    eyebrow: "01 / ENERGY",
-    title: "Solarni sistemi",
-    text: "Projektovanje, oprema, montaža i podrška pri priključenju solarnih elektrana za kuće, firme i industrijske objekte.",
-    href: "/solarni-sistemi",
-    cta: "Uđite u solarne sisteme",
-    poster: "/solar-partne-hero--000.png",
-    tone: "solar",
-  },
-  {
-    label: "Profesionalni dronovi",
-    eyebrow: "02 / UAV",
-    title: "Profesionalni dronovi",
-    text: "Enterprise platforme za energetiku, infrastrukturu, bezbednost i sve zadatke gde je bitna pouzdanost podataka.",
-    href: "/dronovi",
-    cta: "Pogledajte dronove",
-    poster: "/drone/enterprise-uav-hero.png",
-    mobilePoster: "/drone/intro_dron_mob_1.1.png",
-    tone: "drone",
-  },
-  {
-    label: "Sigurnosni sistemi",
-    eyebrow: "03 / SECURITY",
-    title: "Sigurnosni sistemi",
-    text: "Video nadzor, alarmi, kontrola pristupa, interfoni i integracija tehničke zaštite za objekte kojima je potrebna pouzdana kontrola.",
-    href: "/sigurnosni-sistemi",
-    cta: "Pogledajte sigurnosne sisteme",
-    poster: "/security/security_intro.png",
-    mobilePoster: "/security/intro_security_mob_1.1.png",
-    tone: "security",
-  },
-  {
-    label: "O nama",
-    eyebrow: "04 / PARTNER",
-    title: "O nama",
-    text: "Sekcija je pripremljena za priču o kompaniji, principima rada, partnerstvima i podršci klijentima.",
-    href: "#",
-    cta: "Uskoro",
-    poster: "/projects/hibridno_resenje_01.png",
-    tone: "about",
-    disabled: true,
-  },
-];
-
-export function IntroExperience() {
+export function IntroExperience({ locale = "sr" }: { locale?: Locale } = {}) {
+  const scenes = getIntroContent(locale).scenes;
   const pageRef = useRef<HTMLElement>(null);
   const snapTimer = useRef<number>(0);
   const touchStartY = useRef(0);
@@ -248,23 +205,20 @@ export function IntroExperience() {
           <strong>Solar Partner</strong>
         </Link>
         <nav className={styles.headerNav} aria-label="Intro navigacija">
-          {scenes.map((scene, index) =>
-            scene.disabled ? (
-              <a
-                key={scene.label}
-                href={scene.href}
-                className={activeIndex === index ? styles.activeNavItem : ""}
-                onClick={(event) => event.preventDefault()}
-              >
-                {scene.label}
-              </a>
-            ) : (
-              <Link key={scene.label} href={scene.href} className={activeIndex === index ? styles.activeNavItem : ""}>
-                {scene.label}
-              </Link>
-            ),
-          )}
+          {scenes.map((scene, index) => (
+            <Link key={scene.label} href={scene.href} className={activeIndex === index ? styles.activeNavItem : ""}>
+              {scene.label}
+            </Link>
+          ))}
         </nav>
+        <div className={styles.languageSwitch} aria-label="Language switcher">
+          <Link className={locale === "sr" ? styles.activeLanguage : ""} href={getLocalizedPath("intro", "sr")}>
+            SR
+          </Link>
+          <Link className={locale === "en" ? styles.activeLanguage : ""} href={getLocalizedPath("intro", "en")}>
+            EN
+          </Link>
+        </div>
         <button
           className={`${styles.menuButton} ${isMenuOpen ? styles.menuButtonOpen : ""}`}
           type="button"
@@ -302,19 +256,20 @@ export function IntroExperience() {
         className={`${styles.mobileMenu} ${isMenuOpen ? styles.mobileMenuOpen : ""}`}
         aria-label="Mobilni intro meni"
       >
-        {scenes.map((scene, index) =>
-          scene.disabled ? (
-            <a key={scene.label} href={scene.href} onClick={(event) => event.preventDefault()}>
-              <span aria-hidden="true" />
-              {scene.label}
-            </a>
-          ) : (
-            <Link key={scene.label} href={scene.href} onClick={closeMenu}>
-              <span aria-hidden="true" />
-              {scene.label}
-            </Link>
-          ),
-        )}
+        {scenes.map((scene) => (
+          <Link key={scene.label} href={scene.href} onClick={closeMenu}>
+            <span aria-hidden="true" />
+            {scene.label}
+          </Link>
+        ))}
+        <div className={styles.mobileLanguageSwitch} aria-label="Language switcher">
+          <Link className={locale === "sr" ? styles.activeLanguage : ""} href={getLocalizedPath("intro", "sr")} onClick={closeMenu}>
+            SR
+          </Link>
+          <Link className={locale === "en" ? styles.activeLanguage : ""} href={getLocalizedPath("intro", "en")} onClick={closeMenu}>
+            EN
+          </Link>
+        </div>
       </nav>
 
       <div className={styles.stage}>
@@ -354,15 +309,9 @@ export function IntroExperience() {
                 <p>{scene.eyebrow}</p>
                 <h1>{scene.title}</h1>
                 <span>{scene.text}</span>
-                {scene.disabled ? (
-                  <a className={styles.disabledButton} href={scene.href} onClick={(event) => event.preventDefault()}>
-                    {scene.cta}
-                  </a>
-                ) : (
-                  <Link className={styles.primaryButton} href={scene.href}>
-                    {scene.cta}
-                  </Link>
-                )}
+                <Link className={styles.primaryButton} href={scene.href}>
+                  {scene.cta}
+                </Link>
               </div>
               <div className={styles.panelMeta}>
                 <span>{scene.eyebrow}</span>

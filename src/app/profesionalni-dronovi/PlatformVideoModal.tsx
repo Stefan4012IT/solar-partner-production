@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
+import { type MouseEvent, useEffect, useMemo, useState } from "react";
 import { createPortal } from "react-dom";
 import styles from "./page.module.scss";
 
@@ -12,6 +12,10 @@ type PlatformVideo = {
 type PlatformVideoModalProps = {
   platformTitle: string;
   videos: PlatformVideo[];
+  buttonLabel?: string;
+  dialogLabel?: string;
+  closeLabel?: string;
+  switcherLabel?: string;
 };
 
 function getYoutubeEmbedUrl(url: string) {
@@ -23,7 +27,14 @@ function getYoutubeEmbedUrl(url: string) {
   return id ? `https://www.youtube.com/embed/${id}` : url;
 }
 
-export function PlatformVideoModal({ platformTitle, videos }: PlatformVideoModalProps) {
+export function PlatformVideoModal({
+  platformTitle,
+  videos,
+  buttonLabel = "Pogledaj video",
+  dialogLabel = "MISSION VIDEO",
+  closeLabel = "Zatvori video",
+  switcherLabel = "Izbor videa",
+}: PlatformVideoModalProps) {
   const [isOpen, setIsOpen] = useState(false);
   const [activeVideo, setActiveVideo] = useState(0);
   const selectedVideo = videos[activeVideo] ?? videos[0];
@@ -48,24 +59,35 @@ export function PlatformVideoModal({ platformTitle, videos }: PlatformVideoModal
     return null;
   }
 
+  const closeOnBackdrop = (event: MouseEvent<HTMLDivElement>) => {
+    if (event.target === event.currentTarget) {
+      setIsOpen(false);
+    }
+  };
+
   return (
     <>
       <button className={styles.videoButton} type="button" onClick={() => setIsOpen(true)}>
         <span aria-hidden="true" />
-        Pogledaj video
+        {buttonLabel}
       </button>
 
       {isOpen &&
         createPortal(
-        <div className={styles.videoModal} role="dialog" aria-modal="true" aria-label={`Video: ${platformTitle}`}>
-          <button className={styles.videoBackdrop} type="button" aria-label="Zatvori video" onClick={() => setIsOpen(false)} />
+        <div
+          className={styles.videoModal}
+          role="dialog"
+          aria-modal="true"
+          aria-label={`Video: ${platformTitle}`}
+          onClick={closeOnBackdrop}
+        >
           <div className={styles.videoDialog}>
             <div className={styles.videoDialogHeader}>
               <div>
-                <span>MISSION VIDEO</span>
+                <span>{dialogLabel}</span>
                 <strong>{platformTitle}</strong>
               </div>
-              <button type="button" aria-label="Zatvori video" onClick={() => setIsOpen(false)}>
+              <button className={styles.videoCloseButton} type="button" aria-label={closeLabel} onClick={() => setIsOpen(false)}>
                 ×
               </button>
             </div>
@@ -79,7 +101,7 @@ export function PlatformVideoModal({ platformTitle, videos }: PlatformVideoModal
               />
             </div>
             {videos.length > 1 && (
-              <div className={styles.videoSwitcher} aria-label="Izbor videa">
+              <div className={styles.videoSwitcher} aria-label={switcherLabel}>
                 {videos.map((video, index) => (
                   <button
                     key={video.url}

@@ -1,13 +1,29 @@
 "use client";
 
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
+import { siteContent } from "@/content/site";
+import {
+  getLocaleFromPathname,
+  getLocalizedPath,
+  getRouteKey,
+  type Locale,
+  withHash,
+} from "@/lib/i18n";
 import styles from "./SiteHeader.module.scss";
 
-export function SiteHeader() {
+export function SiteHeader({ locale }: { locale?: Locale } = {}) {
+  const pathname = usePathname();
+  const currentLocale = locale ?? getLocaleFromPathname(pathname);
+  const routeKey = getRouteKey(pathname);
+  const copy = siteContent[currentLocale];
   const [isVisible, setIsVisible] = useState(true);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const lastScrollY = useRef(0);
+  const sectionHref = (hash: string) =>
+    routeKey === "solar" ? hash : withHash(getLocalizedPath("solar", currentLocale), hash);
+  const languageHref = (nextLocale: Locale) => getLocalizedPath(routeKey, nextLocale);
 
   useEffect(() => {
     const onScroll = () => {
@@ -44,19 +60,28 @@ export function SiteHeader() {
 
   return (
     <header className={`${styles.header} ${isVisible ? styles.headerVisible : styles.headerHidden}`}>
-      <Link className={styles.brand} href="/" aria-label="Solar Partner početna">
+      <Link className={styles.brand} href={getLocalizedPath("intro", currentLocale)} aria-label="Solar Partner početna">
         <span className={styles.brandMark}>SP</span>
-        <span>Solar Partner</span>
+        <span>{copy.brand}</span>
       </Link>
       <nav className={styles.nav} aria-label="Glavna navigacija">
-        <a href="#resenja">Rešenja</a>
-        <a href="#proces">Proces</a>
-        <a href="#projekti">Projekti</a>
-        <Link href="/dronovi">Dronovi</Link>
-        <a href="#kontakt">Kontakt</a>
+        <a href={sectionHref("#resenja")}>{copy.nav.solutions}</a>
+        <a href={sectionHref("#proces")}>{copy.nav.process}</a>
+        <a href={sectionHref("#projekti")}>{copy.nav.projects}</a>
+        <Link href={getLocalizedPath("drones", currentLocale)}>{copy.nav.drones}</Link>
+        <Link href={getLocalizedPath("about", currentLocale)}>{copy.nav.about}</Link>
+        <a href={sectionHref("#kontakt")}>{copy.nav.contact}</a>
       </nav>
-      <a className={styles.headerCta} href="#kontakt">
-        Zatražite procenu
+      <div className={styles.languageSwitch} aria-label="Language switcher">
+        <Link className={currentLocale === "sr" ? styles.activeLanguage : ""} href={languageHref("sr")}>
+          SR
+        </Link>
+        <Link className={currentLocale === "en" ? styles.activeLanguage : ""} href={languageHref("en")}>
+          EN
+        </Link>
+      </div>
+      <a className={styles.headerCta} href={sectionHref("#kontakt")}>
+        {copy.cta.assessment}
       </a>
       <button
         className={`${styles.menuButton} ${isMenuOpen ? styles.menuButtonOpen : ""}`}
@@ -75,24 +100,35 @@ export function SiteHeader() {
         className={`${styles.mobileNav} ${isMenuOpen ? styles.mobileNavOpen : ""}`}
         aria-label="Mobilna navigacija"
       >
-        <a href="#resenja" onClick={closeMenu}>
-          Rešenja
+        <a href={sectionHref("#resenja")} onClick={closeMenu}>
+          {copy.nav.solutions}
         </a>
-        <a href="#obim-rada" onClick={closeMenu}>
-          Obim rada
+        <a href={sectionHref("#obim-rada")} onClick={closeMenu}>
+          {copy.nav.scope}
         </a>
-        <a href="#proces" onClick={closeMenu}>
-          Proces
+        <a href={sectionHref("#proces")} onClick={closeMenu}>
+          {copy.nav.process}
         </a>
-        <a href="#projekti" onClick={closeMenu}>
-          Projekti
+        <a href={sectionHref("#projekti")} onClick={closeMenu}>
+          {copy.nav.projects}
         </a>
-        <Link href="/dronovi" onClick={closeMenu}>
-          Dronovi
+        <Link href={getLocalizedPath("drones", currentLocale)} onClick={closeMenu}>
+          {copy.nav.drones}
         </Link>
-        <a href="#kontakt" onClick={closeMenu}>
-          Kontakt
+        <Link href={getLocalizedPath("about", currentLocale)} onClick={closeMenu}>
+          {copy.nav.about}
+        </Link>
+        <a href={sectionHref("#kontakt")} onClick={closeMenu}>
+          {copy.nav.contact}
         </a>
+        <div className={styles.mobileLanguageSwitch} aria-label="Language switcher">
+          <Link className={currentLocale === "sr" ? styles.activeLanguage : ""} href={languageHref("sr")} onClick={closeMenu}>
+            SR
+          </Link>
+          <Link className={currentLocale === "en" ? styles.activeLanguage : ""} href={languageHref("en")} onClick={closeMenu}>
+            EN
+          </Link>
+        </div>
       </nav>
     </header>
   );

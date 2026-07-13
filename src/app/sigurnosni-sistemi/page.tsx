@@ -2,7 +2,9 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import { Red_Hat_Display } from "next/font/google";
 import type { CSSProperties } from "react";
+import { getSecurityContent } from "@/content/security";
 import { assetPath } from "@/lib/assetPath";
+import type { Locale } from "@/lib/i18n";
 import { SecurityHeader } from "./SecurityHeader";
 import styles from "./page.module.scss";
 
@@ -12,114 +14,43 @@ const redHatDisplay = Red_Hat_Display({
   variable: "--font-security-display",
 });
 
-const protectionSystems = [
-  {
-    title: "Video nadzor",
-    text: "Kamere više nisu samo izvor slike. Savremeni sistemi mogu da rade analitiku događaja, klasifikaciju alarma, zaštitu perimetra, detekciju lica, brojanje ljudi i prepoznavanje situacija koje zahtevaju reakciju.",
-    image: "/security/systemCardMedia/systemCardMedia_001.png",
-    imageAlt: "Sistem video nadzora za tehničku zaštitu objekta",
-  },
-  {
-    title: "Alarmni sistemi",
-    text: "Alarm je prva linija odbrane objekta. Pravilno projektovan sistem omogućava brzu dojavu, potvrdu alarma preko video nadzora, scenarije automatizacije i daljinsko upravljanje putem mobilnog telefona.",
-    image: "/security/systemCardMedia/systemCardMedia_002.png",
-    imageAlt: "Alarmni sistem za zaštitu objekta",
-  },
-  {
-    title: "Kontrola pristupa",
-    text: "Rešenja za objekte u kojima je potrebno ograničiti i evidentirati kretanje. Sistem beleži ko je otvorio vrata, kada se pristup dogodio i upozorava na nevalidne kartice, pogrešne šifre ili nezatvorena vrata.",
-    image: "/security/systemCardMedia/systemCardMedia_003.png",
-    imageAlt: "Kontrola pristupa i evidencija ulaska u objekat",
-  },
-  {
-    title: "Video interfoni",
-    text: "Moderni interfonski sistemi omogućavaju širokougaone kamere, povezivanje sa liftovima, pametnim kućama, kamerama i udaljeno pozivanje kroz mobilnu aplikaciju.",
-    image: "/security/systemCardMedia/systemCardMedia_004.png",
-    imageAlt: "Video interfon za kontrolu ulaza u objekat",
-  },
-  {
-    title: "Protivpožarna zaštita",
-    text: "Sistemi namenjeni ranom otkrivanju rizika, pravovremenoj dojavi i integraciji sa ostalim tehničkim sistemima objekta kada je to potrebno.",
-    image: "/security/systemCardMedia/systemCardMedia_005.png",
-    imageAlt: "Protivpožarni sistem i detekcija rizika",
-  },
-  {
-    title: "Rampe, barijere i parking sistemi",
-    text: "Kontrola ulaza i izlaza vozila ili pešaka kroz rampe, pešačke barijere, evidenciju prolaza i integraciju sa kontrolom pristupa.",
-    image: "/security/systemCardMedia/systemCardMedia_006.png",
-    imageAlt: "Parking sistem sa rampama i kontrolom prolaza",
-  },
-];
-
-const processSteps = [
-  {
-    title: "Procena objekta",
-    text: "Sagledavamo namenu objekta, kritične tačke, postojeću infrastrukturu, režim kretanja i realne rizike.",
-  },
-  {
-    title: "Predlog rešenja",
-    text: "Biramo opremu i arhitekturu sistema prema zahtevima sa terena, a ne prema gotovom paketu.",
-  },
-  {
-    title: "Ugradnja i podešavanje",
-    text: "Sistem se instalira, povezuje, testira i podešava tako da oprema radi ono zbog čega je ugrađena.",
-  },
-  {
-    title: "Održavanje i dokumentacija",
-    text: "Po potrebi obezbeđujemo servis, ugovore o održavanju, planove, projekte, sertifikate i ostalu prateću dokumentaciju.",
-  },
-];
-
-const systemList = [
-  "Video nadzor",
-  "Alarmni sistemi",
-  "Kontrola pristupa",
-  "PA audio sistemi",
-  "Video interfoni",
-  "Komercijalni displeji",
-  "LED displeji",
-  "Termalne kamere",
-  "Parking sistemi",
-  "Integracioni softver",
-];
+const srContent = getSecurityContent("sr");
 
 export const metadata: Metadata = {
-  title: "Sigurnosni sistemi i tehnička zaštita | Solar Partner",
-  description:
-    "Kompletna rešenja tehničke zaštite: video nadzor, alarmni sistemi, kontrola pristupa, video interfoni, parking sistemi, integracija i održavanje.",
+  title: srContent.metadata.title,
+  description: srContent.metadata.description,
 };
 
-export default function SecuritySystemsPage() {
+export function SecuritySystemsPage({ locale = "sr" }: { locale?: Locale } = {}) {
+  const content = getSecurityContent(locale);
+
   return (
     <main className={`${redHatDisplay.className} ${styles.page}`}>
-      <SecurityHeader />
+      <SecurityHeader locale={locale} content={content.header} />
 
       <section className={styles.hero}>
         <div className={styles.heroCopy}>
-          <p className={styles.eyebrow}>Sistemi tehničke zaštite</p>
-          <h1>Tehnička zaštita za objekte pod kontrolom</h1>
-          <p>
-            Projektovanje, ugradnja, povezivanje i održavanje sistema video nadzora, alarma,
-            kontrole pristupa, video interfona i drugih sistema tehničke zaštite.
-          </p>
+          <p className={styles.eyebrow}>{content.hero.eyebrow}</p>
+          <h1>{content.hero.title}</h1>
+          <p>{content.hero.text}</p>
           <div className={styles.heroActions}>
             <a className={styles.primaryButton} href="#kontakt">
-              Zatražite procenu
+              {content.hero.primaryCta}
             </a>
             <a className={styles.secondaryButton} href="#sistemi">
-              Pogledajte rešenja
+              {content.hero.secondaryCta}
             </a>
           </div>
           <div className={styles.trustGrid}>
-            <span>Individualno planiranje prema objektu</span>
-            <span>Integracija više sigurnosnih sistema</span>
-            <span>Servisno održavanje i podrška</span>
+            {content.hero.trust.map((item) => (
+              <span key={item}>{item}</span>
+            ))}
           </div>
         </div>
         <div className={styles.heroVisual}>
           <Image
             src={assetPath("/security/security_hero_001.png")}
-            alt="Sigurnosni sistem i tehnička zaštita objekta"
+            alt={content.hero.imageAlt}
             fill
             priority
             sizes="(max-width: 980px) 100vw, 48vw"
@@ -129,11 +60,11 @@ export default function SecuritySystemsPage() {
 
       <section id="sistemi" className={styles.section}>
         <div className={styles.sectionHeading}>
-          <p className={styles.eyebrow}>Oblasti primene</p>
-          <h2>Sistem se ne bira po katalogu, već prema načinu korišćenja objekta</h2>
+          <p className={styles.eyebrow}>{content.systemsSection.eyebrow}</p>
+          <h2>{content.systemsSection.title}</h2>
         </div>
         <div className={styles.systemGrid}>
-          {protectionSystems.map((system, index) => (
+          {content.systems.map((system, index) => (
             <article className={styles.systemCard} key={system.title}>
               <div className={styles.systemCardMedia} aria-hidden="true">
                 {system.image && (
@@ -163,30 +94,23 @@ export default function SecuritySystemsPage() {
         }
       >
         <div>
-          <p className={styles.eyebrow}>Video analitika</p>
-          <h2>Video nadzor sa korisnom analitikom</h2>
+          <p className={styles.eyebrow}>{content.analytics.eyebrow}</p>
+          <h2>{content.analytics.title}</h2>
         </div>
         <div className={styles.analyticsText}>
-          <p>
-            Analitika ima smisla tek kada je povezana sa načinom rada objekta. Nije svaki pokret
-            alarm, niti svaka kamera treba da prati iste događaje. Zone, pravila i obaveštenja
-            definišu se prema tome šta korisnik zaista mora da zna u trenutku kada se događaj desi.
-          </p>
-          <p>
-            Cilj je da sistem smanji broj lažnih alarma, jasnije razdvoji važne događaje od
-            pozadinske aktivnosti i pruži informaciju koja ima operativnu vrednost. Zato se svaka
-            analitika podešava prema realnim uslovima na terenu.
-          </p>
+          {content.analytics.paragraphs.map((paragraph) => (
+            <p key={paragraph}>{paragraph}</p>
+          ))}
         </div>
       </section>
 
       <section id="proces" className={`${styles.section} ${styles.darkSection}`}>
         <div className={styles.sectionHeading}>
-          <p className={styles.eyebrow}>Način rada</p>
-          <h2>Od procene rizika do sistema koji se može održavati</h2>
+          <p className={styles.eyebrow}>{content.processSection.eyebrow}</p>
+          <h2>{content.processSection.title}</h2>
         </div>
         <div className={styles.processGrid}>
-          {processSteps.map((step, index) => (
+          {content.processSteps.map((step, index) => (
             <article className={styles.processStep} key={step.title}>
               <span>{String(index + 1).padStart(2, "0")}</span>
               <h3>{step.title}</h3>
@@ -198,18 +122,13 @@ export default function SecuritySystemsPage() {
 
       <section id="oprema" className={styles.equipmentSection}>
         <div className={styles.equipmentCopy}>
-          <p className={styles.eyebrow}>Oprema i integracija</p>
-          <h2>Više sistema povezano u jednu operativnu celinu</h2>
-          <p>
-            Tim poseduje iskustvo u implementaciji različitih proizvođača sigurnosne opreme koji
-            su prisutni na domaćem tržištu. U praksi se često koriste rešenja proizvođača kao što
-            je Hikvision, posebno kada su važni pouzdanost, širok izbor opreme, servisna podrška i
-            mogućnost integracije u jedan softverski sistem.
-          </p>
-          <strong>Važno je da oprema, softver i održavanje budu planirani kao jedan sistem.</strong>
+          <p className={styles.eyebrow}>{content.equipment.eyebrow}</p>
+          <h2>{content.equipment.title}</h2>
+          <p>{content.equipment.text}</p>
+          <strong>{content.equipment.note}</strong>
         </div>
         <div className={styles.systemList}>
-          {systemList.map((item, index) => (
+          {content.equipment.list.map((item, index) => (
             <span key={item}>
               <small>{String(index + 1).padStart(2, "0")}</small>
               {item}
@@ -220,84 +139,72 @@ export default function SecuritySystemsPage() {
 
       <section className={styles.complianceSection}>
         <div>
-          <p className={styles.eyebrow}>Dokumentacija</p>
-          <h2>Tehnička zaštita mora biti planirana i dokumentovana</h2>
+          <p className={styles.eyebrow}>{content.compliance.eyebrow}</p>
+          <h2>{content.compliance.title}</h2>
         </div>
         <div className={styles.complianceCopy}>
-          <p>
-            Ugradnja i održavanje sigurnosne opreme povezani su sa pravilima iz oblasti privatnog
-            obezbeđenja i zaštite podataka o ličnosti. Zato je, zavisno od tipa objekta i sistema,
-            važno na vreme razmotriti planove, projekte, procenu rizika, ugovore o održavanju,
-            sertifikate i potvrde o kvalitetu opreme.
-          </p>
-          <small>
-            * Ugradnja sigurnosne opreme striktno je regulisana kroz Zakon o privatnom obezbeđenju
-            i Zakon o zaštiti podataka o ličnosti (ZZPL). Samim tim postoje jasno definisane
-            zakonske odredbe o propisima montaže i održavanja ovakvog tipa opreme.
-          </small>
+          <p>{content.compliance.text}</p>
+          <small>{content.compliance.note}</small>
         </div>
       </section>
 
       <section id="kontakt" className={styles.contactSection}>
         <div>
-          <p className={styles.eyebrow}>Prvi razgovor</p>
-          <h2>Ostavite kontakt i ukratko ćemo proći kroz potrebe vašeg objekta</h2>
-          <p>
-            U razgovoru prolazimo kroz tip objekta, način korišćenja, kritične tačke, postojeće
-            instalacije i sisteme koji bi imali najviše smisla za vašu situaciju.
-          </p>
+          <p className={styles.eyebrow}>{content.contact.eyebrow}</p>
+          <h2>{content.contact.title}</h2>
+          <p>{content.contact.text}</p>
         </div>
         <form className={styles.form}>
           <div className={styles.field}>
-            <label htmlFor="security-name">Ime i prezime</label>
+            <label htmlFor="security-name">{content.contact.fields.name}</label>
             <input id="security-name" name="name" type="text" autoComplete="name" />
           </div>
           <div className={styles.field}>
-            <label htmlFor="security-email">Email</label>
+            <label htmlFor="security-email">{content.contact.fields.email}</label>
             <input id="security-email" name="email" type="email" autoComplete="email" />
           </div>
           <div className={styles.field}>
-            <label htmlFor="security-phone">Telefon</label>
+            <label htmlFor="security-phone">{content.contact.fields.phone}</label>
             <input id="security-phone" name="phone" type="tel" autoComplete="tel" />
           </div>
           <div className={styles.field}>
-            <label htmlFor="security-system">Interesuje me</label>
+            <label htmlFor="security-system">{content.contact.fields.interest}</label>
             <select id="security-system" name="system" defaultValue="">
               <option value="" disabled>
-                Izaberite
+                {content.contact.fields.placeholder}
               </option>
-              <option>Video nadzor</option>
-              <option>Alarmni sistem</option>
-              <option>Kontrola pristupa</option>
-              <option>Video interfon</option>
-              <option>Parking sistem</option>
-              <option>Kompletno rešenje</option>
-              <option>Nisam siguran, potrebna mi je konsultacija</option>
+              {content.contact.options.map((option) => (
+                <option key={option}>{option}</option>
+              ))}
             </select>
           </div>
           <div className={styles.honeypot} aria-hidden="true">
-            <label htmlFor="security-website">Website</label>
+            <label htmlFor="security-website">{content.contact.fields.website}</label>
             <input id="security-website" name="website" type="text" tabIndex={-1} autoComplete="off" />
           </div>
-          <button type="button">Pošaljite upit</button>
+          <button type="button">{content.contact.submit}</button>
         </form>
       </section>
 
       <footer className={styles.footer}>
         <div>
           <strong>Solar Partner</strong>
-          <p>Tehnička zaštita, sigurnosni sistemi i integrisana rešenja za objekte.</p>
+          <p>{content.footer.text}</p>
         </div>
         <nav aria-label="Footer navigacija">
-          <a href="#sistemi">Sistemi</a>
-          <a href="#proces">Proces</a>
-          <a href="#oprema">Oprema</a>
-          <a href="#kontakt">Kontakt</a>
+          <a href="#sistemi">{content.footer.links[0]}</a>
+          <a href="#proces">{content.footer.links[1]}</a>
+          <a href="#oprema">{content.footer.links[2]}</a>
+          <a href="#kontakt">{content.footer.links[3]}</a>
         </nav>
         <a className={styles.footerCta} href="#kontakt">
-          Zatražite procenu
+          {content.footer.cta}
         </a>
       </footer>
     </main>
   );
+}
+
+export default function SecuritySystemsRoute() {
+  return <SecuritySystemsPage />;
 }

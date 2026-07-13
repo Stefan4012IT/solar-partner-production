@@ -45,7 +45,7 @@
   left: clamp(12px, 2vw, 32px);
   z-index: 40;
   display: grid;
-  grid-template-columns: auto 1fr auto;
+  grid-template-columns: auto 1fr auto auto;
   align-items: center;
   gap: clamp(20px, 3vw, 44px);
   border: 1px solid rgba(255, 255, 255, 0.13);
@@ -91,6 +91,30 @@
   opacity: 0;
   pointer-events: none;
   transform: translateY(calc(-100% - 24px));
+}
+
+.languageSwitch {
+  display: inline-flex;
+  align-items: center;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  background: rgba(255, 255, 255, 0.06);
+  padding: 3px;
+
+  a {
+    display: inline-flex;
+    min-width: 34px;
+    min-height: 32px;
+    align-items: center;
+    justify-content: center;
+    color: rgba(255, 255, 255, 0.62);
+    font-size: 11px;
+    font-weight: 850;
+  }
+}
+
+.activeLanguage {
+  background: var(--drone-accent);
+  color: #101010 !important;
 }
 
 .brand {
@@ -760,7 +784,7 @@
   position: absolute;
   right: 34px;
   bottom: 42px;
-  z-index: 5;
+  z-index: 12;
   display: inline-flex;
   min-height: 42px;
   align-items: center;
@@ -799,24 +823,20 @@
 
 .videoModal {
   position: fixed;
-  z-index: 80;
+  z-index: 9999;
   inset: 0;
   display: grid;
   place-items: center;
-  padding: clamp(14px, 4vw, 48px);
-}
-
-.videoBackdrop {
-  position: absolute;
-  inset: 0;
-  border: 0;
   background: rgba(3, 6, 10, 0.82);
+  padding: clamp(14px, 4vw, 48px);
+  isolation: isolate;
   cursor: pointer;
+  pointer-events: auto;
 }
 
 .videoDialog {
   position: relative;
-  z-index: 1;
+  z-index: 2;
   display: grid;
   width: min(1040px, 100%);
   overflow: hidden;
@@ -827,9 +847,13 @@
     #070a0f;
   background-size: 32px 32px, 32px 32px, auto;
   box-shadow: 0 30px 90px rgba(0, 0, 0, 0.52);
+  cursor: default;
+  pointer-events: auto;
 }
 
 .videoDialogHeader {
+  position: relative;
+  z-index: 3;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -859,27 +883,34 @@
     text-transform: uppercase;
   }
 
-  button {
-    display: grid;
-    width: 38px;
-    height: 38px;
-    place-items: center;
-    border: 1px solid var(--drone-line);
-    background: rgba(255, 255, 255, 0.045);
-    color: var(--drone-text);
-    cursor: pointer;
-    font-size: 24px;
-    line-height: 1;
-  }
+}
+
+.videoCloseButton {
+  position: relative;
+  z-index: 8;
+  display: grid;
+  width: 38px;
+  height: 38px;
+  place-items: center;
+  border: 1px solid var(--drone-line);
+  background: rgba(255, 255, 255, 0.045);
+  color: var(--drone-text);
+  cursor: pointer;
+  font-size: 24px;
+  line-height: 1;
 }
 
 .videoFrame {
   position: relative;
+  z-index: 1;
   aspect-ratio: 16 / 9;
   background: #000;
+  isolation: isolate;
+  overflow: hidden;
 
   iframe {
     position: absolute;
+    z-index: 0;
     inset: 0;
     width: 100%;
     height: 100%;
@@ -888,15 +919,20 @@
 }
 
 .videoSwitcher {
+  position: relative;
+  z-index: 5;
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 10px;
   border-top: 1px solid var(--drone-line);
   padding: 14px;
+  transform: translateZ(0);
 }
 
 .videoSwitch,
 .videoSwitchActive {
+  position: relative;
+  z-index: 6;
   display: flex;
   min-height: 52px;
   align-items: center;
@@ -1320,7 +1356,7 @@
 
 @media (max-width: 1060px) {
   .header {
-    grid-template-columns: 1fr auto;
+    grid-template-columns: 1fr auto auto;
   }
 
   .nav {
