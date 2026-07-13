@@ -10,8 +10,12 @@ export const siteContent: Record<
       process: string;
       projects: string;
       drones: string;
+      security: string;
+      solar: string;
       about: string;
       contact: string;
+      sections: string;
+      otherPages: string;
     };
     cta: {
       assessment: string;
@@ -26,8 +30,12 @@ export const siteContent: Record<
       process: "Proces",
       projects: "Projekti",
       drones: "Dronovi",
+      security: "Sigurnosni sistemi",
+      solar: "Solarni sistemi",
       about: "O nama",
       contact: "Kontakt",
+      sections: "Sekcije",
+      otherPages: "Ostala rešenja",
     },
     cta: {
       assessment: "Zatražite procenu",
@@ -41,8 +49,12 @@ export const siteContent: Record<
       process: "Process",
       projects: "Projects",
       drones: "Drones",
+      security: "Security systems",
+      solar: "Solar systems",
       about: "About",
       contact: "Contact",
+      sections: "Sections",
+      otherPages: "Other solutions",
     },
     cta: {
       assessment: "Request assessment",

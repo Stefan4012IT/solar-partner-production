@@ -117,6 +117,152 @@
   color: #101010 !important;
 }
 
+.menuButton {
+  position: relative;
+  display: none;
+  width: 44px;
+  height: 44px;
+  place-items: center;
+  border: 1px solid rgba(56, 189, 248, 0.22);
+  background:
+    radial-gradient(circle at 30% 20%, rgba(56, 189, 248, 0.18), transparent 1.7rem),
+    rgba(255, 255, 255, 0.045);
+  cursor: pointer;
+
+  span {
+    position: absolute;
+    left: 12px;
+    display: block;
+    width: 20px;
+    height: 2px;
+    background: var(--drone-text);
+    transform-origin: center;
+    transition:
+      top 160ms ease,
+      transform 160ms ease,
+      opacity 160ms ease;
+  }
+
+  span:nth-child(1) {
+    top: 14px;
+  }
+
+  span:nth-child(2) {
+    top: 21px;
+    width: 14px;
+  }
+
+  span:nth-child(3) {
+    top: 28px;
+  }
+}
+
+.menuButtonOpen {
+  border-color: var(--drone-accent);
+
+  span {
+    background: var(--drone-accent);
+  }
+
+  span:nth-child(1) {
+    top: 21px;
+    transform: rotate(45deg);
+  }
+
+  span:nth-child(2) {
+    opacity: 0;
+    transform: scaleX(0);
+  }
+
+  span:nth-child(3) {
+    top: 21px;
+    transform: rotate(-45deg);
+  }
+}
+
+.mobileNav {
+  position: absolute;
+  top: calc(100% + 10px);
+  right: 0;
+  left: 0;
+  display: none;
+  overflow: hidden;
+  border: 1px solid var(--drone-line);
+  background:
+    linear-gradient(rgba(56, 189, 248, 0.035) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(56, 189, 248, 0.035) 1px, transparent 1px),
+    rgba(7, 10, 15, 0.94);
+  background-size: 32px 32px, 32px 32px, auto;
+  box-shadow: 0 24px 70px rgba(0, 0, 0, 0.32);
+  padding: 8px;
+  backdrop-filter: blur(22px) saturate(130%);
+
+  a {
+    display: flex;
+    min-height: 46px;
+    align-items: center;
+    justify-content: space-between;
+    color: var(--drone-text);
+    font-size: 13px;
+    font-weight: 850;
+    padding: 0 14px;
+    text-decoration: none;
+    text-transform: uppercase;
+
+    span {
+      color: var(--drone-accent-blue);
+      font-family: var(--font-geist-mono), monospace;
+      font-size: 10px;
+    }
+
+    &:hover {
+      background: rgba(255, 255, 255, 0.055);
+    }
+  }
+}
+
+.mobileNavOpen {
+  display: grid;
+  gap: 10px;
+}
+
+.mobileSectionGroup,
+.mobilePageGroup {
+  display: grid;
+  gap: 3px;
+}
+
+.mobileNavLabel {
+  color: rgba(255, 255, 255, 0.48);
+  font-family: var(--font-geist-mono), monospace;
+  font-size: 10px;
+  font-weight: 900;
+  letter-spacing: 0.12em;
+  padding: 8px 12px 4px;
+  text-transform: uppercase;
+}
+
+.mobilePageGroup {
+  border-top: 1px solid var(--drone-line);
+  padding-top: 8px;
+}
+
+.mobileNav .mobilePageLink {
+  border: 1px solid rgba(56, 189, 248, 0.18);
+  background:
+    linear-gradient(90deg, rgba(56, 189, 248, 0.09), transparent 44%),
+    rgba(255, 255, 255, 0.035);
+  color: #ffffff;
+
+  &::after {
+    width: 8px;
+    height: 8px;
+    border: 1px solid var(--drone-accent-blue);
+    background: transparent;
+    content: "";
+  }
+}
+
 .brand {
   display: inline-flex;
   align-items: center;
@@ -1361,6 +1507,14 @@
 
   .nav {
     display: none;
+  }
+
+  .headerCta {
+    display: none;
+  }
+
+  .menuButton {
+    display: grid;
   }
 
   .hero,

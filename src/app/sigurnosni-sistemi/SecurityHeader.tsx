@@ -11,6 +11,23 @@ type SecurityHeaderContent = {
   cta: string;
 };
 
+const mobilePageCopy = {
+  sr: {
+    sections: "Sekcije",
+    otherPages: "Ostala rešenja",
+    solar: "Solarni sistemi",
+    drones: "Dronovi",
+    about: "O nama",
+  },
+  en: {
+    sections: "Sections",
+    otherPages: "Other solutions",
+    solar: "Solar systems",
+    drones: "Drones",
+    about: "About",
+  },
+};
+
 export function SecurityHeader({
   locale = "sr",
   content,
@@ -18,7 +35,9 @@ export function SecurityHeader({
   locale?: Locale;
   content: SecurityHeaderContent;
 }) {
+  const mobileCopy = mobilePageCopy[locale];
   const [isVisible, setIsVisible] = useState(true);
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
   const lastScrollY = useRef(0);
 
   useEffect(() => {
@@ -35,6 +54,23 @@ export function SecurityHeader({
 
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
+
+  useEffect(() => {
+    if (!isMenuOpen) {
+      return;
+    }
+
+    const closeOnEscape = (event: KeyboardEvent) => {
+      if (event.key === "Escape") {
+        setIsMenuOpen(false);
+      }
+    };
+
+    window.addEventListener("keydown", closeOnEscape);
+    return () => window.removeEventListener("keydown", closeOnEscape);
+  }, [isMenuOpen]);
+
+  const closeMenu = () => setIsMenuOpen(false);
 
   return (
     <header className={`${styles.header} ${isVisible ? styles.headerVisible : styles.headerHidden}`}>
@@ -73,6 +109,51 @@ export function SecurityHeader({
         <span>{content.cta}</span>
         <i aria-hidden="true">↗</i>
       </a>
+      <button
+        className={`${styles.menuButton} ${isMenuOpen ? styles.menuButtonOpen : ""}`}
+        type="button"
+        aria-label={isMenuOpen ? "Close navigation" : "Open navigation"}
+        aria-controls="security-mobile-navigation"
+        aria-expanded={isMenuOpen}
+        onClick={() => setIsMenuOpen((current) => !current)}
+      >
+        <span />
+        <span />
+        <span />
+      </button>
+      <nav
+        id="security-mobile-navigation"
+        className={`${styles.mobileNav} ${isMenuOpen ? styles.mobileNavOpen : ""}`}
+        aria-label="Mobile security navigation"
+      >
+        <div className={styles.mobileSectionGroup}>
+          <small className={styles.mobileNavLabel}>{mobileCopy.sections}</small>
+          <a href="#sistemi" onClick={closeMenu}>
+            <span>01</span> {content.nav[0]}
+          </a>
+          <a href="#proces" onClick={closeMenu}>
+            <span>02</span> {content.nav[1]}
+          </a>
+          <a href="#oprema" onClick={closeMenu}>
+            <span>03</span> {content.nav[2]}
+          </a>
+          <a href="#kontakt" onClick={closeMenu}>
+            <span>04</span> {content.nav[3]}
+          </a>
+        </div>
+        <div className={styles.mobilePageGroup}>
+          <small className={styles.mobileNavLabel}>{mobileCopy.otherPages}</small>
+          <Link className={styles.mobilePageLink} href={getLocalizedPath("solar", locale)} onClick={closeMenu}>
+            {mobileCopy.solar}
+          </Link>
+          <Link className={styles.mobilePageLink} href={getLocalizedPath("drones", locale)} onClick={closeMenu}>
+            {mobileCopy.drones}
+          </Link>
+          <Link className={styles.mobilePageLink} href={getLocalizedPath("about", locale)} onClick={closeMenu}>
+            {mobileCopy.about}
+          </Link>
+        </div>
+      </nav>
     </header>
   );
 }

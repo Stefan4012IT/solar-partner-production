@@ -100,34 +100,42 @@ export function SiteHeader({ locale }: { locale?: Locale } = {}) {
         className={`${styles.mobileNav} ${isMenuOpen ? styles.mobileNavOpen : ""}`}
         aria-label="Mobilna navigacija"
       >
-        <a href={sectionHref("#resenja")} onClick={closeMenu}>
-          {copy.nav.solutions}
-        </a>
-        <a href={sectionHref("#obim-rada")} onClick={closeMenu}>
-          {copy.nav.scope}
-        </a>
-        <a href={sectionHref("#proces")} onClick={closeMenu}>
-          {copy.nav.process}
-        </a>
-        <a href={sectionHref("#projekti")} onClick={closeMenu}>
-          {copy.nav.projects}
-        </a>
-        <Link href={getLocalizedPath("drones", currentLocale)} onClick={closeMenu}>
-          {copy.nav.drones}
-        </Link>
-        <Link href={getLocalizedPath("about", currentLocale)} onClick={closeMenu}>
-          {copy.nav.about}
-        </Link>
-        <a href={sectionHref("#kontakt")} onClick={closeMenu}>
-          {copy.nav.contact}
-        </a>
-        <div className={styles.mobileLanguageSwitch} aria-label="Language switcher">
-          <Link className={currentLocale === "sr" ? styles.activeLanguage : ""} href={languageHref("sr")} onClick={closeMenu}>
-            SR
+        <div className={styles.mobileSectionGroup}>
+          <span className={styles.mobileNavLabel}>{copy.nav.sections}</span>
+          <a href={sectionHref("#resenja")} onClick={closeMenu}>
+            {copy.nav.solutions}
+          </a>
+          <a href={sectionHref("#obim-rada")} onClick={closeMenu}>
+            {copy.nav.scope}
+          </a>
+          <a href={sectionHref("#proces")} onClick={closeMenu}>
+            {copy.nav.process}
+          </a>
+          <a href={sectionHref("#projekti")} onClick={closeMenu}>
+            {copy.nav.projects}
+          </a>
+          <a href={sectionHref("#kontakt")} onClick={closeMenu}>
+            {copy.nav.contact}
+          </a>
+        </div>
+        <div className={styles.mobilePageGroup}>
+          <span className={styles.mobileNavLabel}>{copy.nav.otherPages}</span>
+          {routeKey !== "solar" && (
+            <Link className={styles.mobilePageLink} href={getLocalizedPath("solar", currentLocale)} onClick={closeMenu}>
+              {copy.nav.solar}
+            </Link>
+          )}
+          <Link className={styles.mobilePageLink} href={getLocalizedPath("drones", currentLocale)} onClick={closeMenu}>
+            {copy.nav.drones}
           </Link>
-          <Link className={currentLocale === "en" ? styles.activeLanguage : ""} href={languageHref("en")} onClick={closeMenu}>
-            EN
+          <Link className={styles.mobilePageLink} href={getLocalizedPath("security", currentLocale)} onClick={closeMenu}>
+            {copy.nav.security}
           </Link>
+          {routeKey !== "about" && (
+            <Link className={styles.mobilePageLink} href={getLocalizedPath("about", currentLocale)} onClick={closeMenu}>
+              {copy.nav.about}
+            </Link>
+          )}
         </div>
       </nav>
     </header>

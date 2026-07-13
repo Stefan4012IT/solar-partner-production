@@ -15,6 +15,23 @@ const defaultContent: DroneHeaderContent = {
   cta: "Zatražite konsultaciju",
 };
 
+const mobilePageCopy = {
+  sr: {
+    sections: "Sekcije",
+    otherPages: "Ostala rešenja",
+    solar: "Solarni sistemi",
+    security: "Sigurnosni sistemi",
+    about: "O nama",
+  },
+  en: {
+    sections: "Sections",
+    otherPages: "Other solutions",
+    solar: "Solar systems",
+    security: "Security systems",
+    about: "About",
+  },
+};
+
 export function DroneHeader({
   locale = "sr",
   content = defaultContent,
@@ -22,7 +39,9 @@ export function DroneHeader({
   locale?: Locale;
   content?: DroneHeaderContent;
 }) {
+  const mobileCopy = mobilePageCopy[locale];
   const [isVisible, setIsVisible] = useState(true);
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
   const lastScrollY = useRef(0);
 
   useEffect(() => {
@@ -39,6 +58,23 @@ export function DroneHeader({
 
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
+
+  useEffect(() => {
+    if (!isMenuOpen) {
+      return;
+    }
+
+    const closeOnEscape = (event: KeyboardEvent) => {
+      if (event.key === "Escape") {
+        setIsMenuOpen(false);
+      }
+    };
+
+    window.addEventListener("keydown", closeOnEscape);
+    return () => window.removeEventListener("keydown", closeOnEscape);
+  }, [isMenuOpen]);
+
+  const closeMenu = () => setIsMenuOpen(false);
 
   return (
     <header
@@ -81,6 +117,51 @@ export function DroneHeader({
         <span>{content.cta}</span>
         <i aria-hidden="true">↗</i>
       </a>
+      <button
+        className={`${styles.menuButton} ${isMenuOpen ? styles.menuButtonOpen : ""}`}
+        type="button"
+        aria-label={isMenuOpen ? "Close navigation" : "Open navigation"}
+        aria-controls="drone-mobile-navigation"
+        aria-expanded={isMenuOpen}
+        onClick={() => setIsMenuOpen((current) => !current)}
+      >
+        <span />
+        <span />
+        <span />
+      </button>
+      <nav
+        id="drone-mobile-navigation"
+        className={`${styles.mobileNav} ${isMenuOpen ? styles.mobileNavOpen : ""}`}
+        aria-label="Mobile drone navigation"
+      >
+        <div className={styles.mobileSectionGroup}>
+          <small className={styles.mobileNavLabel}>{mobileCopy.sections}</small>
+          <a href="#primena" onClick={closeMenu}>
+            <span>01</span> {content.nav[0]}
+          </a>
+          <a href="#platforme" onClick={closeMenu}>
+            <span>02</span> {content.nav[1]}
+          </a>
+          <a href="#poredjenje" onClick={closeMenu}>
+            <span>03</span> {content.nav[2]}
+          </a>
+          <a href="#upit" onClick={closeMenu}>
+            <span>04</span> {content.nav[3]}
+          </a>
+        </div>
+        <div className={styles.mobilePageGroup}>
+          <small className={styles.mobileNavLabel}>{mobileCopy.otherPages}</small>
+          <Link className={styles.mobilePageLink} href={getLocalizedPath("solar", locale)} onClick={closeMenu}>
+            {mobileCopy.solar}
+          </Link>
+          <Link className={styles.mobilePageLink} href={getLocalizedPath("security", locale)} onClick={closeMenu}>
+            {mobileCopy.security}
+          </Link>
+          <Link className={styles.mobilePageLink} href={getLocalizedPath("about", locale)} onClick={closeMenu}>
+            {mobileCopy.about}
+          </Link>
+        </div>
+      </nav>
     </header>
   );
 }

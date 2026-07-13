@@ -231,7 +231,45 @@
 
 .mobileNavOpen {
   display: grid;
+  gap: 10px;
+}
+
+.mobileSectionGroup,
+.mobilePageGroup {
+  display: grid;
   gap: 3px;
+}
+
+.mobileNavLabel {
+  color: var(--color-muted);
+  font-size: 10px;
+  font-weight: 900;
+  letter-spacing: 0.12em;
+  padding: 8px 12px 4px;
+  text-transform: uppercase;
+}
+
+.mobilePageGroup {
+  border-top: 1px solid rgba(22, 24, 29, 0.1);
+  padding-top: 8px;
+}
+
+.mobileNav .mobilePageLink {
+  border: 1px solid rgba(22, 24, 29, 0.08);
+  background:
+    radial-gradient(circle at 92% 28%, rgba(29, 78, 216, 0.11), transparent 6rem),
+    linear-gradient(rgba(16, 23, 34, 0.94), rgba(10, 14, 21, 0.94));
+  color: #ffffff;
+
+  &::after {
+    background: var(--color-primary);
+  }
+
+  &:hover {
+    background:
+      radial-gradient(circle at 92% 28%, rgba(245, 158, 11, 0.16), transparent 6rem),
+      linear-gradient(rgba(16, 23, 34, 0.96), rgba(10, 14, 21, 0.96));
+  }
 }
 
 .headerCta {
@@ -261,7 +299,7 @@
 
 @media (max-width: 1050px) {
   .header {
-    grid-template-columns: 1fr auto auto auto;
+    grid-template-columns: 1fr auto auto;
   }
 
   .nav {
@@ -287,16 +325,10 @@
   }
 
   .headerCta {
-    min-height: 42px;
-    padding: 0 13px;
-    font-size: 13px;
-  }
-
-  .languageSwitch {
     display: none;
   }
 
-  .mobileLanguageSwitch {
+  .languageSwitch {
     display: inline-flex;
   }
 }
