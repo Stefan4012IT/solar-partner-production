@@ -1,11 +1,11 @@
 "use client";
 
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { usePathname, useSearchParams } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 import { siteContent } from "@/content/site";
 import {
-  getLocaleFromPathname,
+  getLocaleFromValue,
   getLocalizedPath,
   getRouteKey,
   type Locale,
@@ -15,14 +15,14 @@ import styles from "./SiteHeader.module.scss";
 
 export function SiteHeader({ locale }: { locale?: Locale } = {}) {
   const pathname = usePathname();
-  const currentLocale = locale ?? getLocaleFromPathname(pathname);
+  const searchParams = useSearchParams();
+  const currentLocale = locale ?? getLocaleFromValue(searchParams.get("lang"));
   const routeKey = getRouteKey(pathname);
   const copy = siteContent[currentLocale];
   const [isVisible, setIsVisible] = useState(true);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const lastScrollY = useRef(0);
-  const sectionHref = (hash: string) =>
-    routeKey === "solar" ? hash : withHash(getLocalizedPath("solar", currentLocale), hash);
+  const sectionHref = (hash: string) => withHash(getLocalizedPath("solar", currentLocale), hash);
   const languageHref = (nextLocale: Locale) => getLocalizedPath(routeKey, nextLocale);
 
   useEffect(() => {

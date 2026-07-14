@@ -4,26 +4,11 @@ export const locales: Locale[] = ["sr", "en"];
 export const defaultLocale: Locale = "sr";
 
 export const localizedRoutes = {
-  intro: {
-    sr: "/sr",
-    en: "/en",
-  },
-  solar: {
-    sr: "/sr/solarni-sistemi",
-    en: "/en/solar-systems",
-  },
-  drones: {
-    sr: "/sr/dronovi",
-    en: "/en/drones",
-  },
-  security: {
-    sr: "/sr/sigurnosni-sistemi",
-    en: "/en/security-systems",
-  },
-  about: {
-    sr: "/sr/o-nama",
-    en: "/en/about",
-  },
+  intro: "/",
+  solar: "/solarni-sistemi",
+  drones: "/dronovi",
+  security: "/sigurnosni-sistemi",
+  about: "/o-nama",
 } as const;
 
 export type RouteKey = keyof typeof localizedRoutes;
@@ -38,10 +23,6 @@ const legacyRouteMap: Record<string, RouteKey> = {
   "/o-nama": "about",
 };
 
-const localizedRouteEntries = Object.entries(localizedRoutes) as Array<
-  [RouteKey, Record<Locale, string>]
->;
-
 export function isLocale(value: string): value is Locale {
   return locales.includes(value as Locale);
 }
@@ -53,12 +34,6 @@ export function getRouteKey(pathname: string): RouteKey {
     return legacyRouteMap[cleanPath];
   }
 
-  for (const [key, paths] of localizedRouteEntries) {
-    if (Object.values(paths).includes(cleanPath)) {
-      return key;
-    }
-  }
-
   return "intro";
 }
 
@@ -68,10 +43,24 @@ export function getLocaleFromPathname(pathname: string): Locale {
   return firstSegment && isLocale(firstSegment) ? firstSegment : defaultLocale;
 }
 
-export function getLocalizedPath(routeKey: RouteKey, locale: Locale) {
-  return localizedRoutes[routeKey][locale];
+export function getLocaleFromValue(value?: string | string[] | null): Locale {
+  const locale = Array.isArray(value) ? value[0] : value;
+
+  return locale && isLocale(locale) ? locale : defaultLocale;
+}
+
+export function getLocalizedPath(routeKey: RouteKey, locale?: Locale) {
+  const path = localizedRoutes[routeKey];
+
+  return locale && locale !== defaultLocale ? `${path}?lang=${locale}` : path;
 }
 
 export function withHash(path: string, hash?: string) {
-  return hash ? `${path}${hash}` : path;
+  if (!hash) {
+    return path;
+  }
+
+  const [basePath, queryString] = path.split("?");
+
+  return queryString ? `${basePath}?${queryString}${hash}` : `${basePath}${hash}`;
 }

@@ -1,14 +1,19 @@
-import type { Metadata } from "next";
-import { getIntroContent } from "@/content/intro";
+"use client";
+
+import { useSearchParams } from "next/navigation";
+import { Suspense } from "react";
+import { getLocaleFromValue } from "@/lib/i18n";
 import { IntroExperience } from "./intro/IntroExperience";
 
-const content = getIntroContent("sr");
-
-export const metadata: Metadata = {
-  title: content.metadata.title,
-  description: content.metadata.description,
-};
-
 export default function Home() {
-  return <IntroExperience />;
+  return (
+    <Suspense fallback={null}>
+      <HomeContent />
+    </Suspense>
+  );
+}
+
+function HomeContent() {
+  const searchParams = useSearchParams();
+  return <IntroExperience locale={getLocaleFromValue(searchParams.get("lang"))} />;
 }

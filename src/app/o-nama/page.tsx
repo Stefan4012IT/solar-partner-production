@@ -1,21 +1,17 @@
-import type { Metadata } from "next";
+"use client";
+
+import { useSearchParams } from "next/navigation";
 import { Red_Hat_Display } from "next/font/google";
+import { Suspense } from "react";
 import { SiteHeader } from "@/components/SiteHeader";
 import { getAboutContent } from "@/content/about";
-import { getLocalizedPath, type Locale } from "@/lib/i18n";
+import { getLocaleFromValue, getLocalizedPath, type Locale } from "@/lib/i18n";
 import styles from "./page.module.scss";
 
 const redHatDisplay = Red_Hat_Display({
   subsets: ["latin", "latin-ext"],
   weight: ["400", "500", "600", "700", "800", "900"],
 });
-
-const srContent = getAboutContent("sr");
-
-export const metadata: Metadata = {
-  title: srContent.metadata.title,
-  description: srContent.metadata.description,
-};
 
 export function AboutPage({ locale = "sr" }: { locale?: Locale } = {}) {
   const content = getAboutContent(locale);
@@ -97,5 +93,14 @@ export function AboutPage({ locale = "sr" }: { locale?: Locale } = {}) {
 }
 
 export default function AboutRoute() {
-  return <AboutPage />;
+  return (
+    <Suspense fallback={null}>
+      <AboutRouteContent />
+    </Suspense>
+  );
+}
+
+function AboutRouteContent() {
+  const searchParams = useSearchParams();
+  return <AboutPage locale={getLocaleFromValue(searchParams.get("lang"))} />;
 }

@@ -1,10 +1,12 @@
-import type { Metadata } from "next";
+"use client";
+
+import { useSearchParams } from "next/navigation";
 import Image from "next/image";
 import { Red_Hat_Display } from "next/font/google";
-import type { CSSProperties } from "react";
+import { Suspense, type CSSProperties } from "react";
 import { getSecurityContent } from "@/content/security";
 import { assetPath } from "@/lib/assetPath";
-import type { Locale } from "@/lib/i18n";
+import { getLocaleFromValue, type Locale } from "@/lib/i18n";
 import { SecurityHeader } from "./SecurityHeader";
 import styles from "./page.module.scss";
 
@@ -13,13 +15,6 @@ const redHatDisplay = Red_Hat_Display({
   weight: ["400", "500", "600", "700", "800", "900"],
   variable: "--font-security-display",
 });
-
-const srContent = getSecurityContent("sr");
-
-export const metadata: Metadata = {
-  title: srContent.metadata.title,
-  description: srContent.metadata.description,
-};
 
 export function SecuritySystemsPage({ locale = "sr" }: { locale?: Locale } = {}) {
   const content = getSecurityContent(locale);
@@ -206,5 +201,14 @@ export function SecuritySystemsPage({ locale = "sr" }: { locale?: Locale } = {})
 }
 
 export default function SecuritySystemsRoute() {
-  return <SecuritySystemsPage />;
+  return (
+    <Suspense fallback={null}>
+      <SecuritySystemsRouteContent />
+    </Suspense>
+  );
+}
+
+function SecuritySystemsRouteContent() {
+  const searchParams = useSearchParams();
+  return <SecuritySystemsPage locale={getLocaleFromValue(searchParams.get("lang"))} />;
 }

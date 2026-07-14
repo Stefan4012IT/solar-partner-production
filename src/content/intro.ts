@@ -14,7 +14,7 @@ export const introContent = {
         title: "Solarni sistemi",
         text:
           "Projektovanje, oprema, montaža i podrška pri priključenju solarnih elektrana za kuće, firme i industrijske objekte.",
-        href: "/sr/solarni-sistemi",
+        href: "/solarni-sistemi",
         cta: "Uđite u solarne sisteme",
         poster: "/solar-partne-hero--000.png",
         tone: "solar",
@@ -25,7 +25,7 @@ export const introContent = {
         title: "Profesionalni dronovi",
         text:
           "Enterprise platforme za energetiku, infrastrukturu, bezbednost i sve zadatke gde je bitna pouzdanost podataka.",
-        href: "/sr/dronovi",
+        href: "/dronovi",
         cta: "Pogledajte dronove",
         poster: "/drone/enterprise-uav-hero.png",
         mobilePoster: "/drone/intro_dron_mob_1.1.png",
@@ -37,7 +37,7 @@ export const introContent = {
         title: "Sigurnosni sistemi",
         text:
           "Video nadzor, alarmi, kontrola pristupa, interfoni i integracija tehničke zaštite za objekte kojima je potrebna pouzdana kontrola.",
-        href: "/sr/sigurnosni-sistemi",
+        href: "/sigurnosni-sistemi",
         cta: "Pogledajte sigurnosne sisteme",
         poster: "/security/security_intro.png",
         mobilePoster: "/security/intro_security_mob_1.1.png",
@@ -49,7 +49,7 @@ export const introContent = {
         title: "O nama",
         text:
           "Saznajte kako Solar Partner povezuje solarnu energiju, profesionalne dronove i tehničku zaštitu u jasna projektna rešenja.",
-        href: "/sr/o-nama",
+        href: "/o-nama",
         cta: "Upoznajte kompaniju",
         poster: "/projects/hibridno_resenje_01.png",
         tone: "about",
@@ -69,7 +69,7 @@ export const introContent = {
         title: "Solar systems",
         text:
           "Design, equipment, installation and grid connection support for solar power systems for homes, businesses and industrial facilities.",
-        href: "/en/solar-systems",
+        href: "/solarni-sistemi?lang=en",
         cta: "Enter solar systems",
         poster: "/solar-partne-hero--000.png",
         tone: "solar",
@@ -80,7 +80,7 @@ export const introContent = {
         title: "Professional drones",
         text:
           "Enterprise platforms for energy, infrastructure, security and every task where reliable data matters.",
-        href: "/en/drones",
+        href: "/dronovi?lang=en",
         cta: "View drones",
         poster: "/drone/enterprise-uav-hero.png",
         mobilePoster: "/drone/intro_dron_mob_1.1.png",
@@ -92,7 +92,7 @@ export const introContent = {
         title: "Security systems",
         text:
           "Video surveillance, alarms, access control, intercoms and integrated technical security for facilities that need reliable control.",
-        href: "/en/security-systems",
+        href: "/sigurnosni-sistemi?lang=en",
         cta: "View security systems",
         poster: "/security/security_intro.png",
         mobilePoster: "/security/intro_security_mob_1.1.png",
@@ -104,7 +104,7 @@ export const introContent = {
         title: "About",
         text:
           "Learn how Solar Partner connects solar energy, professional drones and technical security into clear project solutions.",
-        href: "/en/about",
+        href: "/o-nama?lang=en",
         cta: "Meet the company",
         poster: "/projects/hibridno_resenje_01.png",
         tone: "about",

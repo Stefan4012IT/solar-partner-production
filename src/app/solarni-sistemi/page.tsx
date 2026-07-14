@@ -1,14 +1,19 @@
-import type { Metadata } from "next";
-import { getSolarContent } from "@/content/solar";
+"use client";
+
+import { useSearchParams } from "next/navigation";
+import { Suspense } from "react";
+import { getLocaleFromValue } from "@/lib/i18n";
 import { SolarSystemsPage } from "./SolarSystemsPage";
 
-const content = getSolarContent("sr");
-
-export const metadata: Metadata = {
-  title: content.metadata.title,
-  description: content.metadata.description,
-};
-
 export default function SolarSystemsRoute() {
-  return <SolarSystemsPage />;
+  return (
+    <Suspense fallback={null}>
+      <SolarSystemsRouteContent />
+    </Suspense>
+  );
+}
+
+function SolarSystemsRouteContent() {
+  const searchParams = useSearchParams();
+  return <SolarSystemsPage locale={getLocaleFromValue(searchParams.get("lang"))} />;
 }
