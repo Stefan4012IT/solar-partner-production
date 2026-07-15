@@ -6,6 +6,7 @@ import { useEffect, useRef, useState } from "react";
 import { siteContent } from "@/content/site";
 import {
   getLocaleFromValue,
+  getLocalizedHref,
   getLocalizedPath,
   getRouteKey,
   type Locale,
@@ -22,8 +23,14 @@ export function SiteHeader({ locale }: { locale?: Locale } = {}) {
   const [isVisible, setIsVisible] = useState(true);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const lastScrollY = useRef(0);
-  const sectionHref = (hash: string) => withHash(getLocalizedPath("solar", currentLocale), hash);
+  const sectionHref = (hash: string) => withHash(getLocalizedHref("solar", currentLocale), hash);
   const languageHref = (nextLocale: Locale) => getLocalizedPath(routeKey, nextLocale);
+  const solutionLinks = [
+    { key: "solar" as const, label: copy.nav.solar },
+    { key: "drones" as const, label: copy.nav.drones },
+    { key: "security" as const, label: copy.nav.security },
+    { key: "about" as const, label: copy.nav.about },
+  ].filter((item) => item.key !== routeKey);
 
   useEffect(() => {
     const onScroll = () => {
@@ -65,12 +72,14 @@ export function SiteHeader({ locale }: { locale?: Locale } = {}) {
         <span>{copy.brand}</span>
       </Link>
       <nav className={styles.nav} aria-label="Glavna navigacija">
-        <a href={sectionHref("#resenja")}>{copy.nav.solutions}</a>
-        <a href={sectionHref("#proces")}>{copy.nav.process}</a>
-        <a href={sectionHref("#projekti")}>{copy.nav.projects}</a>
-        <Link href={getLocalizedPath("drones", currentLocale)}>{copy.nav.drones}</Link>
-        <Link href={getLocalizedPath("about", currentLocale)}>{copy.nav.about}</Link>
-        <a href={sectionHref("#kontakt")}>{copy.nav.contact}</a>
+        {routeKey === "solar" && (
+          <>
+            <a href={sectionHref("#resenja")}>{copy.nav.solutions}</a>
+            <a href={sectionHref("#proces")}>{copy.nav.process}</a>
+            <a href={sectionHref("#projekti")}>{copy.nav.projects}</a>
+            <a href={sectionHref("#kontakt")}>{copy.nav.contact}</a>
+          </>
+        )}
       </nav>
       <div className={styles.languageSwitch} aria-label="Language switcher">
         <Link className={currentLocale === "sr" ? styles.activeLanguage : ""} href={languageHref("sr")}>
@@ -80,9 +89,19 @@ export function SiteHeader({ locale }: { locale?: Locale } = {}) {
           EN
         </Link>
       </div>
-      <a className={styles.headerCta} href={sectionHref("#kontakt")}>
-        {copy.cta.assessment}
-      </a>
+      <div className={styles.solutionsDropdown}>
+        <button className={styles.solutionsToggle} type="button" aria-haspopup="true">
+          {copy.nav.otherPages}
+          <span aria-hidden="true" />
+        </button>
+        <div className={styles.solutionsMenu}>
+          {solutionLinks.map((item) => (
+            <Link key={item.key} href={getLocalizedPath(item.key, currentLocale)}>
+              {item.label}
+            </Link>
+          ))}
+        </div>
+      </div>
       <button
         className={`${styles.menuButton} ${isMenuOpen ? styles.menuButtonOpen : ""}`}
         type="button"

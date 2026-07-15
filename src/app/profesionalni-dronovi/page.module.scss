@@ -445,6 +445,105 @@
   color: var(--drone-accent-blue);
 }
 
+.solutionsDropdown {
+  position: relative;
+  z-index: 4;
+
+  &::after {
+    position: absolute;
+    top: 100%;
+    right: 0;
+    left: 0;
+    height: 10px;
+    content: "";
+  }
+}
+
+.solutionsToggle {
+  display: inline-flex;
+  min-height: 48px;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  border: 1px solid rgba(56, 189, 248, 0.24);
+  background:
+    radial-gradient(circle at 86% 18%, rgba(56, 189, 248, 0.22), transparent 4rem),
+    linear-gradient(rgba(10, 14, 21, 0.92), rgba(15, 23, 42, 0.9));
+  color: var(--drone-text);
+  cursor: pointer;
+  font-size: 12px;
+  font-weight: 900;
+  letter-spacing: 0.04em;
+  overflow: hidden;
+  padding: 0 0 0 18px;
+  text-transform: uppercase;
+
+  i {
+    display: grid;
+    align-self: stretch;
+    width: 38px;
+    min-height: 100%;
+    place-items: center;
+    border-left: 1px solid rgba(226, 232, 240, 0.2);
+    color: var(--drone-accent-blue);
+    font-style: normal;
+
+    &::before {
+      width: 7px;
+      height: 7px;
+      border-right: 2px solid currentColor;
+      border-bottom: 2px solid currentColor;
+      content: "";
+      transform: translateY(-1px) rotate(45deg);
+    }
+  }
+}
+
+.solutionsMenu {
+  position: absolute;
+  top: calc(100% + 9px);
+  right: 0;
+  display: grid;
+  min-width: 230px;
+  gap: 4px;
+  border: 1px solid var(--drone-line);
+  background:
+    radial-gradient(circle at 88% 12%, rgba(56, 189, 248, 0.14), transparent 7rem),
+    linear-gradient(rgba(10, 14, 21, 0.98), rgba(15, 23, 42, 0.96));
+  box-shadow: 0 22px 54px rgba(0, 0, 0, 0.28);
+  opacity: 0;
+  padding: 8px;
+  pointer-events: none;
+  transform: translateY(-6px);
+  transition:
+    opacity 160ms ease,
+    transform 160ms ease;
+  backdrop-filter: blur(18px);
+
+  a {
+    border: 1px solid transparent;
+    color: var(--drone-text);
+    font-size: 12px;
+    font-weight: 850;
+    letter-spacing: 0.04em;
+    padding: 12px;
+    text-transform: uppercase;
+
+    &:hover {
+      border-color: rgba(56, 189, 248, 0.22);
+      background: rgba(56, 189, 248, 0.08);
+      color: var(--drone-accent-blue);
+    }
+  }
+}
+
+.solutionsDropdown:hover .solutionsMenu,
+.solutionsDropdown:focus-within .solutionsMenu {
+  opacity: 1;
+  pointer-events: auto;
+  transform: translateY(0);
+}
+
 .hero {
   position: relative;
   isolation: isolate;
@@ -1545,6 +1644,10 @@
   }
 
   .headerCta {
+    display: none;
+  }
+
+  .solutionsDropdown {
     display: none;
   }
 

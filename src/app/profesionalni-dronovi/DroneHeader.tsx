@@ -75,6 +75,11 @@ export function DroneHeader({
   }, [isMenuOpen]);
 
   const closeMenu = () => setIsMenuOpen(false);
+  const solutionLinks = [
+    { key: "solar" as const, label: mobileCopy.solar },
+    { key: "security" as const, label: mobileCopy.security },
+    { key: "about" as const, label: mobileCopy.about },
+  ];
 
   return (
     <header
@@ -113,10 +118,19 @@ export function DroneHeader({
           EN
         </Link>
       </div>
-      <a className={styles.headerCta} href="#upit">
-        <span>{content.cta}</span>
-        <i aria-hidden="true">↗</i>
-      </a>
+      <div className={styles.solutionsDropdown}>
+        <button className={styles.solutionsToggle} type="button" aria-haspopup="true">
+          {mobileCopy.otherPages}
+          <i aria-hidden="true" />
+        </button>
+        <div className={styles.solutionsMenu}>
+          {solutionLinks.map((item) => (
+            <Link key={item.key} href={getLocalizedPath(item.key, locale)}>
+              {item.label}
+            </Link>
+          ))}
+        </div>
+      </div>
       <button
         className={`${styles.menuButton} ${isMenuOpen ? styles.menuButtonOpen : ""}`}
         type="button"

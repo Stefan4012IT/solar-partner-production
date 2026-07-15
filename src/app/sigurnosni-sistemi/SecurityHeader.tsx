@@ -71,6 +71,11 @@ export function SecurityHeader({
   }, [isMenuOpen]);
 
   const closeMenu = () => setIsMenuOpen(false);
+  const solutionLinks = [
+    { key: "solar" as const, label: mobileCopy.solar },
+    { key: "drones" as const, label: mobileCopy.drones },
+    { key: "about" as const, label: mobileCopy.about },
+  ];
 
   return (
     <header className={`${styles.header} ${isVisible ? styles.headerVisible : styles.headerHidden}`}>
@@ -105,10 +110,19 @@ export function SecurityHeader({
           EN
         </Link>
       </div>
-      <a className={styles.headerCta} href="#kontakt">
-        <span>{content.cta}</span>
-        <i aria-hidden="true">↗</i>
-      </a>
+      <div className={styles.solutionsDropdown}>
+        <button className={styles.solutionsToggle} type="button" aria-haspopup="true">
+          {mobileCopy.otherPages}
+          <i aria-hidden="true" />
+        </button>
+        <div className={styles.solutionsMenu}>
+          {solutionLinks.map((item) => (
+            <Link key={item.key} href={getLocalizedPath(item.key, locale)}>
+              {item.label}
+            </Link>
+          ))}
+        </div>
+      </div>
       <button
         className={`${styles.menuButton} ${isMenuOpen ? styles.menuButtonOpen : ""}`}
         type="button"

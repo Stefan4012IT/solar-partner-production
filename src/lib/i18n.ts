@@ -2,6 +2,7 @@ export type Locale = "sr" | "en";
 
 export const locales: Locale[] = ["sr", "en"];
 export const defaultLocale: Locale = "sr";
+const basePath = process.env.NEXT_PUBLIC_BASE_PATH ?? "";
 
 export const localizedRoutes = {
   intro: "/",
@@ -28,7 +29,9 @@ export function isLocale(value: string): value is Locale {
 }
 
 export function getRouteKey(pathname: string): RouteKey {
-  const cleanPath = pathname === "" ? "/" : pathname.replace(/\/$/, "") || "/";
+  const pathWithoutBase =
+    basePath && pathname.startsWith(basePath) ? pathname.slice(basePath.length) || "/" : pathname;
+  const cleanPath = pathWithoutBase === "" ? "/" : pathWithoutBase.replace(/\/$/, "") || "/";
 
   if (legacyRouteMap[cleanPath]) {
     return legacyRouteMap[cleanPath];
@@ -53,6 +56,18 @@ export function getLocalizedPath(routeKey: RouteKey, locale?: Locale) {
   const path = localizedRoutes[routeKey];
 
   return locale && locale !== defaultLocale ? `${path}?lang=${locale}` : path;
+}
+
+export function getPublicPath(path: string) {
+  if (!basePath || path.startsWith("#") || path.startsWith("http") || path.startsWith("mailto:") || path.startsWith("tel:")) {
+    return path;
+  }
+
+  return path === "/" ? basePath : `${basePath}${path}`;
+}
+
+export function getLocalizedHref(routeKey: RouteKey, locale?: Locale) {
+  return getPublicPath(getLocalizedPath(routeKey, locale));
 }
 
 export function withHash(path: string, hash?: string) {

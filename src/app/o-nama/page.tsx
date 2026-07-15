@@ -5,7 +5,7 @@ import { Red_Hat_Display } from "next/font/google";
 import { Suspense } from "react";
 import { SiteHeader } from "@/components/SiteHeader";
 import { getAboutContent } from "@/content/about";
-import { getLocaleFromValue, getLocalizedPath, type Locale } from "@/lib/i18n";
+import { getLocaleFromValue, getLocalizedHref, withHash, type Locale } from "@/lib/i18n";
 import styles from "./page.module.scss";
 
 const redHatDisplay = Red_Hat_Display({
@@ -15,6 +15,7 @@ const redHatDisplay = Red_Hat_Display({
 
 export function AboutPage({ locale = "sr" }: { locale?: Locale } = {}) {
   const content = getAboutContent(locale);
+  const solarContactHref = withHash(getLocalizedHref("solar", locale), "#kontakt");
 
   return (
     <main className={`${redHatDisplay.className} ${styles.page}`}>
@@ -73,7 +74,7 @@ export function AboutPage({ locale = "sr" }: { locale?: Locale } = {}) {
         <p className={styles.eyebrow}>{content.cta.eyebrow}</p>
         <h2>{content.cta.title}</h2>
         <p>{content.cta.text}</p>
-        <a href={`${getLocalizedPath("solar", locale)}#kontakt`}>{content.cta.link}</a>
+        <a href={solarContactHref}>{content.cta.link}</a>
       </section>
 
       <footer className={styles.footer}>
@@ -82,10 +83,10 @@ export function AboutPage({ locale = "sr" }: { locale?: Locale } = {}) {
           <p>{content.footer.text}</p>
         </div>
         <nav aria-label="Footer navigacija">
-          <a href={getLocalizedPath("solar", locale)}>{content.footer.links[0]}</a>
-          <a href={getLocalizedPath("drones", locale)}>{content.footer.links[1]}</a>
-          <a href={getLocalizedPath("security", locale)}>{content.footer.links[2]}</a>
-          <a href={`${getLocalizedPath("solar", locale)}#kontakt`}>{content.footer.links[3]}</a>
+          <a href={getLocalizedHref("solar", locale)}>{content.footer.links[0]}</a>
+          <a href={getLocalizedHref("drones", locale)}>{content.footer.links[1]}</a>
+          <a href={getLocalizedHref("security", locale)}>{content.footer.links[2]}</a>
+          <a href={solarContactHref}>{content.footer.links[3]}</a>
         </nav>
       </footer>
     </main>
