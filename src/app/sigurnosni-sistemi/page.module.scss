@@ -974,6 +974,11 @@
   background-size: 72px 72px, 72px 72px, auto, auto;
   color: #ffffff;
 
+  > div,
+  > form {
+    min-width: 0;
+  }
+
   h2 {
     max-width: 700px;
     margin-top: 14px;
@@ -992,6 +997,10 @@
 
 .form {
   display: grid;
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
+  box-sizing: border-box;
   gap: 14px;
   border: 1px solid rgba(56, 189, 248, 0.2);
   background:
@@ -1002,6 +1011,7 @@
 
 .field {
   display: grid;
+  min-width: 0;
   gap: 7px;
 
   label {
@@ -1014,6 +1024,9 @@
 
   input,
   select {
+    width: 100%;
+    min-width: 0;
+    box-sizing: border-box;
     min-height: 48px;
     border: 1px solid rgba(255, 255, 255, 0.16);
     border-radius: 0;
@@ -1038,6 +1051,9 @@
 }
 
 .form button {
+  width: 100%;
+  min-width: 0;
+  box-sizing: border-box;
   min-height: 52px;
   border: 0;
   cursor: pointer;
@@ -1220,5 +1236,27 @@
   .complianceSection,
   .contactSection {
     padding-inline: 18px;
+  }
+
+  .contactSection {
+    gap: 26px;
+  }
+
+  .form {
+    padding: 14px;
+  }
+}
+
+@media (max-width: 380px) {
+  .section,
+  .analyticsSection,
+  .equipmentSection,
+  .complianceSection,
+  .contactSection {
+    padding-inline: 12px;
+  }
+
+  .form {
+    padding: 12px;
   }
 }
