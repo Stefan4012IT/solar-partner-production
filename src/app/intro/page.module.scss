@@ -361,24 +361,11 @@
 }
 
 .motionLayer {
-  position: absolute;
-  z-index: 1;
-  inset: -18%;
-  mix-blend-mode: screen;
-  opacity: calc(0.28 + (var(--transition-progress) * 0.14));
-  animation: drift 8s ease-in-out infinite alternate;
+  display: none;
 }
 
 .scanline {
-  position: absolute;
-  z-index: 2;
-  inset: 0;
-  background:
-    linear-gradient(110deg, transparent 0 32%, rgba(255, 255, 255, 0.18) 46%, transparent 62%),
-    repeating-linear-gradient(0deg, rgba(255, 255, 255, 0.035) 0 1px, transparent 1px 6px);
-  opacity: calc(0.08 + (var(--transition-progress) * 0.12));
-  transform: translateX(-22%);
-  animation: scan 6s ease-in-out infinite;
+  display: none;
 }
 
 .solar .motionLayer {

@@ -1,0 +1,106 @@
+.overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 2200;
+  display: grid;
+  place-items: center;
+  padding: 20px;
+  background: rgba(4, 9, 18, 0.68);
+  backdrop-filter: blur(12px) saturate(112%);
+}
+
+.dialog {
+  position: relative;
+  width: min(100%, 460px);
+  border: 1px solid rgba(56, 189, 248, 0.24);
+  border-radius: 18px;
+  background:
+    linear-gradient(135deg, rgba(245, 158, 11, 0.16), transparent 42%),
+    linear-gradient(180deg, rgba(16, 31, 48, 0.98), rgba(7, 17, 30, 0.98));
+  box-shadow: 0 30px 90px rgba(0, 0, 0, 0.38);
+  color: #ffffff;
+  padding: 34px;
+}
+
+.closeButton {
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  display: grid;
+  width: 38px;
+  height: 38px;
+  place-items: center;
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.08);
+  color: #ffffff;
+  cursor: pointer;
+  font-size: 24px;
+  line-height: 1;
+}
+
+.statusMark {
+  display: grid;
+  width: 54px;
+  height: 54px;
+  margin-bottom: 20px;
+  place-items: center;
+  border-radius: 16px;
+  background: #f59e0b;
+  color: #07111f;
+  font-size: 28px;
+  font-weight: 900;
+}
+
+.eyebrow {
+  margin: 0 0 10px;
+  color: #fbbf24;
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.dialog h2 {
+  margin: 0;
+  color: #ffffff;
+  font-size: clamp(28px, 5vw, 40px);
+  font-weight: 760;
+  line-height: 1.04;
+}
+
+.dialog p:not(.eyebrow) {
+  margin: 16px 0 0;
+  color: rgba(255, 255, 255, 0.76);
+  font-size: 16px;
+  line-height: 1.65;
+}
+
+.actionButton {
+  display: inline-flex;
+  min-height: 46px;
+  align-items: center;
+  justify-content: center;
+  border: 0;
+  border-radius: 14px;
+  margin-top: 24px;
+  background: #f59e0b;
+  color: #07111f;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 800;
+  padding: 0 22px;
+}
+
+@media (max-width: 560px) {
+  .overlay {
+    align-items: end;
+    padding: 12px;
+  }
+
+  .dialog {
+    width: 100%;
+    border-radius: 18px 18px 10px 10px;
+    padding: 28px 22px 22px;
+  }
+}
