@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import { FloatingContact } from "@/components/FloatingContact";
+import { getIntroContent } from "@/content/intro";
+import { createPageMetadata } from "@/lib/metadata";
 import "./globals.scss";
 
 const geistSans = Geist({
@@ -13,10 +15,28 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
+const basePath = process.env.NEXT_PUBLIC_BASE_PATH ?? "";
+const brandIconPath = `${basePath}/brand/solar_logo_001.svg`;
+const homeMetadata = getIntroContent("sr").metadata;
+
 export const metadata: Metadata = {
-  title: "Solarne elektrane za kuće i firme | Solar Partner",
-  description:
-    "Kompletna solarna rešenja za domaćinstva, firme i industrijske objekte u Srbiji. Projektovanje, oprema, ugradnja i podrška pri priključenju.",
+  ...createPageMetadata({
+    title: homeMetadata.title,
+    description: homeMetadata.description,
+    path: "/",
+    keywords: [
+      "Solar Partner",
+      "solarni sistemi",
+      "profesionalni dronovi",
+      "sigurnosni sistemi",
+      "tehnička rešenja Srbija",
+    ],
+  }),
+  icons: {
+    icon: [{ url: brandIconPath, type: "image/svg+xml" }],
+    shortcut: [{ url: brandIconPath, type: "image/svg+xml" }],
+    apple: [{ url: brandIconPath, type: "image/svg+xml" }],
+  },
 };
 
 export default function RootLayout({
