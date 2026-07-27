@@ -4,7 +4,7 @@
   bottom: clamp(16px, 2vw, 28px);
   z-index: 120;
   display: grid;
-  justify-items: center;
+  justify-items: end;
   gap: 7px;
   pointer-events: none;
 }
@@ -12,6 +12,7 @@
 .actionList,
 .actionListOpen {
   display: grid;
+  justify-items: end;
   gap: 8px;
   transform: translateY(10px);
   opacity: 0;
@@ -30,6 +31,7 @@
 .actionList a,
 .actionListOpen a {
   display: inline-flex;
+  width: 154px;
   align-items: center;
   gap: 10px;
   min-height: 44px;
@@ -65,20 +67,20 @@
   overflow: visible;
 }
 
+.launcherWrap {
+  justify-self: end;
+  pointer-events: auto;
+}
+
 .launcher {
-  width: 64px;
-  height: 64px;
+  display: grid;
+  justify-items: center;
+  gap: 7px;
   border: 0;
-  border-radius: 50%;
-  background:
-    radial-gradient(circle at 35% 28%, rgba(255, 255, 255, 0.46), transparent 28%),
-    linear-gradient(135deg, #f59e0b 0%, #f97316 52%, #1d4ed8 100%);
+  background: transparent;
   color: #ffffff;
   cursor: pointer;
-  pointer-events: auto;
-  box-shadow:
-    0 20px 45px rgba(7, 15, 31, 0.3),
-    0 0 0 8px rgba(245, 158, 11, 0.16);
+  box-shadow: none;
   transition:
     transform 180ms ease,
     box-shadow 180ms ease;
@@ -86,9 +88,7 @@
 
 .launcher:hover {
   transform: translateY(-2px);
-  box-shadow:
-    0 24px 52px rgba(7, 15, 31, 0.34),
-    0 0 0 10px rgba(245, 158, 11, 0.18);
+  box-shadow: none;
 }
 
 .launcher:focus-visible {
@@ -96,15 +96,20 @@
   outline-offset: 4px;
 }
 
-.launcher span {
+.launcherIcon {
   display: grid;
+  width: 64px;
+  height: 64px;
   place-items: center;
-  width: 100%;
-  height: 100%;
-  border-radius: inherit;
-  font-size: 1rem;
-  font-weight: 900;
-  letter-spacing: 0;
+  border-radius: 18px;
+  background: #071827;
+  overflow: hidden;
+
+  img {
+    display: block;
+    width: 100%;
+    height: 100%;
+  }
 }
 
 .launcherLabel {
@@ -122,7 +127,7 @@
   line-height: 1;
   text-align: center;
   pointer-events: none;
-  box-shadow: 0 12px 28px rgba(7, 15, 31, 0.22);
+  box-shadow: none;
   backdrop-filter: blur(12px);
 }
 
@@ -132,9 +137,10 @@
     bottom: 14px;
   }
 
-  .launcher {
+  .launcherIcon {
     width: 58px;
     height: 58px;
+    border-radius: 16px;
   }
 
   .launcherLabel {

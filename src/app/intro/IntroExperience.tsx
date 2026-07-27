@@ -3,8 +3,8 @@
 import Link from "next/link";
 import { Red_Hat_Display } from "next/font/google";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
-import { getIntroContent } from "@/content/intro";
 import { assetPath } from "@/lib/assetPath";
+import { getIntroContent } from "@/content/intro";
 import { getLocalizedPath, type Locale } from "@/lib/i18n";
 import styles from "./page.module.scss";
 
@@ -201,8 +201,9 @@ export function IntroExperience({ locale = "sr" }: { locale?: Locale } = {}) {
     <main ref={pageRef} className={`${redHatDisplay.className} ${styles.introPage}`} style={pageStyle}>
       <header className={styles.header}>
         <Link className={styles.brand} href="/" aria-label="Solar Partner početna">
-          <span>SP</span>
-          <strong>Solar Partner</strong>
+          <span>
+            <img src={assetPath("/brand/solar-partner-logo-011.svg")} alt="" aria-hidden="true" />
+          </span>
         </Link>
         <nav className={styles.headerNav} aria-label="Intro navigacija">
           {scenes.map((scene, index) => (

@@ -38,6 +38,7 @@ jobs:
         run: npm run build
         env:
           GITHUB_PAGES: "true"
+          NEXT_PUBLIC_LEADS_SCRIPT_URL: ${{ vars.NEXT_PUBLIC_LEADS_SCRIPT_URL }}
 
       - name: Preserve static assets
         run: touch out/.nojekyll

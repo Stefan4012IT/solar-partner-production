@@ -34,24 +34,27 @@
 .brand {
   display: inline-flex;
   align-items: center;
-  gap: 10px;
+  justify-content: flex-start;
   color: var(--color-dark);
   font-size: 16px;
   font-weight: 800;
 }
 
 .brandMark {
-  display: grid;
-  width: 42px;
-  height: 42px;
-  place-items: center;
-  border: 1px solid rgba(245, 158, 11, 0.28);
-  border-radius: 14px;
-  background: linear-gradient(#101722eb, #0a0e15eb);
-  color: var(--color-primary);
-  font-size: 12px;
-  font-weight: 800;
-  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.08);
+  display: flex;
+  width: clamp(138px, 14vw, 166px);
+  height: 50px;
+  align-items: center;
+  justify-content: flex-start;
+
+  img {
+    display: block;
+    width: auto;
+    max-width: 100%;
+    height: 100%;
+    object-fit: contain;
+    object-position: center center;
+  }
 }
 
 .nav {
@@ -418,8 +421,10 @@
     padding: 9px 10px;
   }
 
-  .brand span:last-child {
-    display: none;
+  .brandMark {
+    width: clamp(124px, 42vw, 154px);
+    height: 42px;
+    justify-content: flex-start;
   }
 
   .headerCta {

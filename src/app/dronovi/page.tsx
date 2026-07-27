@@ -6,7 +6,7 @@ import { Red_Hat_Display } from "next/font/google";
 import { Suspense } from "react";
 import { getDronePageContent } from "@/content/drones";
 import { assetPath } from "@/lib/assetPath";
-import { getLocaleFromValue, type Locale } from "@/lib/i18n";
+import { getLocaleFromValue, getLocalizedPath, type Locale } from "@/lib/i18n";
 import { DroneInquiryForm } from "../profesionalni-dronovi/DroneInquiryForm";
 import { DroneHeader } from "../profesionalni-dronovi/DroneHeader";
 import { HeroCarousel } from "../profesionalni-dronovi/HeroCarousel";
@@ -243,18 +243,44 @@ export function ProfessionalDronesPage({ locale = "sr" }: { locale?: Locale } = 
 
       <footer className={styles.footer}>
         <div>
-          <strong>Solar Partner</strong>
+          <img
+            className={styles.footerLogo}
+            src={assetPath("/brand/solar-parner-footer-02.svg")}
+            alt="Solar Partner"
+          />
           <p>{content.footer.text}</p>
+          <div className={styles.footerContact}>
+            <a href="mailto:office@solarpartner.rs">
+              <span>Email</span>
+              office@solarpartner.rs
+            </a>
+            <a href="tel:+381603471739">
+              <span>Telefon</span>
+              +381 60 3471739
+            </a>
+            <a href="tel:+381638495979">
+              <span>Telefon</span>
+              +381 63 8495979
+            </a>
+          </div>
         </div>
-        <nav aria-label="Footer navigacija">
-          <a href="#primena">{content.footer.links[0]}</a>
-          <a href="#platforme">{content.footer.links[1]}</a>
-          <a href="#poredjenje">{content.footer.links[2]}</a>
-          <a href="#upit">{content.footer.links[3]}</a>
-        </nav>
-        <a className={styles.footerCta} href="#upit">
-          {content.footer.cta}
-        </a>
+        <div className={styles.footerLinks}>
+          <nav aria-label="Footer navigacija">
+            <span>{locale === "en" ? "Sections" : "Sekcije"}</span>
+            <a href="#primena">{content.footer.links[0]}</a>
+            <a href="#platforme">{content.footer.links[1]}</a>
+            <a href="#poredjenje">{content.footer.links[2]}</a>
+            <a href="#upit">{content.footer.links[3]}</a>
+          </nav>
+          <nav aria-label="Footer ostala rešenja">
+            <span>{locale === "en" ? "Other solutions" : "Ostala rešenja"}</span>
+            <a href={getLocalizedPath("solar", locale)}>{locale === "en" ? "Solar systems" : "Solarni sistemi"}</a>
+            <a href={getLocalizedPath("security", locale)}>
+              {locale === "en" ? "Security systems" : "Sigurnosni sistemi"}
+            </a>
+            <a href={getLocalizedPath("about", locale)}>{locale === "en" ? "About" : "O nama"}</a>
+          </nav>
+        </div>
       </footer>
     </main>
   );

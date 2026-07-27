@@ -3,7 +3,8 @@ import { Red_Hat_Display } from "next/font/google";
 import { SiteHeader } from "@/components/SiteHeader";
 import { getSolarContent } from "@/content/solar";
 import { assetPath } from "@/lib/assetPath";
-import type { Locale } from "@/lib/i18n";
+import { getLocalizedPath, type Locale } from "@/lib/i18n";
+import { SolarLeadForm } from "./SolarLeadForm";
 import styles from "./page.module.scss";
 
 const redHatDisplay = Red_Hat_Display({
@@ -211,47 +212,50 @@ export function SolarSystemsPage({ locale = "sr" }: { locale?: Locale } = {}) {
           <h2>{content.sections.contact.title}</h2>
           <p>{content.sections.contact.text}</p>
         </div>
-        <form className={styles.contactForm}>
-          <div className={styles.formField}>
-            <label htmlFor="solar-name">{content.form.name}</label>
-            <input id="solar-name" name="name" type="text" autoComplete="name" />
-          </div>
-          <div className={styles.formField}>
-            <label htmlFor="solar-email">{content.form.email}</label>
-            <input id="solar-email" name="email" type="email" autoComplete="email" />
-          </div>
-          <div className={styles.formField}>
-            <label htmlFor="solar-phone">{content.form.phone}</label>
-            <input id="solar-phone" name="phone" type="tel" autoComplete="tel" />
-          </div>
-          <div className={styles.honeypot} aria-hidden="true">
-            <label htmlFor="solar-website">{content.form.website}</label>
-            <input
-              id="solar-website"
-              name="website"
-              type="text"
-              tabIndex={-1}
-              autoComplete="off"
-            />
-          </div>
-          <button className={styles.primaryButton} type="button">
-            {content.sections.contact.submit}
-          </button>
-        </form>
+        <SolarLeadForm content={content.form} submitLabel={content.sections.contact.submit} />
       </section>
 
       <footer className={styles.footer}>
         <div>
-          <strong>Solar Partner</strong>
+          <img
+            className={styles.footerLogo}
+            src={assetPath("/brand/solar-partner-footer-01.svg")}
+            alt="Solar Partner"
+          />
           <p>{content.footer.text}</p>
+          <div className={styles.footerContact}>
+            <a href="mailto:office@solarpartner.rs">
+              <span>Email</span>
+              office@solarpartner.rs
+            </a>
+            <a href="tel:+381603471739">
+              <span>Telefon</span>
+              +381 60 3471739
+            </a>
+            <a href="tel:+381638495979">
+              <span>Telefon</span>
+              +381 63 8495979
+            </a>
+          </div>
         </div>
-        <nav aria-label="Footer navigation">
-          <a href="#resenja">{content.footer.links.solutions}</a>
-          <a href="#proces">{content.footer.links.process}</a>
-          <a href="#projekti">{content.footer.links.projects}</a>
-          <a href="#faq">{content.footer.links.faq}</a>
-          <a href="#kontakt">{content.footer.links.contact}</a>
-        </nav>
+        <div className={styles.footerLinks}>
+          <nav aria-label="Footer navigation">
+            <span>{locale === "en" ? "Sections" : "Sekcije"}</span>
+            <a href="#resenja">{content.footer.links.solutions}</a>
+            <a href="#proces">{content.footer.links.process}</a>
+            <a href="#projekti">{content.footer.links.projects}</a>
+            <a href="#faq">{content.footer.links.faq}</a>
+            <a href="#kontakt">{content.footer.links.contact}</a>
+          </nav>
+          <nav aria-label="Footer other solutions">
+            <span>{locale === "en" ? "Other solutions" : "Ostala rešenja"}</span>
+            <a href={getLocalizedPath("drones", locale)}>{locale === "en" ? "Drones" : "Dronovi"}</a>
+            <a href={getLocalizedPath("security", locale)}>
+              {locale === "en" ? "Security systems" : "Sigurnosni sistemi"}
+            </a>
+            <a href={getLocalizedPath("about", locale)}>{locale === "en" ? "About" : "O nama"}</a>
+          </nav>
+        </div>
       </footer>
     </main>
   );

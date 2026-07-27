@@ -2,12 +2,13 @@
 
 import { usePathname } from "next/navigation";
 import { useState } from "react";
+import { assetPath } from "@/lib/assetPath";
 import styles from "./FloatingContact.module.scss";
 
-const phoneDisplay = "Broj telefona";
-const phoneHref = "#kontakt";
-const whatsappHref = "#kontakt";
-const viberHref = "#kontakt";
+const phoneDisplay = "Telefon";
+const phoneHref = "tel:+381603471739";
+const whatsappHref = "https://wa.me/381603471739";
+const viberHref = "viber://chat?number=%2B381603471739";
 
 const contactActions = [
   {
@@ -59,7 +60,15 @@ export function FloatingContact() {
   const [isOpen, setIsOpen] = useState(false);
   const normalizedPathname = pathname.replace(/\/$/, "");
 
-  if (!normalizedPathname || normalizedPathname === "/intro" || normalizedPathname.endsWith("/intro")) {
+  if (
+    !normalizedPathname ||
+    normalizedPathname === "/intro" ||
+    normalizedPathname.endsWith("/intro") ||
+    normalizedPathname === "/dronovi" ||
+    normalizedPathname.endsWith("/dronovi") ||
+    normalizedPathname === "/sigurnosni-sistemi" ||
+    normalizedPathname.endsWith("/sigurnosni-sistemi")
+  ) {
     return null;
   }
 
@@ -75,16 +84,20 @@ export function FloatingContact() {
           </a>
         ))}
       </div>
-      <button
-        className={styles.launcher}
-        type="button"
-        aria-label={isOpen ? "Zatvori brzi kontakt" : "Otvori brzi kontakt"}
-        aria-expanded={isOpen}
-        onClick={() => setIsOpen((current) => !current)}
-      >
-        <span>SP</span>
-      </button>
-      <span className={styles.launcherLabel}>Pozovite nas</span>
+      <div className={styles.launcherWrap}>
+        <button
+          className={styles.launcher}
+          type="button"
+          aria-label={isOpen ? "Zatvori brzi kontakt" : "Otvori brzi kontakt"}
+          aria-expanded={isOpen}
+          onClick={() => setIsOpen((current) => !current)}
+        >
+          <span className={styles.launcherIcon}>
+            <img src={assetPath("/brand/solar_logo_001.svg")} alt="" aria-hidden="true" />
+          </span>
+          <span className={styles.launcherLabel}>Pozovite nas</span>
+        </button>
+      </div>
     </div>
   );
 }

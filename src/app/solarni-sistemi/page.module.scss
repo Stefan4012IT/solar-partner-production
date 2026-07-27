@@ -881,7 +881,20 @@
   button {
     width: 100%;
     cursor: pointer;
+
+    &:disabled {
+      cursor: wait;
+      opacity: 0.76;
+    }
   }
+}
+
+.formStatus {
+  margin: 2px 0 0;
+  color: rgba(255, 255, 255, 0.76);
+  font-size: 13px;
+  font-weight: 650;
+  line-height: 1.45;
 }
 
 .formField {
@@ -941,18 +954,26 @@
 }
 
 .footer {
+  position: relative;
+  overflow: hidden;
   display: grid;
   grid-template-columns: minmax(0, 1fr) auto;
   align-items: center;
-  gap: 24px;
+  gap: clamp(28px, 5vw, 72px);
   border-top: 1px solid rgba(22, 24, 29, 0.1);
-  background: #ffffff;
-  padding: 28px clamp(20px, 5vw, 72px);
+  background:
+    linear-gradient(90deg, rgba(245, 158, 11, 0.08), transparent 38%),
+    linear-gradient(rgba(29, 78, 216, 0.018) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(29, 78, 216, 0.018) 1px, transparent 1px),
+    #ffffff;
+  background-size: auto, 64px 64px, 64px 64px, auto;
+  padding: 34px clamp(20px, 5vw, 72px);
+  padding-right: clamp(136px, 12vw, 190px);
 
   strong {
     display: block;
     color: var(--color-dark);
-    font-size: 20px;
+    font-size: 22px;
     font-weight: 900;
   }
 
@@ -964,13 +985,6 @@
     line-height: 1.55;
   }
 
-  nav {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: flex-end;
-    gap: 14px;
-  }
-
   a {
     color: var(--color-muted);
     font-size: 13px;
@@ -980,6 +994,67 @@
 
     &:hover {
       color: var(--color-secondary);
+    }
+  }
+}
+
+.footerLogo {
+  display: block;
+  width: clamp(150px, 16vw, 210px);
+  height: auto;
+}
+
+.footerLinks {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(150px, max-content));
+  gap: 22px;
+  align-items: start;
+  justify-content: end;
+
+  nav {
+    display: grid;
+    gap: 9px;
+  }
+
+  span {
+    color: var(--color-dark);
+    font-size: 11px;
+    font-weight: 900;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+}
+
+.footerContact {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, max-content));
+  gap: 8px;
+  margin-top: 18px;
+
+  a {
+    display: grid;
+    gap: 4px;
+    border: 1px solid rgba(22, 24, 29, 0.08);
+    border-radius: 12px;
+    background: rgba(255, 255, 255, 0.72);
+    color: var(--color-dark);
+    font-size: 14px;
+    font-weight: 850;
+    padding: 10px 12px;
+    text-transform: none;
+
+    span {
+      color: var(--color-muted);
+      font-size: 10px;
+      font-weight: 900;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+
+    &:hover {
+      border-color: rgba(245, 158, 11, 0.32);
+      color: var(--color-dark);
+      background: rgba(245, 158, 11, 0.08);
     }
   }
 }
@@ -1069,10 +1144,23 @@
 
   .footer {
     grid-template-columns: 1fr;
+    padding-right: clamp(20px, 5vw, 72px);
 
-    nav {
+    .footerLinks {
       justify-content: flex-start;
     }
+  }
+
+  .footerLinks {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .footerContact {
+    grid-template-columns: 1fr;
+  }
+
+  .footerLinks {
+    grid-template-columns: 1fr;
   }
 
   .processStep {

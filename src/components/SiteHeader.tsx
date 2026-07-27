@@ -4,6 +4,7 @@ import Link from "next/link";
 import { usePathname, useSearchParams } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 import { siteContent } from "@/content/site";
+import { assetPath } from "@/lib/assetPath";
 import {
   getLocaleFromValue,
   getLocalizedHref,
@@ -68,8 +69,9 @@ export function SiteHeader({ locale }: { locale?: Locale } = {}) {
   return (
     <header className={`${styles.header} ${isVisible ? styles.headerVisible : styles.headerHidden}`}>
       <Link className={styles.brand} href={getLocalizedPath("intro", currentLocale)} aria-label="Solar Partner početna">
-        <span className={styles.brandMark}>SP</span>
-        <span>{copy.brand}</span>
+        <span className={styles.brandMark}>
+          <img src={assetPath("/brand/solar-partner-logo-full-011.svg")} alt="" aria-hidden="true" />
+        </span>
       </Link>
       <nav className={styles.nav} aria-label="Glavna navigacija">
         {routeKey === "solar" && (

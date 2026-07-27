@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
+import { assetPath } from "@/lib/assetPath";
 import { getLocalizedPath, type Locale } from "@/lib/i18n";
 import styles from "./page.module.scss";
 
@@ -88,12 +89,8 @@ export function DroneHeader({
       }`}
     >
       <Link className={styles.brand} href={getLocalizedPath("intro", locale)} aria-label="Solar Partner početna">
-        <span className={styles.brandMark}>SP</span>
-        <span className={styles.brandCopy}>
-          <strong>Solar Partner</strong>
-          <small>
-            <i /> Enterprise systems
-          </small>
+        <span className={styles.brandMark}>
+          <img src={assetPath("/brand/solar-partner-logo-011.svg")} alt="" aria-hidden="true" />
         </span>
       </Link>
       <nav className={styles.nav} aria-label="Navigacija stranice profesionalnih dronova">

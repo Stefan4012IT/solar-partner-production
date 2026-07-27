@@ -6,7 +6,8 @@ import { Red_Hat_Display } from "next/font/google";
 import { Suspense, type CSSProperties } from "react";
 import { getSecurityContent } from "@/content/security";
 import { assetPath } from "@/lib/assetPath";
-import { getLocaleFromValue, type Locale } from "@/lib/i18n";
+import { getLocaleFromValue, getLocalizedPath, type Locale } from "@/lib/i18n";
+import { SecurityLeadForm } from "./SecurityLeadForm";
 import { SecurityHeader } from "./SecurityHeader";
 import styles from "./page.module.scss";
 
@@ -149,52 +150,47 @@ export function SecuritySystemsPage({ locale = "sr" }: { locale?: Locale } = {})
           <h2>{content.contact.title}</h2>
           <p>{content.contact.text}</p>
         </div>
-        <form className={styles.form}>
-          <div className={styles.field}>
-            <label htmlFor="security-name">{content.contact.fields.name}</label>
-            <input id="security-name" name="name" type="text" autoComplete="name" />
-          </div>
-          <div className={styles.field}>
-            <label htmlFor="security-email">{content.contact.fields.email}</label>
-            <input id="security-email" name="email" type="email" autoComplete="email" />
-          </div>
-          <div className={styles.field}>
-            <label htmlFor="security-phone">{content.contact.fields.phone}</label>
-            <input id="security-phone" name="phone" type="tel" autoComplete="tel" />
-          </div>
-          <div className={styles.field}>
-            <label htmlFor="security-system">{content.contact.fields.interest}</label>
-            <select id="security-system" name="system" defaultValue="">
-              <option value="" disabled>
-                {content.contact.fields.placeholder}
-              </option>
-              {content.contact.options.map((option) => (
-                <option key={option}>{option}</option>
-              ))}
-            </select>
-          </div>
-          <div className={styles.honeypot} aria-hidden="true">
-            <label htmlFor="security-website">{content.contact.fields.website}</label>
-            <input id="security-website" name="website" type="text" tabIndex={-1} autoComplete="off" />
-          </div>
-          <button type="button">{content.contact.submit}</button>
-        </form>
+        <SecurityLeadForm content={content.contact} />
       </section>
 
       <footer className={styles.footer}>
         <div>
-          <strong>Solar Partner</strong>
+          <img
+            className={styles.footerLogo}
+            src={assetPath("/brand/solar-parner-footer-02.svg")}
+            alt="Solar Partner"
+          />
           <p>{content.footer.text}</p>
+          <div className={styles.footerContact}>
+            <a href="mailto:office@solarpartner.rs">
+              <span>Email</span>
+              office@solarpartner.rs
+            </a>
+            <a href="tel:+381603471739">
+              <span>Telefon</span>
+              +381 60 3471739
+            </a>
+            <a href="tel:+381638495979">
+              <span>Telefon</span>
+              +381 63 8495979
+            </a>
+          </div>
         </div>
-        <nav aria-label="Footer navigacija">
-          <a href="#sistemi">{content.footer.links[0]}</a>
-          <a href="#proces">{content.footer.links[1]}</a>
-          <a href="#oprema">{content.footer.links[2]}</a>
-          <a href="#kontakt">{content.footer.links[3]}</a>
-        </nav>
-        <a className={styles.footerCta} href="#kontakt">
-          {content.footer.cta}
-        </a>
+        <div className={styles.footerLinks}>
+          <nav aria-label="Footer navigacija">
+            <span>{locale === "en" ? "Sections" : "Sekcije"}</span>
+            <a href="#sistemi">{content.footer.links[0]}</a>
+            <a href="#proces">{content.footer.links[1]}</a>
+            <a href="#oprema">{content.footer.links[2]}</a>
+            <a href="#kontakt">{content.footer.links[3]}</a>
+          </nav>
+          <nav aria-label="Footer ostala rešenja">
+            <span>{locale === "en" ? "Other solutions" : "Ostala rešenja"}</span>
+            <a href={getLocalizedPath("solar", locale)}>{locale === "en" ? "Solar systems" : "Solarni sistemi"}</a>
+            <a href={getLocalizedPath("drones", locale)}>{locale === "en" ? "Drones" : "Dronovi"}</a>
+            <a href={getLocalizedPath("about", locale)}>{locale === "en" ? "About" : "O nama"}</a>
+          </nav>
+        </div>
       </footer>
     </main>
   );
