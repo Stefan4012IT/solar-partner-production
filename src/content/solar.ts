@@ -191,13 +191,13 @@ export const solarContent = {
     projects: [
       {
         title: "Solarna elektrana za porodičnu kuću",
-        meta: "Domaćinstvo / 6 kW / On-grid",
+        meta: "Domaćinstvo / 6 do 10 kW / On-grid",
         text:
           "Sistem projektovan za smanjenje mesečnih troškova električne energije i veću energetsku nezavisnost domaćinstva.",
       },
       {
         title: "Solarni sistem za poslovni objekat",
-        meta: "Firma / 30 kW / On-grid",
+        meta: "Firma / 30+ kW / On-grid",
         text:
           "Rešenje prilagođeno dnevnoj potrošnji poslovnog objekta, sa fokusom na dugoročnu uštedu.",
       },
@@ -400,13 +400,13 @@ export const solarContent = {
     projects: [
       {
         title: "Solar power system for a family house",
-        meta: "Household / 6 kW / On-grid",
+        meta: "Household / 6 to 10 kW / On-grid",
         text:
           "A system designed to reduce monthly electricity costs and improve the household’s energy independence.",
       },
       {
         title: "Solar system for a business facility",
-        meta: "Business / 30 kW / On-grid",
+        meta: "Business / 30+ kW / On-grid",
         text:
           "A solution aligned with daytime consumption, with a focus on long-term savings.",
       },
