@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect } from "react";
+import { createPortal } from "react-dom";
 import styles from "./LeadSuccessModal.module.scss";
 
 type LeadSuccessModalProps = {
@@ -37,7 +38,7 @@ export function LeadSuccessModal({
     return null;
   }
 
-  return (
+  return createPortal(
     <div className={styles.overlay} role="presentation" onMouseDown={onClose}>
       <div
         className={styles.dialog}
@@ -59,6 +60,7 @@ export function LeadSuccessModal({
           {closeLabel}
         </button>
       </div>
-    </div>
+    </div>,
+    document.body,
   );
 }
