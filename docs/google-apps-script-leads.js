@@ -4,7 +4,7 @@ const SHEETS = {
   "solarni-paneli": {
     name: "solarni-paneli",
     headers: ["Vreme", "Ime i prezime", "Email", "Telefon", "Stranica", "Jezik"],
-    values: (data) => [data.submittedAt, data.name, data.email, data.phone, data.page, data.locale],
+    values: (data) => [data.submittedAt, data.name, data.email, text_(data.phone), data.page, data.locale],
   },
   dronovi: {
     name: "dronovi",
@@ -23,7 +23,7 @@ const SHEETS = {
       data.submittedAt,
       data.name,
       data.company,
-      data.phone,
+      text_(data.phone),
       data.email,
       data.application,
       data.platform,
@@ -34,7 +34,7 @@ const SHEETS = {
   "sigurnosni-sistemi": {
     name: "sigurnosni-sistemi",
     headers: ["Vreme", "Ime i prezime", "Email", "Telefon", "Interesuje me", "Stranica", "Jezik"],
-    values: (data) => [data.submittedAt, data.name, data.email, data.phone, data.system, data.page, data.locale],
+    values: (data) => [data.submittedAt, data.name, data.email, text_(data.phone), data.system, data.page, data.locale],
   },
 };
 
@@ -82,6 +82,15 @@ function getOrCreateSheet_(spreadsheet, sheetName, headers) {
   }
 
   return sheet;
+}
+
+function text_(value) {
+  if (!value) {
+    return "";
+  }
+
+  const text = String(value).trim();
+  return text.startsWith("'") ? text : "'" + text;
 }
 
 function json_(payload) {

@@ -13,6 +13,12 @@ function getStringValue(value: FormDataEntryValue) {
   return typeof value === "string" ? value.trim() : "";
 }
 
+function getSheetTextValue(value: FormDataEntryValue) {
+  const text = getStringValue(value);
+
+  return text ? `'${text}` : "";
+}
+
 export async function submitLeadForm(formType: LeadFormType, form: HTMLFormElement): Promise<SubmitLeadResult> {
   const formData = new FormData(form);
   const website = getStringValue(formData.get("website") ?? "");
@@ -35,7 +41,7 @@ export async function submitLeadForm(formType: LeadFormType, form: HTMLFormEleme
 
   formData.forEach((value, key) => {
     if (key !== "website") {
-      payload[key] = getStringValue(value);
+      payload[key] = key === "phone" ? getSheetTextValue(value) : getStringValue(value);
     }
   });
 
