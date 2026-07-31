@@ -1,4 +1,5 @@
 const SPREADSHEET_ID = "1kfWWkaOdupWBvNJNkIxXV04q4eMNq4qh57pydvMvqAw";
+const NOTIFICATION_EMAILS = ["office@solarpartner.rs"];
 
 const SHEETS = {
   "solarni-paneli": {
@@ -50,6 +51,7 @@ function doPost(e) {
     const spreadsheet = SpreadsheetApp.openById(SPREADSHEET_ID);
     const sheet = getOrCreateSheet_(spreadsheet, config.name, config.headers);
     sheet.appendRow(config.values(data));
+    sendLeadNotification_(config.name, data);
 
     return json_({ ok: true });
   } catch (error) {
@@ -91,6 +93,40 @@ function text_(value) {
 
   const text = String(value).trim();
   return text.startsWith("'") ? text : "'" + text;
+}
+
+function sendLeadNotification_(sheetName, data) {
+  if (!NOTIFICATION_EMAILS.length) {
+    return;
+  }
+
+  const formLabels = {
+    "solarni-paneli": "Solarni sistemi",
+    dronovi: "Profesionalni dronovi",
+    "sigurnosni-sistemi": "Sigurnosni sistemi",
+  };
+
+  const fields = [
+    ["Forma", formLabels[data.formType] || sheetName],
+    ["Vreme", data.submittedAt],
+    ["Ime i prezime", data.name],
+    ["Email", data.email],
+    ["Telefon", data.phone],
+    ["Kompanija / institucija", data.company],
+    ["Tip primene", data.application],
+    ["Platforma", data.platform],
+    ["Interesuje me", data.system],
+    ["Stranica", data.page],
+    ["Jezik", data.locale],
+  ].filter((item) => item[1]);
+
+  const body = fields.map((item) => item[0] + ": " + item[1]).join("\n");
+
+  MailApp.sendEmail({
+    to: NOTIFICATION_EMAILS.join(","),
+    subject: "Novi upit - " + (formLabels[data.formType] || sheetName),
+    body: "Stigao je novi upit preko Solar Partner sajta.\n\n" + body,
+  });
 }
 
 function json_(payload) {
